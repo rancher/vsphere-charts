@@ -3,11 +3,12 @@ name: vSphere Charts
 on:
   push:
     branches:
-      - main
+      - release
 
 jobs:
   release:
     runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/heads/release')
     steps:
       - name: Checkout
         uses: actions/checkout@v2
