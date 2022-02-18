@@ -24,8 +24,37 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       {{- else }}
-      nodeSelector:
-        kubernetes.io/os: linux
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              # Rancher node selector label
+              - key: kubernetes.io/os
+                operator: NotIn
+                values:
+                - "windows"
+      {{- end }}
+      {{- if .Values.csiNode.tolerations }}
+      tolerations:
+      {{- with .Values.csiNode.tolerations }}
+        {{- toYaml . | nindent 6 }}
+      {{- end }}
+      {{- else }}
+      tolerations:
+        - key: node-role.kubernetes.io/master
+          operator: Exists
+          effect: NoSchedule
+        # Rancher specific change: These tolerations are added to account for RKE1 and RKE2 taints
+        - key: node-role.kubernetes.io/controlplane
+          effect: NoSchedule
+          value: "true"
+        - key: node-role.kubernetes.io/control-plane
+          effect: NoSchedule
+          operator: Exists
+        - key: node-role.kubernetes.io/etcd
+          effect: NoExecute
+          operator: Exists
       {{- end }}
       serviceAccountName: vsphere-csi-node
       hostNetwork: true
@@ -147,8 +176,3 @@ spec:
           hostPath:
             path: /sys/devices
             type: Directory
-      tolerations:
-        - effect: NoExecute
-          operator: Exists
-        - effect: NoSchedule
-          operator: Exists
