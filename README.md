@@ -1,20 +1,32 @@
 # vSphere Charts
 
+The repository provides charts for vSphere CSI and CPI based on the upstream repositories and the manifests provided by those
+repositories.
+
 ## Prerequisites
 - Helm 3.x
 
-## Use released charts in rancher/charts
-Use below tarballs in rancher/charts to pull released charts.
+## vSphere CSI Chart
 
-```
-CPI: https://github.com/rancher/vsphere-charts/releases/download/rancher-vsphere-cpi-x.y.z/rancher-vsphere-cpi-x.y.z.tgz
+This chart is produced using the following repository: https://github.com/kubernetes-sigs/vsphere-csi-driver
 
-CSI: https://github.com/rancher/vsphere-charts/releases/download/rancher-vsphere-csi-x.y.z-rancherx/rancher-vsphere-csi-x.y.z-rancherx.tgz
-```
-## Releasing New Charts
-When ready to release a new version or add a new chart, make changes to CPI and CSI which are in `charts/` directory. Make sure the chart directories are named after the actual charts (for example: `rancher-vsphere-cpi`)
+The manifests are located [here](https://github.com/kubernetes-sigs/vsphere-csi-driver/tree/master/manifests). The workflow is to compare 
+the existing helm templates to manifests in that repository when a new version has been released. Make any changes that are required to make the 
+templates have parity with the manifests. Then submit your PR.
 
-Once a PR is merged or pushed, GitHub Actions will look for changes to charts in the `charts/` directory since the last release. It will package the updated chart and then release it with a new tag.
+Any images consumed by this chart need to be mirrored in the following [repository](https://github.com/rancher/image-mirror) first.
 
-Note that changes should only be synced to this repository when you are ready to create a new release. GitHub Actions will fail if changes are made to the charts, without updating the chart version. Chart Releaser will not attempt to override a previously released version. In case of a new change, update the charts along with the chart version & then raise a PR. This will create a new release and tag it with the given version.
+## vSphere CPI Charts
 
+This chart is produced using the following repository: https://github.com/kubernetes/cloud-provider-vsphere/
+
+The manifests are located [here](https://github.com/kubernetes/cloud-provider-vsphere/tree/master/releases). The workflow is to compare
+the existing helm templates to manifests in that repository when a new version has been released. Make any changes that are required to make the
+templates have parity with the manifests. Then submit your PR.
+
+Any images consumed by this chart need to be mirrored in the following [repository](https://github.com/rancher/image-mirror) first.
+
+## Using charts in rancher/charts and rancher/rke2-charts
+
+Charts from this repository should be consumed by commit hash based on the version and features that you want to have
+included.
