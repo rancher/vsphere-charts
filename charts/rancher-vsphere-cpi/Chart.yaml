@@ -2,11 +2,11 @@ annotations:
   catalog.cattle.io/certified: rancher
   catalog.cattle.io/display-name: vSphere CPI
   catalog.cattle.io/experimental: "true"
+  catalog.cattle.io/kube-version: '>= 1.18.0-0 < 1.24.0-0'
   catalog.cattle.io/namespace: kube-system
   catalog.cattle.io/os: linux
   catalog.cattle.io/permits-os: linux,windows
   catalog.cattle.io/rancher-version: '>= 2.6.0-0 <= 2.6.100-0'
-  catalog.cattle.io/kube-version: '>= 1.18.0-0 < 1.24.0-0'
   catalog.cattle.io/release-name: vsphere-cpi
 apiVersion: v1
 appVersion: 1.2.0-alpha
