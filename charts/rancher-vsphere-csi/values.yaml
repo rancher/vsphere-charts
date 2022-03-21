@@ -72,6 +72,8 @@ improvedCsiIdempotency:
   enabled: false
 improvedVolumeTopology:
   enabled: false
+csiWindowsSupport:
+  enabled: false
 
 csiNode:
   ## Node labels for pod assignment

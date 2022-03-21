@@ -83,6 +83,13 @@ questions:
     default: false
     group: Driver Configuration
 
+  - variable: csiWindowsSupport.enabled
+    label: Enable CSI Windows Support
+    description: Allows using the topology feature without the need to mount vSphere credentials in the CSI node daemonset
+    type: boolean
+    default: false
+    group: Driver Configuration
+
   - variable: csiController.csiResizer.enabled
     label: Enable CSI Volume Resizer
     description: This feature is available for vSphere 7.0 U1+ only

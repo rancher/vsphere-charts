@@ -8,6 +8,7 @@ data:
   "async-query-volume": {{ .Values.asyncQueryVolume.enabled | quote }}
   "improved-csi-idempotency": {{ .Values.improvedCsiIdempotency.enabled | quote }}
   "improved-volume-topology": {{ .Values.improvedVolumeTopology.enabled | quote }}
+  "csi-windows-support": {{ .Values.csiWindowsSupport.enabled | quote }}
 kind: ConfigMap
 metadata:
   name: internal-feature-states.csi.vsphere.vmware.com
