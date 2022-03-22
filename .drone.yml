@@ -1,0 +1,16 @@
+kind: pipeline
+name: ci
+type: docker
+steps:
+  - name: linting
+    image: registry.suse.com/suse/sle15
+    environment:
+      DESIRED_VERSION: v3.8.1
+    commands:
+      - zypper -n install make curl awk tar gzip
+      - curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+      - chmod 700 get_helm.sh && ./get_helm.sh
+      - make
+    when:
+      event:
+        #- pull_request
