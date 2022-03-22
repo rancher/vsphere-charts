@@ -9,6 +9,9 @@ data:
   "improved-csi-idempotency": {{ .Values.improvedCsiIdempotency.enabled | quote }}
   "improved-volume-topology": {{ .Values.improvedVolumeTopology.enabled | quote }}
   "csi-windows-support": {{ .Values.csiWindowsSupport.enabled | quote }}
+  "use-csinode-id": {{ .Values.useCsinodeId.enabled | quote }}
+  "pv-to-backingdiskobjectid-mapping": {{ .Values.pvToBackingdiskobjectidMapping.enabled | quote }}
+  "cnsmgr-suspend-create-volume": {{ .Values.cnsmgrSuspendCreateVolume.enabled | quote }}
 kind: ConfigMap
 metadata:
   name: internal-feature-states.csi.vsphere.vmware.com
