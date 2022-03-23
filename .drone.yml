@@ -13,4 +13,4 @@ steps:
       - make
     when:
       event:
-        #- pull_request
+        - pull_request
