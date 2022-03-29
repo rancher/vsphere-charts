@@ -1,4 +1,4 @@
-# Source: https://github.com/kubernetes/cloud-provider-vsphere
+{{- template "applyVersionOverrides" . -}}
 apiVersion: apps/v1
 kind: DaemonSet
 metadata:
@@ -82,7 +82,7 @@ spec:
       serviceAccountName: {{ .Chart.Name }}-cloud-controller-manager
       containers:
         - name: {{ .Chart.Name }}-cloud-controller-manager
-          image: "{{ template "system_default_registry" . }}{{ default (include "get_image" . ) (include "get_image_override" . ) }}"
+          image: {{ template "system_default_registry" . }}{{ .Values.cloudControllerManager.repository }}:{{ .Values.cloudControllerManager.tag }}
           args:
             - --cloud-provider=vsphere
             - --v=2
