@@ -6,6 +6,16 @@
 {{- end -}}
 {{- end -}}
 
+{{- define "applyVersionOverrides" -}}
+{{- $overrides := dict -}}
+{{- range $override := .Values.versionOverrides -}}
+{{- if semverCompare $override.constraint $.Capabilities.KubeVersion.Version -}}
+{{- $_ := mergeOverwrite $overrides $override.values -}}
+{{- end -}}
+{{- end -}}
+{{- $_ := mergeOverwrite .Values $overrides -}}
+{{- end -}}
+
 {{/*
 Windows cluster will add default taint for linux nodes,
 add below linux tolerations to workloads could be scheduled to those linux nodes
