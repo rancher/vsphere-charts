@@ -1,4 +1,5 @@
 {{- if .Values.csiWindowsSupport.enabled }}
+{{- template "applyVersionOverrides" . -}}
 kind: DaemonSet
 apiVersion: apps/v1
 metadata:

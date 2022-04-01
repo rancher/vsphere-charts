@@ -14,7 +14,7 @@ icon: https://charts.rancher.io/assets/logos/vsphere-cpi.svg
 keywords:
 - infrastructure
 maintainers:
-- email: caleb@rancher.com
+- email: jamie.phillips@suse.com
   name: Rancher
 name: rancher-vsphere-cpi
 sources:

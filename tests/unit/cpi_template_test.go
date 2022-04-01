@@ -43,7 +43,7 @@ func TestCPITemplateRenderedDaemonset(t *testing.T) {
 			name: "Kubernetes 1.22",
 			args: args{
 				values:        map[string]string{},
-				kubeVersion:   "1.23",
+				kubeVersion:   "1.22",
 				namespace:     "cpitest-" + strings.ToLower(random.UniqueId()),
 				releaseName:   "cpitest-" + strings.ToLower(random.UniqueId()),
 				chartRelPath:  cpiChart,
@@ -115,7 +115,7 @@ func TestCPITemplateRenderedDaemonset(t *testing.T) {
 			// assert
 			require.Equal(t, tt.args.namespace, daemonSet.Namespace)
 			daemonSetContainers := daemonSet.Spec.Template.Spec.Containers
-			require.Equal(t, len(daemonSetContainers), 1)
+			require.Equal(t, 1, len(daemonSetContainers))
 			require.Equal(t, tt.args.expectedImage, daemonSetContainers[0].Image)
 		})
 	}
