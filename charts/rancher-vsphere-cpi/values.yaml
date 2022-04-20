@@ -9,6 +9,11 @@ vCenter:
     name: "vsphere-cpi-creds"
     generate: true
 
+# vSphere Tags used to determine the zone and region of a Kubernetes node. This labels will be propagated to NodeLabels
+  labels:
+    region: "k8s-region"
+    zone: "k8s-zone"
+
 # A list of Semver constraint strings (defined by https://github.com/Masterminds/semver) and values.yaml overrides.
 #
 # For each key in versionOvverides, this chart will check to see if the current Kubernetes cluster's version matches

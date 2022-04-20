@@ -40,3 +40,23 @@ questions:
     type: string
     group: Configuration
     show_if: "vCenter.credentialsSecret.generate=false"
+
+  - variable: vCenter.labels.generate
+    label: Define vSphere Tags
+    description: "vSphere Tags used to determine the zone and region of a Kubernetes node. This labels will be propagated to NodeLabels"
+    type: boolean
+    default: true
+    required: true
+    group: Configuration
+    show_subquestion_if: true
+    subquestions:
+      - variable: labels.region
+        label: Region
+        description: vSphere tag which will used to define regions. e.g. eu-central
+        type: string
+        group: Configuration
+      - variable: labels.zone
+        label: Zone
+        description: vSphere tag which will used to define availability zones
+        type: string
+        group: Configuration
