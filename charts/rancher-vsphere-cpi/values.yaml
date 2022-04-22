@@ -1,7 +1,7 @@
 vCenter:
   host: ""
   port: 443
-  insecureFlag: "1"
+  insecureFlag: true
   datacenters: ""
   username: ""
   password: ""

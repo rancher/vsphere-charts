@@ -7,14 +7,14 @@ metadata:
     component: {{ .Chart.Name }}-cloud-controller-manager
   namespace: {{ .Release.Namespace }}
 data:
-  vsphere.conf: |
+  vsphere.yaml: |
     # Global properties in this section will be used for all specified vCenters unless overriden in VirtualCenter section.
     {{ with .Values.vCenter }}
     global:
       secretName: {{ .credentialsSecret.name | quote }}
       secretNamespace: {{ $.Release.Namespace | quote }}
-      port: {{ .port | quote }}
-      insecureFlag: {{ .insecureFlag | quote }}
+      port: {{ .port }}
+      insecureFlag: {{ .insecureFlag }}
 
     vcenter:
       {{ .host | quote }}:

@@ -86,7 +86,7 @@ spec:
           args:
             - --cloud-provider=vsphere
             - --v=2
-            - --cloud-config=/etc/cloud/vsphere.conf
+            - --cloud-config=/etc/cloud/vsphere.yaml
           volumeMounts:
             - mountPath: /etc/cloud
               name: vsphere-config-volume
