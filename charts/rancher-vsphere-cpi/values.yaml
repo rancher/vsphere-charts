@@ -27,7 +27,12 @@ vCenter:
 # - On running a helm template, Helm generally assumes the kubeVersion is v1.20.0
 # - On running a helm install --dry-run, the correct kubeVersion should be chosen.
 versionOverrides:
-  - constraint: ">= 1.22 < 1.24"
+  - constraint: ">= 1.23 < 1.25"
+    values:
+      cloudControllerManager:
+        repository: rancher/mirrored-cloud-provider-vsphere-cpi-release-manager
+        tag: v1.23.0
+  - constraint: "~ 1.22"
     values:
       cloudControllerManager:
         repository: rancher/mirrored-cloud-provider-vsphere-cpi-release-manager
