@@ -1,13 +1,18 @@
 vCenter:
   host: ""
   port: 443
-  insecureFlag: "1"
+  insecureFlag: true
   datacenters: ""
   username: ""
   password: ""
   credentialsSecret:
     name: "vsphere-cpi-creds"
     generate: true
+
+# vSphere Tags used to determine the zone and region of a Kubernetes node. This labels will be propagated to NodeLabels
+  labels:
+    region: "k8s-region"
+    zone: "k8s-zone"
 
 # A list of Semver constraint strings (defined by https://github.com/Masterminds/semver) and values.yaml overrides.
 #
