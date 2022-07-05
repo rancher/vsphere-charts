@@ -29,6 +29,17 @@ func TestCPITemplateRenderedDaemonset(t *testing.T) {
 		args args
 	}{
 		{
+			name: "Kubernetes 1.25",
+			args: args{
+				values:        map[string]string{},
+				kubeVersion:   "1.25",
+				namespace:     "cpitest-" + strings.ToLower(random.UniqueId()),
+				releaseName:   "cpitest-" + strings.ToLower(random.UniqueId()),
+				chartRelPath:  cpiChart,
+				expectedImage: "rancher/mirrored-cloud-provider-vsphere-cpi-release-manager:v1.24.0",
+			},
+		},
+		{
 			name: "Kubernetes 1.24",
 			args: args{
 				values:        map[string]string{},
@@ -36,7 +47,7 @@ func TestCPITemplateRenderedDaemonset(t *testing.T) {
 				namespace:     "cpitest-" + strings.ToLower(random.UniqueId()),
 				releaseName:   "cpitest-" + strings.ToLower(random.UniqueId()),
 				chartRelPath:  cpiChart,
-				expectedImage: "rancher/mirrored-cloud-provider-vsphere-cpi-release-manager:v1.23.0",
+				expectedImage: "rancher/mirrored-cloud-provider-vsphere-cpi-release-manager:v1.24.0",
 			},
 		},
 		{
@@ -47,7 +58,7 @@ func TestCPITemplateRenderedDaemonset(t *testing.T) {
 				namespace:     "cpitest-" + strings.ToLower(random.UniqueId()),
 				releaseName:   "cpitest-" + strings.ToLower(random.UniqueId()),
 				chartRelPath:  cpiChart,
-				expectedImage: "rancher/mirrored-cloud-provider-vsphere-cpi-release-manager:v1.23.0",
+				expectedImage: "rancher/mirrored-cloud-provider-vsphere-cpi-release-manager:v1.23.1",
 			},
 		},
 		{
