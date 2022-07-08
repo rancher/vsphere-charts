@@ -39,7 +39,7 @@ func TestCSITemplateRenderedNodeDaemonset(t *testing.T) {
 				windowsEnabled: false,
 				expectedImages: []string{
 					"rancher/mirrored-sig-storage-csi-node-driver-registrar:v2.5.0",
-					"rancher/mirrored-cloud-provider-vsphere-csi-release-driver:v2.5.1",
+					"rancher/mirrored-cloud-provider-vsphere-csi-release-driver:v2.5.2",
 					"rancher/mirrored-sig-storage-livenessprobe:v2.6.0",
 				},
 			},
@@ -57,7 +57,7 @@ func TestCSITemplateRenderedNodeDaemonset(t *testing.T) {
 				chartRelPath: csiChart,
 				expectedImages: []string{
 					"rancher/mirrored-sig-storage-csi-node-driver-registrar:v2.5.0",
-					"rancher/mirrored-cloud-provider-vsphere-csi-release-driver:v2.5.1",
+					"rancher/mirrored-cloud-provider-vsphere-csi-release-driver:v2.5.2",
 					"rancher/mirrored-sig-storage-livenessprobe:v2.6.0",
 				},
 			},
@@ -73,7 +73,7 @@ func TestCSITemplateRenderedNodeDaemonset(t *testing.T) {
 				windowsEnabled: false,
 				expectedImages: []string{
 					"rancher/mirrored-sig-storage-csi-node-driver-registrar:v2.5.0",
-					"rancher/mirrored-cloud-provider-vsphere-csi-release-driver:v2.5.1",
+					"rancher/mirrored-cloud-provider-vsphere-csi-release-driver:v2.5.2",
 					"rancher/mirrored-sig-storage-livenessprobe:v2.6.0",
 				},
 			},
@@ -91,7 +91,7 @@ func TestCSITemplateRenderedNodeDaemonset(t *testing.T) {
 				chartRelPath: csiChart,
 				expectedImages: []string{
 					"rancher/mirrored-sig-storage-csi-node-driver-registrar:v2.5.0",
-					"rancher/mirrored-cloud-provider-vsphere-csi-release-driver:v2.5.1",
+					"rancher/mirrored-cloud-provider-vsphere-csi-release-driver:v2.5.2",
 					"rancher/mirrored-sig-storage-livenessprobe:v2.6.0",
 				},
 			},
@@ -107,7 +107,7 @@ func TestCSITemplateRenderedNodeDaemonset(t *testing.T) {
 				windowsEnabled: false,
 				expectedImages: []string{
 					"rancher/mirrored-sig-storage-csi-node-driver-registrar:v2.5.0",
-					"rancher/mirrored-cloud-provider-vsphere-csi-release-driver:v2.5.1",
+					"rancher/mirrored-cloud-provider-vsphere-csi-release-driver:v2.5.2",
 					"rancher/mirrored-sig-storage-livenessprobe:v2.6.0",
 				},
 			},
@@ -125,7 +125,7 @@ func TestCSITemplateRenderedNodeDaemonset(t *testing.T) {
 				chartRelPath: csiChart,
 				expectedImages: []string{
 					"rancher/mirrored-sig-storage-csi-node-driver-registrar:v2.5.0",
-					"rancher/mirrored-cloud-provider-vsphere-csi-release-driver:v2.5.1",
+					"rancher/mirrored-cloud-provider-vsphere-csi-release-driver:v2.5.2",
 					"rancher/mirrored-sig-storage-livenessprobe:v2.6.0",
 				},
 			},
@@ -141,7 +141,7 @@ func TestCSITemplateRenderedNodeDaemonset(t *testing.T) {
 				windowsEnabled: false,
 				expectedImages: []string{
 					"rancher/mirrored-sig-storage-csi-node-driver-registrar:v2.3.0",
-					"rancher/mirrored-cloud-provider-vsphere-csi-release-driver:v2.4.1",
+					"rancher/mirrored-cloud-provider-vsphere-csi-release-driver:v2.4.2",
 					"rancher/mirrored-sig-storage-livenessprobe:v2.4.0",
 				},
 			},
@@ -159,7 +159,7 @@ func TestCSITemplateRenderedNodeDaemonset(t *testing.T) {
 				chartRelPath: csiChart,
 				expectedImages: []string{
 					"rancher/mirrored-sig-storage-csi-node-driver-registrar:v2.5.0",
-					"rancher/mirrored-cloud-provider-vsphere-csi-release-driver:v2.5.1",
+					"rancher/mirrored-cloud-provider-vsphere-csi-release-driver:v2.5.2",
 					"rancher/mirrored-sig-storage-livenessprobe:v2.6.0",
 				},
 			},
@@ -234,9 +234,9 @@ func TestCSITemplateRenderedControllerDeployment(t *testing.T) {
 				csiResizerEnabled: false,
 				expectedImages: []string{
 					"rancher/mirrored-sig-storage-csi-attacher:v3.4.0",
-					"rancher/mirrored-cloud-provider-vsphere-csi-release-driver:v2.5.1",
+					"rancher/mirrored-cloud-provider-vsphere-csi-release-driver:v2.5.2",
 					"rancher/mirrored-sig-storage-livenessprobe:v2.6.0",
-					"rancher/mirrored-cloud-provider-vsphere-csi-release-syncer:v2.5.1",
+					"rancher/mirrored-cloud-provider-vsphere-csi-release-syncer:v2.5.2",
 					"rancher/mirrored-sig-storage-csi-provisioner:v3.1.0",
 				},
 			},
@@ -252,9 +252,9 @@ func TestCSITemplateRenderedControllerDeployment(t *testing.T) {
 				csiResizerEnabled: false,
 				expectedImages: []string{
 					"rancher/mirrored-sig-storage-csi-attacher:v3.4.0",
-					"rancher/mirrored-cloud-provider-vsphere-csi-release-driver:v2.5.1",
+					"rancher/mirrored-cloud-provider-vsphere-csi-release-driver:v2.5.2",
 					"rancher/mirrored-sig-storage-livenessprobe:v2.6.0",
-					"rancher/mirrored-cloud-provider-vsphere-csi-release-syncer:v2.5.1",
+					"rancher/mirrored-cloud-provider-vsphere-csi-release-syncer:v2.5.2",
 					"rancher/mirrored-sig-storage-csi-provisioner:v3.1.0",
 				},
 			},
@@ -270,9 +270,9 @@ func TestCSITemplateRenderedControllerDeployment(t *testing.T) {
 				csiResizerEnabled: false,
 				expectedImages: []string{
 					"rancher/mirrored-sig-storage-csi-attacher:v3.4.0",
-					"rancher/mirrored-cloud-provider-vsphere-csi-release-driver:v2.5.1",
+					"rancher/mirrored-cloud-provider-vsphere-csi-release-driver:v2.5.2",
 					"rancher/mirrored-sig-storage-livenessprobe:v2.6.0",
-					"rancher/mirrored-cloud-provider-vsphere-csi-release-syncer:v2.5.1",
+					"rancher/mirrored-cloud-provider-vsphere-csi-release-syncer:v2.5.2",
 					"rancher/mirrored-sig-storage-csi-provisioner:v3.1.0",
 				},
 			},
@@ -288,9 +288,9 @@ func TestCSITemplateRenderedControllerDeployment(t *testing.T) {
 				csiResizerEnabled: false,
 				expectedImages: []string{
 					"rancher/mirrored-sig-storage-csi-attacher:v3.3.0",
-					"rancher/mirrored-cloud-provider-vsphere-csi-release-driver:v2.4.1",
+					"rancher/mirrored-cloud-provider-vsphere-csi-release-driver:v2.4.2",
 					"rancher/mirrored-sig-storage-livenessprobe:v2.4.0",
-					"rancher/mirrored-cloud-provider-vsphere-csi-release-syncer:v2.4.1",
+					"rancher/mirrored-cloud-provider-vsphere-csi-release-syncer:v2.4.2",
 					"rancher/mirrored-sig-storage-csi-provisioner:v3.0.0",
 				},
 			},
@@ -310,9 +310,9 @@ func TestCSITemplateRenderedControllerDeployment(t *testing.T) {
 				expectedImages: []string{
 					"rancher/mirrored-sig-storage-csi-attacher:v3.4.0",
 					"rancher/mirrored-sig-storage-csi-resizer:v1.4.0",
-					"rancher/mirrored-cloud-provider-vsphere-csi-release-driver:v2.5.1",
+					"rancher/mirrored-cloud-provider-vsphere-csi-release-driver:v2.5.2",
 					"rancher/mirrored-sig-storage-livenessprobe:v2.6.0",
-					"rancher/mirrored-cloud-provider-vsphere-csi-release-syncer:v2.5.1",
+					"rancher/mirrored-cloud-provider-vsphere-csi-release-syncer:v2.5.2",
 					"rancher/mirrored-sig-storage-csi-provisioner:v3.1.0",
 				},
 			},
@@ -332,9 +332,9 @@ func TestCSITemplateRenderedControllerDeployment(t *testing.T) {
 				expectedImages: []string{
 					"rancher/mirrored-sig-storage-csi-attacher:v3.3.0",
 					"rancher/mirrored-sig-storage-csi-resizer:v1.3.0",
-					"rancher/mirrored-cloud-provider-vsphere-csi-release-driver:v2.4.1",
+					"rancher/mirrored-cloud-provider-vsphere-csi-release-driver:v2.4.2",
 					"rancher/mirrored-sig-storage-livenessprobe:v2.4.0",
-					"rancher/mirrored-cloud-provider-vsphere-csi-release-syncer:v2.4.1",
+					"rancher/mirrored-cloud-provider-vsphere-csi-release-syncer:v2.4.2",
 					"rancher/mirrored-sig-storage-csi-provisioner:v3.0.0",
 				},
 			},
