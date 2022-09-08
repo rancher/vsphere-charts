@@ -72,13 +72,21 @@ improvedCsiIdempotency:
   enabled: false
 improvedVolumeTopology:
   enabled: false
+blockVolumeSnapshot:
+  enabled: false
 csiWindowsSupport:
   enabled: false
 useCsinodeId:
   enabled: true
+listVolumes:
+  enabled: false
 pvToBackingdiskobjectidMapping:
   enabled: false
 cnsmgrSuspendCreateVolume:
+  enabled: false
+topologyPreferentialDatastores:
+  enabled: false
+maxPvscsiTargetsPerVm:
   enabled: false
 
 csiNode:
@@ -112,6 +120,37 @@ global:
     systemDefaultRegistry: ""
 
 versionOverrides:
+  - constraint: ">= 1.24"
+    values:
+      csiController:
+        image:
+          repository: rancher/mirrored-cloud-provider-vsphere-csi-release-driver
+          tag: v2.6.0
+          csiAttacher:
+            repository: rancher/mirrored-sig-storage-csi-attacher
+            tag: v3.4.0
+          csiResizer:
+            repository: rancher/mirrored-sig-storage-csi-resizer
+            tag: v1.4.0
+          livenessProbe:
+            repository: rancher/mirrored-sig-storage-livenessprobe
+            tag: v2.7.0
+          vsphereSyncer:
+            repository: rancher/mirrored-cloud-provider-vsphere-csi-release-syncer
+            tag: v2.6.0
+          csiProvisioner:
+            repository: rancher/mirrored-sig-storage-csi-provisioner
+            tag: v3.2.1
+      csiNode:
+        image:
+          repository: rancher/mirrored-cloud-provider-vsphere-csi-release-driver
+          tag: v2.6.0
+          nodeDriverRegistrar:
+            repository: rancher/mirrored-sig-storage-csi-node-driver-registrar
+            tag: v2.5.1
+          livenessProbe:
+            repository: rancher/mirrored-sig-storage-livenessprobe
+            tag: v2.7.0
   - constraint: ">= 1.21 < 1.24"
     values:
       csiController:

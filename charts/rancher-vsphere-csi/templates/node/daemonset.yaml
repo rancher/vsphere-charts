@@ -88,7 +88,9 @@ spec:
           args:
             - "--fss-name=internal-feature-states.csi.vsphere.vmware.com"
             - "--fss-namespace=$(CSI_NAMESPACE)"
+            {{- if semverCompare "< 1.24" $.Capabilities.KubeVersion.Version }}
             - "--use-gocsi=false"
+            {{- end }}
           imagePullPolicy: "Always"
           env:
             - name: NODE_NAME

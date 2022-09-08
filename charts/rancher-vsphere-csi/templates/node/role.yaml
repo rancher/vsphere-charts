@@ -15,7 +15,11 @@ metadata:
 rules:
   - apiGroups: ["cns.vmware.com"]
     resources: ["csinodetopologies"]
+{{- if semverCompare ">= 1.21" $.Capabilities.KubeVersion.Version }}
+    verbs: ["create", "watch", "get", "patch"]
+{{- else }}
     verbs: ["create", "watch"]
+{{- end }}
   - apiGroups: [""]
     resources: ["nodes"]
     verbs: ["get"]
