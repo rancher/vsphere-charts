@@ -29,6 +29,40 @@ func TestCSITemplateRenderedNodeDaemonset(t *testing.T) {
 		args args
 	}{
 		{
+			name: "Kubernetes 1.24 Linux Only",
+			args: args{
+				values:         map[string]string{"vCenter.clusterId": random.UniqueId()},
+				kubeVersion:    "1.24",
+				namespace:      "csitest-" + strings.ToLower(random.UniqueId()),
+				releaseName:    "csitest-" + strings.ToLower(random.UniqueId()),
+				chartRelPath:   csiChart,
+				windowsEnabled: false,
+				expectedImages: []string{
+					"rancher/mirrored-sig-storage-csi-node-driver-registrar:v2.5.1",
+					"rancher/mirrored-cloud-provider-vsphere-csi-release-driver:v2.6.0",
+					"rancher/mirrored-sig-storage-livenessprobe:v2.7.0",
+				},
+			},
+		},
+		{
+			name: "Kubernetes 1.24 Linux and Windows",
+			args: args{
+				values: map[string]string{
+					"vCenter.clusterId":         random.UniqueId(),
+					"csiWindowsSupport:enabled": "true",
+				},
+				kubeVersion:  "1.24",
+				namespace:    "csitest-" + strings.ToLower(random.UniqueId()),
+				releaseName:  "csitest-" + strings.ToLower(random.UniqueId()),
+				chartRelPath: csiChart,
+				expectedImages: []string{
+					"rancher/mirrored-sig-storage-csi-node-driver-registrar:v2.5.1",
+					"rancher/mirrored-cloud-provider-vsphere-csi-release-driver:v2.6.0",
+					"rancher/mirrored-sig-storage-livenessprobe:v2.7.0",
+				},
+			},
+		},
+		{
 			name: "Kubernetes 1.23 Linux Only",
 			args: args{
 				values:         map[string]string{"vCenter.clusterId": random.UniqueId()},
@@ -224,6 +258,46 @@ func TestCSITemplateRenderedControllerDeployment(t *testing.T) {
 		args args
 	}{
 		{
+			name: "Kubernetes 1.24 with CSI Resizer Enabled",
+			args: args{
+				values: map[string]string{
+					"vCenter.clusterId":                random.UniqueId(),
+					"csiController.csiResizer.enabled": "true",
+				},
+				kubeVersion:       "1.24",
+				namespace:         "csitest-" + strings.ToLower(random.UniqueId()),
+				releaseName:       "csitest-" + strings.ToLower(random.UniqueId()),
+				chartRelPath:      csiChart,
+				csiResizerEnabled: false,
+				expectedImages: []string{
+					"rancher/mirrored-sig-storage-csi-attacher:v3.4.0",
+					"rancher/mirrored-sig-storage-csi-resizer:v1.4.0",
+					"rancher/mirrored-cloud-provider-vsphere-csi-release-driver:v2.6.0",
+					"rancher/mirrored-sig-storage-livenessprobe:v2.7.0",
+					"rancher/mirrored-cloud-provider-vsphere-csi-release-syncer:v2.6.0",
+					"rancher/mirrored-sig-storage-csi-provisioner:v3.2.1",
+				},
+			},
+		},
+		{
+			name: "Kubernetes 1.24",
+			args: args{
+				values:            map[string]string{"vCenter.clusterId": random.UniqueId()},
+				kubeVersion:       "1.24",
+				namespace:         "csitest-" + strings.ToLower(random.UniqueId()),
+				releaseName:       "csitest-" + strings.ToLower(random.UniqueId()),
+				chartRelPath:      csiChart,
+				csiResizerEnabled: false,
+				expectedImages: []string{
+					"rancher/mirrored-sig-storage-csi-attacher:v3.4.0",
+					"rancher/mirrored-cloud-provider-vsphere-csi-release-driver:v2.6.0",
+					"rancher/mirrored-sig-storage-livenessprobe:v2.7.0",
+					"rancher/mirrored-cloud-provider-vsphere-csi-release-syncer:v2.6.0",
+					"rancher/mirrored-sig-storage-csi-provisioner:v3.2.1",
+				},
+			},
+		},
+		{
 			name: "Kubernetes 1.23",
 			args: args{
 				values:            map[string]string{"vCenter.clusterId": random.UniqueId()},
@@ -364,6 +438,248 @@ func TestCSITemplateRenderedControllerDeployment(t *testing.T) {
 			require.Equal(t, len(tt.args.expectedImages), len(deploymentSetContainers))
 			for i := range tt.args.expectedImages {
 				require.Equal(t, tt.args.expectedImages[i], deploymentSetContainers[i].Image)
+			}
+		})
+	}
+}
+
+func TestCSITemplateRenderedControllerDeploymentArgs(t *testing.T) {
+	type args struct {
+		values       map[string]string
+		kubeVersion  string
+		namespace    string
+		releaseName  string
+		chartRelPath string
+		expectedArgs []string
+	}
+	tests := []struct {
+		name string
+		args args
+	}{
+		{
+			name: "Kubernetes 1.24",
+			args: args{
+				values:       map[string]string{"vCenter.clusterId": random.UniqueId()},
+				kubeVersion:  "1.24",
+				namespace:    "csitest-" + strings.ToLower(random.UniqueId()),
+				releaseName:  "csitest-" + strings.ToLower(random.UniqueId()),
+				chartRelPath: csiChart,
+				expectedArgs: []string{
+					"--fss-name=internal-feature-states.csi.vsphere.vmware.com",
+					"--fss-namespace=$(CSI_NAMESPACE)",
+				},
+			},
+		},
+		{
+			name: "Kubernetes 1.23",
+			args: args{
+				values:       map[string]string{"vCenter.clusterId": random.UniqueId()},
+				kubeVersion:  "1.23",
+				namespace:    "csitest-" + strings.ToLower(random.UniqueId()),
+				releaseName:  "csitest-" + strings.ToLower(random.UniqueId()),
+				chartRelPath: csiChart,
+				expectedArgs: []string{
+					"--fss-name=internal-feature-states.csi.vsphere.vmware.com",
+					"--fss-namespace=$(CSI_NAMESPACE)",
+					"--use-gocsi=false",
+				},
+			},
+		},
+		{
+			name: "Kubernetes 1.22",
+			args: args{
+				values:       map[string]string{"vCenter.clusterId": random.UniqueId()},
+				kubeVersion:  "1.22",
+				namespace:    "csitest-" + strings.ToLower(random.UniqueId()),
+				releaseName:  "csitest-" + strings.ToLower(random.UniqueId()),
+				chartRelPath: csiChart,
+				expectedArgs: []string{
+					"--fss-name=internal-feature-states.csi.vsphere.vmware.com",
+					"--fss-namespace=$(CSI_NAMESPACE)",
+					"--use-gocsi=false",
+				},
+			},
+		},
+		{
+			name: "Kubernetes 1.21",
+			args: args{
+				values:       map[string]string{"vCenter.clusterId": random.UniqueId()},
+				kubeVersion:  "1.21",
+				namespace:    "csitest-" + strings.ToLower(random.UniqueId()),
+				releaseName:  "csitest-" + strings.ToLower(random.UniqueId()),
+				chartRelPath: csiChart,
+				expectedArgs: []string{
+					"--fss-name=internal-feature-states.csi.vsphere.vmware.com",
+					"--fss-namespace=$(CSI_NAMESPACE)",
+					"--use-gocsi=false",
+				},
+			},
+		},
+		{
+			name: "Kubernetes 1.20",
+			args: args{
+				values:       map[string]string{"vCenter.clusterId": random.UniqueId()},
+				kubeVersion:  "1.20",
+				namespace:    "csitest-" + strings.ToLower(random.UniqueId()),
+				releaseName:  "csitest-" + strings.ToLower(random.UniqueId()),
+				chartRelPath: csiChart,
+				expectedArgs: []string{
+					"--fss-name=internal-feature-states.csi.vsphere.vmware.com",
+					"--fss-namespace=$(CSI_NAMESPACE)",
+					"--use-gocsi=false",
+				},
+			},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			// arrange
+			chartPath, err := filepath.Abs(tt.args.chartRelPath)
+			require.NoError(t, err)
+
+			options := &helm.Options{
+				SetValues:      tt.args.values,
+				KubectlOptions: k8s.NewKubectlOptions("", "", tt.args.namespace),
+			}
+
+			// act
+			output := helm.RenderTemplate(t, options, chartPath, tt.args.releaseName, []string{"templates/controller/deployment.yaml"}, "--kube-version", tt.args.kubeVersion)
+
+			var deployment appsv1.Deployment
+			helm.UnmarshalK8SYaml(t, output, &deployment)
+			var args []string
+			for _, container := range deployment.Spec.Template.Spec.Containers {
+				if container.Name == "vsphere-csi-controller" {
+					args = container.Args
+				}
+			}
+
+			// assert
+			require.Equal(t, tt.args.namespace, deployment.Namespace)
+			require.Equal(t, len(tt.args.expectedArgs), len(args))
+			for i := range tt.args.expectedArgs {
+				require.Equal(t, tt.args.expectedArgs[i], args[i])
+			}
+		})
+	}
+}
+
+func TestCSITemplateRenderedNodeDaemonSetArgs(t *testing.T) {
+	type args struct {
+		values       map[string]string
+		kubeVersion  string
+		namespace    string
+		releaseName  string
+		chartRelPath string
+		expectedArgs []string
+	}
+	tests := []struct {
+		name string
+		args args
+	}{
+		{
+			name: "Kubernetes 1.24",
+			args: args{
+				values:       map[string]string{"vCenter.clusterId": random.UniqueId()},
+				kubeVersion:  "1.24",
+				namespace:    "csitest-" + strings.ToLower(random.UniqueId()),
+				releaseName:  "csitest-" + strings.ToLower(random.UniqueId()),
+				chartRelPath: csiChart,
+				expectedArgs: []string{
+					"--fss-name=internal-feature-states.csi.vsphere.vmware.com",
+					"--fss-namespace=$(CSI_NAMESPACE)",
+				},
+			},
+		},
+		{
+			name: "Kubernetes 1.23",
+			args: args{
+				values:       map[string]string{"vCenter.clusterId": random.UniqueId()},
+				kubeVersion:  "1.23",
+				namespace:    "csitest-" + strings.ToLower(random.UniqueId()),
+				releaseName:  "csitest-" + strings.ToLower(random.UniqueId()),
+				chartRelPath: csiChart,
+				expectedArgs: []string{
+					"--fss-name=internal-feature-states.csi.vsphere.vmware.com",
+					"--fss-namespace=$(CSI_NAMESPACE)",
+					"--use-gocsi=false",
+				},
+			},
+		},
+		{
+			name: "Kubernetes 1.22",
+			args: args{
+				values:       map[string]string{"vCenter.clusterId": random.UniqueId()},
+				kubeVersion:  "1.22",
+				namespace:    "csitest-" + strings.ToLower(random.UniqueId()),
+				releaseName:  "csitest-" + strings.ToLower(random.UniqueId()),
+				chartRelPath: csiChart,
+				expectedArgs: []string{
+					"--fss-name=internal-feature-states.csi.vsphere.vmware.com",
+					"--fss-namespace=$(CSI_NAMESPACE)",
+					"--use-gocsi=false",
+				},
+			},
+		},
+		{
+			name: "Kubernetes 1.21",
+			args: args{
+				values:       map[string]string{"vCenter.clusterId": random.UniqueId()},
+				kubeVersion:  "1.21",
+				namespace:    "csitest-" + strings.ToLower(random.UniqueId()),
+				releaseName:  "csitest-" + strings.ToLower(random.UniqueId()),
+				chartRelPath: csiChart,
+				expectedArgs: []string{
+					"--fss-name=internal-feature-states.csi.vsphere.vmware.com",
+					"--fss-namespace=$(CSI_NAMESPACE)",
+					"--use-gocsi=false",
+				},
+			},
+		},
+		{
+			name: "Kubernetes 1.20",
+			args: args{
+				values:       map[string]string{"vCenter.clusterId": random.UniqueId()},
+				kubeVersion:  "1.20",
+				namespace:    "csitest-" + strings.ToLower(random.UniqueId()),
+				releaseName:  "csitest-" + strings.ToLower(random.UniqueId()),
+				chartRelPath: csiChart,
+				expectedArgs: []string{
+					"--fss-name=internal-feature-states.csi.vsphere.vmware.com",
+					"--fss-namespace=$(CSI_NAMESPACE)",
+					"--use-gocsi=false",
+				},
+			},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			// arrange
+			chartPath, err := filepath.Abs(tt.args.chartRelPath)
+			require.NoError(t, err)
+
+			options := &helm.Options{
+				SetValues:      tt.args.values,
+				KubectlOptions: k8s.NewKubectlOptions("", "", tt.args.namespace),
+			}
+
+			// act
+			output := helm.RenderTemplate(t, options, chartPath, tt.args.releaseName, []string{"templates/node/daemonset.yaml"}, "--kube-version", tt.args.kubeVersion)
+
+			var deployment appsv1.Deployment
+			helm.UnmarshalK8SYaml(t, output, &deployment)
+			var args []string
+			for _, container := range deployment.Spec.Template.Spec.Containers {
+				if container.Name == "vsphere-csi-node" {
+					args = container.Args
+				}
+			}
+
+			// assert
+			require.Equal(t, tt.args.namespace, deployment.Namespace)
+			require.Equal(t, len(tt.args.expectedArgs), len(args))
+			for i := range tt.args.expectedArgs {
+				require.Equal(t, tt.args.expectedArgs[i], args[i])
 			}
 		})
 	}
