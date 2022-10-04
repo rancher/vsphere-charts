@@ -14,7 +14,7 @@ icon: https://charts.rancher.io/assets/logos/vsphere-csi.svg
 keywords:
 - infrastructure
 maintainers:
-- email: jamie.phillips@suse.com
+- email: jiaqi.luo@suse.com
   name: Rancher
 name: rancher-vsphere-csi
 sources:
