@@ -120,12 +120,12 @@ global:
     systemDefaultRegistry: ""
 
 versionOverrides:
-  - constraint: ">= 1.24"
+  - constraint: ">= 1.24 < 1.26"
     values:
       csiController:
         image:
           repository: rancher/mirrored-cloud-provider-vsphere-csi-release-driver
-          tag: v2.6.0
+          tag: v2.6.1
           csiAttacher:
             repository: rancher/mirrored-sig-storage-csi-attacher
             tag: v3.4.0
@@ -137,14 +137,14 @@ versionOverrides:
             tag: v2.7.0
           vsphereSyncer:
             repository: rancher/mirrored-cloud-provider-vsphere-csi-release-syncer
-            tag: v2.6.0
+            tag: v2.6.1
           csiProvisioner:
             repository: rancher/mirrored-sig-storage-csi-provisioner
             tag: v3.2.1
       csiNode:
         image:
           repository: rancher/mirrored-cloud-provider-vsphere-csi-release-driver
-          tag: v2.6.0
+          tag: v2.6.1
           nodeDriverRegistrar:
             repository: rancher/mirrored-sig-storage-csi-node-driver-registrar
             tag: v2.5.1
@@ -156,7 +156,7 @@ versionOverrides:
       csiController:
         image:
           repository: rancher/mirrored-cloud-provider-vsphere-csi-release-driver
-          tag: v2.5.2
+          tag: v2.5.3
           csiAttacher:
             repository: rancher/mirrored-sig-storage-csi-attacher
             tag: v3.4.0
@@ -168,14 +168,14 @@ versionOverrides:
             tag: v2.6.0
           vsphereSyncer:
             repository: rancher/mirrored-cloud-provider-vsphere-csi-release-syncer
-            tag: v2.5.2
+            tag: v2.5.3
           csiProvisioner:
             repository: rancher/mirrored-sig-storage-csi-provisioner
             tag: v3.1.0
       csiNode:
         image:
           repository: rancher/mirrored-cloud-provider-vsphere-csi-release-driver
-          tag: v2.5.2
+          tag: v2.5.3
           nodeDriverRegistrar:
             repository: rancher/mirrored-sig-storage-csi-node-driver-registrar
             tag: v2.5.0
@@ -187,7 +187,7 @@ versionOverrides:
       csiController:
         image:
           repository: rancher/mirrored-cloud-provider-vsphere-csi-release-driver
-          tag: v2.4.2
+          tag: v2.4.3
           csiAttacher:
             repository: rancher/mirrored-sig-storage-csi-attacher
             tag: v3.3.0
@@ -199,14 +199,14 @@ versionOverrides:
             tag: v2.4.0
           vsphereSyncer:
             repository: rancher/mirrored-cloud-provider-vsphere-csi-release-syncer
-            tag: v2.4.2
+            tag: v2.4.3
           csiProvisioner:
             repository: rancher/mirrored-sig-storage-csi-provisioner
             tag: v3.0.0
       csiNode:
         image:
           repository: rancher/mirrored-cloud-provider-vsphere-csi-release-driver
-          tag: v2.4.2
+          tag: v2.4.3
           nodeDriverRegistrar:
             repository: rancher/mirrored-sig-storage-csi-node-driver-registrar
             tag: v2.3.0
