@@ -73,6 +73,8 @@ cloudControllerManager:
   tag: v1.22.7
   nodeSelector: {}
   tolerations: []
+  ## Optional additional labels to add to pods
+  podLabels: {}
   rbac:
     enabled: true
 

@@ -3,6 +3,8 @@ apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: vsphere-csi-node-binding
   namespace: {{ .Release.Namespace }}
+  labels:
+  {{- include "labels" . | nindent 4 }}
 subjects:
   - kind: ServiceAccount
     name: vsphere-csi-node
@@ -18,6 +20,8 @@ kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: vsphere-csi-node-cluster-role-binding
+  labels:
+  {{- include "labels" . | nindent 4 }}
 subjects:
   - kind: ServiceAccount
     name: vsphere-csi-node

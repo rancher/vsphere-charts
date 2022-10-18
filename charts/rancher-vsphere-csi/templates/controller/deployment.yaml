@@ -4,6 +4,8 @@ apiVersion: apps/v1
 metadata:
   name: vsphere-csi-controller
   namespace: {{ .Release.Namespace }}
+  labels:
+  {{- include "labels" . | nindent 4 }}
 spec:
   replicas: 3
   strategy:
@@ -19,6 +21,10 @@ spec:
       labels:
         app: vsphere-csi-controller
         role: vsphere-csi
+      {{- include "labels" . | nindent 8 }}
+      {{- with .Values.csiController.podLabels }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
     spec:
       serviceAccountName: vsphere-csi-controller
       {{- if .Values.csiController.nodeSelector }}

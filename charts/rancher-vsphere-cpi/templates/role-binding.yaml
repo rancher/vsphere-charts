@@ -10,6 +10,7 @@ items:
     labels:
       vsphere-cpi-infra: role-binding
       component: {{ .Chart.Name }}-cloud-controller-manager
+    {{- include "labels" . | nindent 6 }}
     namespace: {{ .Release.Namespace }}
   roleRef:
     apiGroup: rbac.authorization.k8s.io
@@ -30,6 +31,7 @@ items:
     labels:
       vsphere-cpi-infra: cluster-role-binding
       component: {{ .Chart.Name }}-cloud-controller-manager
+    {{- include "labels" . | nindent 6 }}
   roleRef:
     apiGroup: rbac.authorization.k8s.io
     kind: ClusterRole

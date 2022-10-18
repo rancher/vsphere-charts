@@ -6,6 +6,7 @@ metadata:
   labels:
     vsphere-cpi-infra: role
     component: {{ .Chart.Name }}-cloud-controller-manager
+  {{- include "labels" . | nindent 4 }}
 rules:
 - apiGroups:
   - ""
