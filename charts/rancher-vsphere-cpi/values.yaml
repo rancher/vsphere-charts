@@ -28,10 +28,10 @@ vCenter:
 # - On running a helm install --dry-run, the correct kubeVersion should be chosen.
 versionOverrides:
   - constraint: "~ 1.25"
-      values:
-        cloudControllerManager:
-          repository: rancher/mirrored-cloud-provider-vsphere-cpi-release-manager
-          tag: v1.25.0
+    values:
+      cloudControllerManager:
+        repository: rancher/mirrored-cloud-provider-vsphere-cpi-release-manager
+        tag: v1.25.0
   - constraint: ">= 1.24 < 1.25"
     values:
       cloudControllerManager:
