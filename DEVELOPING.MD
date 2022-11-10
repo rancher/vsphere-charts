@@ -28,6 +28,7 @@ Features and upstream releases are the primary reason to be working in this repo
 * Update the [image-mirror](https://github.com/rancher/image-mirror) repository for new images
 * Update the charts with the new images and manifest changes
 * Update the chart versions (if necessary)
+* Update the chart tests
 * Locally compile and deploy to a Kubernetes cluster to ensure that the chart functions
 * Check with RKE2 on the next release cycle and plan out PRs for getting these changes included by the target release date.
 * Update Rancher Charts with the new versions
@@ -68,7 +69,12 @@ If you find that image versions have been updated, then you will need to make a 
 
 Checking the manifests is best done by doing a tag compare in each upstream chart. Compare the chart tag, that the rancher vsphere chart is based off of, with the latest tag in upstream. This compares the manifest directories. If there is a change that needs to be added to charts in this repository, bring it in. [Here](https://github.com/kubernetes/cloud-provider-vsphere/compare/v1.25.0...v1.24.2) is an example.
 
-Finally, make sure that the unit tests for each chart have been updated, or new tests or test cases are added based on the set of changes. Increment the chart version, if necessary.
+Make sure that the unit tests for each chart have been updated, or new tests or test cases are added based on the set of manifest changes.
+
+Finally increment the chart version, if necessary. We need to update the chart version anytime that a new tag of CSI/CPI is released and we update to that version of upstream.
+
+CPI and CSI versioning is different because CSI tracks the version from upstream so it needs a `-rancher1` for when we need to do a Rancher specific patch, whereas CPI doesn’t track the same version from upstream (they have multiple CPIs based on Kubernetes version. Our CPI chart is based on all of them together). We use our own versioning so we can bump the patch for Rancher specific versions. [Here](https://github.com/rancher/vsphere-charts/pull/36/commits/5bb4f6a042dc31ace66522fe670a72930d5d3e63) is an example.
+
 
 ### Step 2: Compile and check locally
 
