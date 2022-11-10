@@ -20,4 +20,4 @@
 
 #### After the PR is merged ####
 
-Once the PR is merged, typically upon a new release, the necessary teams will be notified Slack hook to perform the rancher/rke2-charts and RKE2 changes. Any developer working on this issue is not responsible for updating rancher/rke2-charts or RKE2.
+Once the PR is merged, typically upon a new release, the necessary teams will be notified via Slack hook to perform the RKE2 Charts and RKE2 changes. Any developer working on this issue is not responsible for updating RKE2 Charts or RKE2.

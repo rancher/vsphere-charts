@@ -47,7 +47,7 @@ Before getting started, it is suggested to create an issue in the Rancher/Ranche
 
 - [ ] Update Image-mirror repo
 - [ ] Update manifests in rancher/vsphere-charts
-- [ ] Notify about chart "release" (reference @brandond @cwayne18 and @rancher-max in team-release-rancher-bits that the new chart version is available)
+- [ ] Verify Slack hook notified about chart "release" in relevant channels
 - [ ] Update chart in rancher/charts
 - [ ] Update chart in rancher/rke2-charts (RKE2 team)
 - [ ] Updated RKE2 to consume new chart (RKE2 team)
@@ -129,13 +129,13 @@ Make sure to supply the vSphere configuration required. Your `values.yaml` is th
 
 ```
 vCenter:
-  host: "engqa-7-wrangler.fremont.rancherlabs.com"
-  port: 443
+  host: <host>
+  port: <port>
   insecureFlag: true
   clusterId: "test-cluster-id"
-  datacenters: "ENGQA-7-DC"
-  username: "<add username>>"
-  password: "<add password>"
+  datacenters: <datacenter>
+  username: <username>
+  password: <password>
 ```
 
 Ensure that all pods for both the CPI and CSI charts come up without errors. Make sure that the provider gets set on each node to be vSphere. 
