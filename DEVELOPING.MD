@@ -161,3 +161,17 @@ Once the RKE2-Charts PR has been merged, a member from the RKE2 team can update 
 ### Step 7: Create Rancher Charts PR
 
 The last step is to pull the vSphere charts into the Rancher charts repository. The process is well documented, so follow the instructions listed in that repository for the workflow. [Here](https://github.com/rancher/charts/pull/1898) is an example PR.
+
+If there is an existing patch for CSI/CPI in charts upstream, you may have to remove the generated-changes folder, reapply your changes, manually apply the upstream patch, then regenerate the patch. [Here](https://github.com/rancher/charts/pull/2204) is an example PR. Team 3 is working on a 3-way rebase script that may be available soon.
+
+Here are walkthrough steps,
+
+* Delete the generated-changes dir
+* Run `make prepare`
+* Apply your changes: bump chart versions and `release.yaml` to track the new versions. Manually reapply any patches from charts upstream
+* Run `make patch && make clean`
+* Run `git commit -am <message>`
+* Run `make charts`
+* Run `git commit -m "Make charts"`
+* Check the generated CSI/CPI chart files against vsphere-charts upstream
+* Run `make validate` (I always do this to confirm the PR build will pass before pushing!)
