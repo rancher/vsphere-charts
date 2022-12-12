@@ -144,6 +144,8 @@ vCenter:
   password: <password>
 ```
 
+If you deploy CPI via the Rancher UI, **do not** `Define vSphere Tags` without specifying the `Region` and `Zone` in which to tag pods. This will cause the chart to not function properly and the kubelet will not remove taints or set the provider ID on the nodes.
+
 Ensure that all pods for both the CPI and CSI charts come up without errors. Make sure that the provider gets set on each node to be vSphere. 
 
 ### Step 4: PR to Rancher vSphere Charts Repository
