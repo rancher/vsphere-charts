@@ -67,7 +67,7 @@ There are two goals when checking upstream manifests. The first goal is to check
 
 If you find that image versions have been updated, then you will need to make a pull request to the [image-mirror](https://github.com/rancher/image-mirror) repository first before proceeding. [Here](https://github.com/rancher/image-mirror/pull/261) is an example PR and follow the requirements outlined in the PR template for those changes. After the images have been checked and image-mirror updated with any new images or image versions, then proceed to check check the manifests.
 
-Checking the manifests is best done by doing a tag compare in each upstream chart. Compare the chart tag, that the rancher vsphere chart is based off of, with the latest tag in upstream. This compares the manifest directories. If there is a change that needs to be added to charts in this repository, bring it in. [Here](https://github.com/kubernetes/cloud-provider-vsphere/compare/v1.25.0...v1.24.2) is an example.
+Checking the manifests is best done by doing a tag compare in each upstream chart. Compare an upstream tag and the tag that the rancher chart is based off of by viewing the `Full Changelog` for that tag. This compares the manifest directories. If there is a change that needs to be added to charts in this repository, bring it in. [Here](https://github.com/kubernetes/cloud-provider-vsphere/compare/v1.25.0...v1.24.2) is an example.
 
 Make sure that the unit tests for each chart have been updated, or new tests or test cases are added based on the set of manifest changes.
 
@@ -126,7 +126,7 @@ $ helm install -f values.yaml --kubeconfig <path to kube config> csi ./charts/ra
 ```
 
 ```
-$ helm install -f values.yaml --namespace --kube-system --kubeconfig <path to kube config> cpi ./charts/rancher-vsphere-cpi
+$ helm install -f values.yaml --namespace kube-system --kubeconfig <path to kube config> cpi ./charts/rancher-vsphere-cpi
 ```
 
 The CPI chart **must** be installed in the `kube-system` namespace.
@@ -144,7 +144,9 @@ vCenter:
   password: <password>
 ```
 
-If you deploy CPI via the Rancher UI, **do not** `Define vSphere Tags` without specifying the `Region` and `Zone` in which to tag pods. This will cause the chart to not function properly and the kubelet will not remove taints or set the provider ID on the nodes.
+If you want to test that CPI is functioning properly, add the `node.cloudprovider.kubernetes.io/uninitialized=true:NoSchedule` taint to the cluster nodes. When CPI is installed, the kubelet should remove the taints.
+
+If you deploy CPI via the Rancher UI, **do not** `Define vSphere Tags` without specifying the `Region` and `Zone` in which to tag pods. This will cause the chart to malfunction and the kubelet will not remove taints or set the provider ID on the nodes.
 
 Ensure that all pods for both the CPI and CSI charts come up without errors. Make sure that the provider gets set on each node to be vSphere. 
 
