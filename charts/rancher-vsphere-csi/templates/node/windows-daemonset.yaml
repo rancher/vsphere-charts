@@ -5,8 +5,6 @@ apiVersion: apps/v1
 metadata:
   name: vsphere-csi-node-windows
   namespace: {{ .Release.Namespace }}
-  labels:
-  {{- include "labels" . | nindent 4 }}
 spec:
   selector:
     matchLabels:
