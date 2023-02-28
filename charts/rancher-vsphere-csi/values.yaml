@@ -84,6 +84,8 @@ pvToBackingdiskobjectidMapping:
   enabled: false
 cnsmgrSuspendCreateVolume:
   enabled: false
+topology:
+  enabled: false
 topologyPreferentialDatastores:
   enabled: false
 maxPvscsiTargetsPerVm:

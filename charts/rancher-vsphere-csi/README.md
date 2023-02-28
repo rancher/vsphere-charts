@@ -71,3 +71,14 @@ More information on managing Secrets using kubectl [here](https://kubernetes.io/
 ## Migration
 
 The CSI migration feature is only available for vSphere 7.0 U1.
+
+## vSphere CSI with Topology
+
+When deploying to a vSphere environment using zoning, the topology plugin can be enabled for the CSI to make intelligent volume provisioning decisions. More information on vSphere zoning and prerequisites for the CSI toplogy plugin can be found [here](https://docs.vmware.com/en/VMware-vSphere-Container-Storage-Plug-in/2.0/vmware-vsphere-csp-getting-started/GUID-162E7582-723B-4A0F-A937-3ACE82EAFD31.html#guidelines-and-best-practices-for-deployment-with-topology-0).
+
+To enable the topology plugin, adjust the values for the chart as follows:
+
+```yaml
+topology:
+  enabled: true
+```

@@ -205,9 +205,11 @@ spec:
             - "--kube-api-burst=100"
             - "--leader-election"
             - "--default-fstype=ext4"
+            {{- if .Values.topology.enabled }}
             # needed only for topology aware setup
-            #- "--feature-gates=Topology=true"
-            #- "--strict-topology"
+            - "--feature-gates=Topology=true"
+            - "--strict-topology"
+            {{- end }}
           env:
             - name: ADDRESS
               value: /csi/csi.sock
