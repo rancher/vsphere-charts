@@ -37,13 +37,17 @@ spec:
                 operator: In
                 values:
                 - "true"
+              # Rancher node selector label
+              - key: kubernetes.io/os
+                operator: NotIn
+                values:
+                - "windows"
             - matchExpressions:
               # RKE2 node selector label
               - key: node-role.kubernetes.io/control-plane
                 operator: In
                 values:
                 - "true"
-            - matchExpressions:
               # Rancher node selector label
               - key: kubernetes.io/os
                 operator: NotIn
