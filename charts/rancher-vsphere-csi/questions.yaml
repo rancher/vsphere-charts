@@ -90,6 +90,13 @@ questions:
     default: false
     group: Driver Configuration
 
+  - variable: topology.enabled
+    label: Enable CSI Topology Plugin
+    description: Enables the CSI Topology Plugin
+    type: boolean
+    default: false
+    group: Driver Configuration
+
   - variable: csiController.csiResizer.enabled
     label: Enable CSI Volume Resizer
     description: This feature is available for vSphere 7.0 U1+ only
