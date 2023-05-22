@@ -46,12 +46,12 @@ versionOverrides:
     values:
       cloudControllerManager:
         repository: rancher/mirrored-cloud-provider-vsphere-cpi-release-manager
-        tag: v1.25.1
+        tag: v1.25.2
   - constraint: ">= 1.24 < 1.25"
     values:
       cloudControllerManager:
         repository: rancher/mirrored-cloud-provider-vsphere-cpi-release-manager
-        tag: v1.24.4
+        tag: v1.24.5
   - constraint: ">= 1.23 < 1.24"
     values:
       cloudControllerManager:
