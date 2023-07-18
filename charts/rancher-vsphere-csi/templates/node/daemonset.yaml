@@ -4,6 +4,8 @@ apiVersion: apps/v1
 metadata:
   name: vsphere-csi-node
   namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "labels" . | nindent 4 }}
 spec:
   selector:
     matchLabels:
@@ -17,6 +19,10 @@ spec:
       labels:
         app: vsphere-csi-node
         role: vsphere-csi
+        {{- include "labels" . | nindent 8 }}
+      {{- with .Values.csiNode.podLabels }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
     spec:
       {{- if .Values.csiNode.nodeSelector }}
       nodeSelector: {{ include "linux-node-selector" . | nindent 8 }}

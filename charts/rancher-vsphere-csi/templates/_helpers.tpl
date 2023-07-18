@@ -30,3 +30,19 @@ add below linux tolerations to workloads could be scheduled to those linux nodes
 {{- define "linux-node-selector" -}}
 kubernetes.io/os: linux
 {{- end -}}
+
+{{/*
+Create chart name and version as used by the chart label.
+*/}}
+{{- define "chartName" -}}
+{{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" -}}
+{{- end -}}
+
+{{/*
+Labels that should be added on each resource
+*/}}
+{{- define "labels" -}}
+app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
+app.kubernetes.io/managed-by: {{ .Release.Service }}
+helm.sh/chart: {{ include "chartName" . }}
+{{- end -}}
