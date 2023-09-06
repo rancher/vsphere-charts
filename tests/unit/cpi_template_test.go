@@ -36,7 +36,7 @@ func TestCPITemplateRenderedDaemonset(t *testing.T) {
 				namespace:     "cpitest-" + strings.ToLower(random.UniqueId()),
 				releaseName:   "cpitest-" + strings.ToLower(random.UniqueId()),
 				chartRelPath:  cpiChart,
-				expectedImage: "rancher/mirrored-cloud-provider-vsphere-cpi-release-manager:v1.26.1",
+				expectedImage: "rancher/mirrored-cloud-provider-vsphere-cpi-release-manager:v1.27.0",
 			},
 		},
 		{
@@ -47,7 +47,7 @@ func TestCPITemplateRenderedDaemonset(t *testing.T) {
 				namespace:     "cpitest-" + strings.ToLower(random.UniqueId()),
 				releaseName:   "cpitest-" + strings.ToLower(random.UniqueId()),
 				chartRelPath:  cpiChart,
-				expectedImage: "rancher/mirrored-cloud-provider-vsphere-cpi-release-manager:v1.26.1",
+				expectedImage: "rancher/mirrored-cloud-provider-vsphere-cpi-release-manager:v1.26.2",
 			},
 		},
 		{
@@ -58,7 +58,7 @@ func TestCPITemplateRenderedDaemonset(t *testing.T) {
 				namespace:     "cpitest-" + strings.ToLower(random.UniqueId()),
 				releaseName:   "cpitest-" + strings.ToLower(random.UniqueId()),
 				chartRelPath:  cpiChart,
-				expectedImage: "rancher/mirrored-cloud-provider-vsphere-cpi-release-manager:v1.25.2",
+				expectedImage: "rancher/mirrored-cloud-provider-vsphere-cpi-release-manager:v1.25.3",
 			},
 		},
 		{
@@ -69,7 +69,7 @@ func TestCPITemplateRenderedDaemonset(t *testing.T) {
 				namespace:     "cpitest-" + strings.ToLower(random.UniqueId()),
 				releaseName:   "cpitest-" + strings.ToLower(random.UniqueId()),
 				chartRelPath:  cpiChart,
-				expectedImage: "rancher/mirrored-cloud-provider-vsphere-cpi-release-manager:v1.24.5",
+				expectedImage: "rancher/mirrored-cloud-provider-vsphere-cpi-release-manager:v1.24.6",
 			},
 		},
 		{
