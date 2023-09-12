@@ -99,6 +99,7 @@ csiNode:
   ## List of node taints to tolerate (requires Kubernetes >= 1.6)
   tolerations: []
   prefixPath: ""
+  prefixPathWindows: ""
   image:
     repository: rancher/mirrored-cloud-provider-vsphere-csi-release-driver
     tag: latest
