@@ -146,3 +146,10 @@ questions:
     type: string
     default: ""
     group: Node Configuration
+
+  - variable: csiNode.prefixPathWindows
+    label: Prefix Path for `/var/lib/kubelet`
+    description: For some operating systems including RancherOS, RKE prefixes `/var/lib/kubelet` with `/opt/rke`. For Windows, this will likely be the default value, which is 'C:'
+    type: string
+    default: ""
+    group: Node Configuration
