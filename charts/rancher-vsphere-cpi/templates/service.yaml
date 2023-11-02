@@ -3,6 +3,7 @@ kind: Service
 metadata:
   labels:
     component: {{ .Chart.Name }}-cloud-controller-manager
+    {{- include "labels" . | nindent 4 }}
   name: {{ .Chart.Name }}-cloud-controller-manager
   namespace: {{ .Release.Namespace }}
 spec:

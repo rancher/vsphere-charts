@@ -56,6 +56,9 @@ csiController:
   #   operator: Exists
   #   effect: NoExecute
   #   tolerationSeconds: 30
+  ##
+  ## Optional additional labels to add to pods
+  podLabels: {}
 
 # Internal features
 csiMigration:
@@ -98,6 +101,8 @@ csiNode:
   nodeSelector: {}
   ## List of node taints to tolerate (requires Kubernetes >= 1.6)
   tolerations: []
+  ## Optional additional labels to add to pods
+  podLabels: {} 
   prefixPath: ""
   prefixPathWindows: ""
   image:

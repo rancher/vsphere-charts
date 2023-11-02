@@ -6,6 +6,7 @@ metadata:
   labels:
     component: {{ .Chart.Name }}-cloud-controller-manager
     tier: control-plane
+  {{- include "labels" . | nindent 4 }}
   namespace: {{ .Release.Namespace }}
   annotations:
     scheduler.alpha.kubernetes.io/critical-pod: ""
@@ -21,6 +22,10 @@ spec:
         name: {{ .Chart.Name }}-cloud-controller-manager
         component: {{ .Chart.Name }}-cloud-controller-manager
         tier: control-plane
+        {{- include "labels" . | nindent 8 }}
+      {{- with .Values.cloudControllerManager.podLabels }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
     spec:
       {{- if .Values.cloudControllerManager.nodeSelector }}
       nodeSelector: {{ include "linux-node-selector" . | nindent 8 }}

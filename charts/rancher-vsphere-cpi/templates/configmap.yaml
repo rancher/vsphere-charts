@@ -5,6 +5,7 @@ metadata:
   labels:
     vsphere-cpi-infra: config
     component: {{ .Chart.Name }}-cloud-controller-manager
+    {{- include "labels" . | nindent 4 }}
   namespace: {{ .Release.Namespace }}
 data:
   vsphere.yaml: |

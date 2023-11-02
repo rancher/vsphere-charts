@@ -2,6 +2,8 @@ kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: vsphere-csi-controller-role
+  labels:
+    {{- include "labels" . | nindent 4 }}
 rules:
   - apiGroups: [""]
     resources: ["nodes", "pods", "configmaps"]
