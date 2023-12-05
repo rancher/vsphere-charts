@@ -21,8 +21,10 @@ data:
     vcenter:
       {{ .host | quote }}:
         server: {{ .host | quote }}
+      {{- range $datacenter := .datacenters }}
         datacenters:
-          - {{ .datacenters | quote }}
+          - {{ $datacenter | quote }}
+      {{- end }}
     {{- if .labels.generate }}
 
     # labels for regions and zones
