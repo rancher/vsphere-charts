@@ -21,8 +21,8 @@ data:
     vcenter:
       {{ .host | quote }}:
         server: {{ .host | quote }}
-      {{- range $datacenter := .datacenters }}
         datacenters:
+      {{- range $datacenter := .datacenters }}
           - {{ $datacenter | quote }}
       {{- end }}
     {{- if .labels.generate }}
