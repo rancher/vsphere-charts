@@ -145,32 +145,32 @@ versionOverrides:
       csiController:
         image:
           repository: rancher/mirrored-cloud-provider-vsphere-csi-release-driver
-          tag: v3.1.0
+          tag: v3.1.2
           csiAttacher:
             repository: rancher/mirrored-sig-storage-csi-attacher
-            tag: v4.4.0
+            tag: v4.3.0
           csiResizer:
             repository: rancher/mirrored-sig-storage-csi-resizer
-            tag: v1.9.0
+            tag: v1.8.0
           livenessProbe:
             repository: rancher/mirrored-sig-storage-livenessprobe
-            tag: v2.11.0
+            tag: v2.10.0
           vsphereSyncer:
             repository: rancher/mirrored-cloud-provider-vsphere-csi-release-syncer
-            tag: v3.1.0
+            tag: v3.1.2
           csiProvisioner:
             repository: rancher/mirrored-sig-storage-csi-provisioner
-            tag: v3.6.0
+            tag: v3.5.0
       csiNode:
         image:
           repository: rancher/mirrored-cloud-provider-vsphere-csi-release-driver
-          tag: v3.1.0
+          tag: v3.1.2
           nodeDriverRegistrar:
             repository: rancher/mirrored-sig-storage-csi-node-driver-registrar
-            tag: v2.9.0
+            tag: v2.8.0
           livenessProbe:
             repository: rancher/mirrored-sig-storage-livenessprobe
-            tag: v2.11.0
+            tag: v2.10.0
   # Versions from https://github.com/kubernetes-sigs/vsphere-csi-driver/blob/release-2.7/manifests/vanilla/vsphere-csi-driver.yaml
   - constraint: "~ 1.23"
     values:
@@ -183,7 +183,7 @@ versionOverrides:
             tag: v3.5.0
           csiResizer:
             repository: rancher/mirrored-sig-storage-csi-resizer
-            tag: v1.6.0
+            tag: v1.8.0
           livenessProbe:
             repository: rancher/mirrored-sig-storage-livenessprobe
             tag: v2.8.0
