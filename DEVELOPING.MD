@@ -1,12 +1,12 @@
 # Developer Guide for vSphere Charts for Rancher
 
-This guide is going to highlight the steps that are required to develop and maintian the vSphere charts for [CPI](https://github.com/kubernetes/cloud-provider-vsphere) and [CSI](https://github.com/kubernetes-sigs/vsphere-csi-driver) for Rancher. Upstream is only releasing manifests at this point and they do that in version specific branches. We use these upstream manifests to create the charts that we use. This makes the process a touch more complex as each manifest needs to be compared to the helm chart template to make the appropriate changes. Since we mirror images into our own container registry, we also have to check the manifests every time a release happens to gather the correct image versions to keep our registry synced. Once the charts and images have been updated, we then need to ensure that the charts are updated in [Rancher Charts](https://github.com/rancher/charts), [RKE2-Charts](https://github.com/rancher/rke2-charts), and [RKE2](https://github.com/rancher/rke2).  
+This guide is going to highlight the steps that are required to develop and maintian the vSphere charts for [CPI](https://github.com/kubernetes/cloud-provider-vsphere) and [CSI](https://github.com/kubernetes-sigs/vsphere-csi-driver) for Rancher. Upstream is only releasing manifests at this point and they do that in version specific branches. We use these upstream manifests to create the charts that we use. This makes the process a touch more complex as each manifest needs to be compared to the helm chart template to make the appropriate changes. Since we mirror images into our own container registry, we also have to check the manifests every time a release happens to gather the correct image versions to keep our registry synced. Once the charts and images have been updated, we then need to ensure that the charts are updated in [Rancher Charts](https://github.com/rancher/charts), [RKE2-Charts](https://github.com/rancher/rke2-charts), and [RKE2](https://github.com/rancher/rke2).
 
-#### You may be asking why both Rancher charts and RKE2? 
+#### You may be asking why both Rancher charts and RKE2?
 
-RKE2 embeds the charts that it ships with each version of RKE2 that is released. This means that RKE2 always uses its own version of the vSphere charts regardless if deployed standalone or through Rancher. The charts being deployed are determined by the selected cloud provider when provisioning. Rancher charts shouldn't be consumed for RKE2 and currently exist for use with non-RKE2 clusters that are provisioned in Rancher, primarily RKE1. 
+RKE2 embeds the charts that it ships with each version of RKE2 that is released. This means that RKE2 always uses its own version of the vSphere charts regardless if deployed standalone or through Rancher. The charts being deployed are determined by the selected cloud provider when provisioning. Rancher charts shouldn't be consumed for RKE2 and currently exist for use with non-RKE2 clusters that are provisioned in Rancher, primarily RKE1.
 
-#### Upstream Releases 
+#### Upstream Releases
 
 Upstream releases are not immediate when a new version of Kubernetes is released. This means that the charts typically lag behind the Kubernetes version by at least a month if not longer. This often means that users can't upgrade clusters immediately or deploy the newest version that is released in RKE2 or Rancher with full support.
 
@@ -20,7 +20,7 @@ Both the CSI and CPI charts in this repository are designed to be what have been
 
 By creating a super chart, it means there is only ever one chart and we can ensure that users are always getting the most up to date images based on their Kubernetes version. This technique is used in other charts inside of Rancher.
 
-## Development  
+## Development
 
 Features and upstream releases are the primary reason to be working in this repository. Upstream releases through either bug fixes or new Kubernetes version support is the majority of the work that is required. Below is a high level of the steps that need to occur.
 
@@ -33,7 +33,7 @@ Features and upstream releases are the primary reason to be working in this repo
 * Check with RKE2 on the next release cycle and plan out PRs for getting these changes included by the target release date.
 * Update Rancher Charts with the new versions
 
-Before getting started, it is suggested to create an issue in the Rancher/Rancher repository to track the work that has to occur. It spans several different repositories which is often hard to coordinate. Here is the recommend issue format. 
+Before getting started, it is suggested to create an issue in the Rancher/Rancher repository to track the work that has to occur. It spans several different repositories which is often hard to coordinate. Here is the recommend issue format.
 
 ```
 **Is your feature request related to a problem? Please describe.**
@@ -54,7 +54,7 @@ Before getting started, it is suggested to create an issue in the Rancher/Ranche
 - [ ] Updated RKE2 to consume new chart (RKE2 team)
 ```
 
-For every PR, link back to this issue so everything can be tracked. Whoever does the RKE2 updates will need to create a separate issue in the RKE2 repository in addition to the Rancher one. 
+For every PR, link back to this issue so everything can be tracked. Whoever does the RKE2 updates will need to create a separate issue in the RKE2 repository in addition to the Rancher one.
 
 Here are some examples:
 
@@ -63,11 +63,13 @@ Here are some examples:
 
 ### Step 1: Checking upstream manifests
 
-There are two goals when checking upstream manifests. The first goal is to check to see if any image versions have been updated and the second is to check if any changes in the manifests have occured. 
+NOTE: the charts _do not match_ the upstream charts exactly - the `rancher/vsphere-charts` package actually predates those by a lot due to the fact that upstream did NOT ship a chart instead they just shipped raw manifests which isn't very easy to package/update. Engineers used those initial manifests and made these from them.
+
+There are two goals when checking upstream manifests. The first goal is to check to see if any image versions have been updated and the second is to check if any changes in the manifests have occured.
 
 If you find that image versions have been updated, then you will need to make a pull request to the [image-mirror](https://github.com/rancher/image-mirror) repository first before proceeding. [Here](https://github.com/rancher/image-mirror/pull/261) is an example PR and follow the requirements outlined in the PR template for those changes. After the images have been checked and image-mirror updated with any new images or image versions, then proceed to check check the manifests.
 
-Checking the manifests is best done by doing a tag compare in each upstream chart. Compare an upstream tag to the tag that the rancher chart is based off of by viewing the `Full Changelog` for that tag. This compares the manifest directories. If there is a change that needs to be added to charts in this repository, bring it in. [Here](https://github.com/kubernetes/cloud-provider-vsphere/compare/v1.25.0...v1.24.2) is an example.
+Checking the manifests is best done by doing a tag compare in each upstream chart. Compare an upstream tag to the tag that the rancher chart is based off of by viewing the `Full Changelog` for that tag. This compares the manifest directories. If there is a change that needs to be added to charts in this repository, bring it in. [Here](https://github.com/kubernetes/cloud-provider-vsphere/compare/v1.25.0...v1.24.2) is an example. Just look for important changes and bring them into this chart as necessary. New environment variables, configs, etc.
 
 Make sure that the unit tests for each chart have been updated, or new tests or test cases are added based on the set of manifest changes.
 
@@ -122,7 +124,7 @@ If everything passes here then it's time to test deployment to a cluster. If som
 At this stage, it's now safe to test the charts on a real cluster. Typically, a RKE1 cluster is deployed on vSphere using Rancher. Then the kubeconfig is downloaded from the cluster and used to deploy the local chart to the cluster using helm. Here is an example.
 
 ```
-$ helm install -f values.yaml --kubeconfig <path to kube config> csi ./charts/rancher-vsphere-csi 
+$ helm install -f values.yaml --kubeconfig <path to kube config> csi ./charts/rancher-vsphere-csi
 ```
 
 ```
@@ -148,15 +150,15 @@ If you want to test that CPI is functioning properly, add the `node.cloudprovide
 
 If you deploy CPI via the Rancher UI, **do not** `Define vSphere Tags` without specifying the `Region` and `Zone` in which to tag pods. This will cause the chart to malfunction and the kubelet will not remove taints or set the provider ID on the nodes.
 
-Ensure that all pods for both the CPI and CSI charts come up without errors. Make sure that the provider gets set on each node to be vSphere. 
+Ensure that all pods for both the CPI and CSI charts come up without errors. Make sure that the provider gets set on each node to be vSphere.
 
 ### Step 4: PR to Rancher vSphere Charts Repository
 
-You are now ready to submit a PR to the vSphere charts repository. Fill out the PR template and request reviews. Once the PR has been approved and passed the Drone run, you can merge. [Here](https://github.com/rancher/vsphere-charts/pull/35) is an example PR. 
+You are now ready to submit a PR to the vSphere charts repository. Fill out the PR template and request reviews. Once the PR has been approved and passed the Drone run, you can merge. [Here](https://github.com/rancher/vsphere-charts/pull/35) is an example PR.
 
 ### Step 5: Create RKE2-Charts PR
 
-A member from the RKE2 team can now pull the chart into the RKE2-Charts repository. [Here](https://github.com/rancher/rke2-charts/pull/250) is an example PR. 
+A member from the RKE2 team can now pull the chart into the RKE2-Charts repository. [Here](https://github.com/rancher/rke2-charts/pull/250) is an example PR.
 
 ### Step 6: Create RKE2 PR
 
