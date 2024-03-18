@@ -394,6 +394,28 @@ func TestCSITemplateRenderedControllerDeployment(t *testing.T) {
 		args args
 	}{
 		{
+			name: "Kubernetes 1.28 with Block Snapshotter Enabled",
+			args: args{
+				values: map[string]string{
+					"vCenter.clusterId":           random.UniqueId(),
+					"blockVolumeSnapshot.enabled": "true",
+				},
+				kubeVersion:       "1.28",
+				namespace:         "csitest-" + strings.ToLower(random.UniqueId()),
+				releaseName:       "csitest-" + strings.ToLower(random.UniqueId()),
+				chartRelPath:      csiChart,
+				csiResizerEnabled: false,
+				expectedImages: []string{
+					"rancher/mirrored-sig-storage-csi-attacher:v4.3.0",
+					"rancher/mirrored-sig-storage-csi-snapshotter:v6.2.2",
+					"rancher/mirrored-cloud-provider-vsphere-csi-release-driver:v3.1.2",
+					"rancher/mirrored-sig-storage-livenessprobe:v2.10.0",
+					"rancher/mirrored-cloud-provider-vsphere-csi-release-syncer:v3.1.2",
+					"rancher/mirrored-sig-storage-csi-provisioner:v3.5.0",
+				},
+			},
+		},
+		{
 			name: "Kubernetes 1.28 with CSI Resizer Enabled",
 			args: args{
 				values: map[string]string{
@@ -456,6 +478,28 @@ func TestCSITemplateRenderedControllerDeployment(t *testing.T) {
 			},
 		},
 		{
+			name: "Kubernetes 1.27 with Block Snapshotter Enabled",
+			args: args{
+				values: map[string]string{
+					"vCenter.clusterId":           random.UniqueId(),
+					"blockVolumeSnapshot.enabled": "true",
+				},
+				kubeVersion:       "1.27",
+				namespace:         "csitest-" + strings.ToLower(random.UniqueId()),
+				releaseName:       "csitest-" + strings.ToLower(random.UniqueId()),
+				chartRelPath:      csiChart,
+				csiResizerEnabled: false,
+				expectedImages: []string{
+					"rancher/mirrored-sig-storage-csi-attacher:v4.3.0",
+					"rancher/mirrored-sig-storage-csi-snapshotter:v6.2.2",
+					"rancher/mirrored-cloud-provider-vsphere-csi-release-driver:v3.1.2",
+					"rancher/mirrored-sig-storage-livenessprobe:v2.10.0",
+					"rancher/mirrored-cloud-provider-vsphere-csi-release-syncer:v3.1.2",
+					"rancher/mirrored-sig-storage-csi-provisioner:v3.5.0",
+				},
+			},
+		},
+		{
 			name: "Kubernetes 1.27",
 			args: args{
 				values:            map[string]string{"vCenter.clusterId": random.UniqueId()},
@@ -488,6 +532,28 @@ func TestCSITemplateRenderedControllerDeployment(t *testing.T) {
 				expectedImages: []string{
 					"rancher/mirrored-sig-storage-csi-attacher:v4.3.0",
 					"rancher/mirrored-sig-storage-csi-resizer:v1.8.0",
+					"rancher/mirrored-cloud-provider-vsphere-csi-release-driver:v3.1.2",
+					"rancher/mirrored-sig-storage-livenessprobe:v2.10.0",
+					"rancher/mirrored-cloud-provider-vsphere-csi-release-syncer:v3.1.2",
+					"rancher/mirrored-sig-storage-csi-provisioner:v3.5.0",
+				},
+			},
+		},
+		{
+			name: "Kubernetes 1.26 with Block Snapshotter Enabled",
+			args: args{
+				values: map[string]string{
+					"vCenter.clusterId":           random.UniqueId(),
+					"blockVolumeSnapshot.enabled": "true",
+				},
+				kubeVersion:       "1.26",
+				namespace:         "csitest-" + strings.ToLower(random.UniqueId()),
+				releaseName:       "csitest-" + strings.ToLower(random.UniqueId()),
+				chartRelPath:      csiChart,
+				csiResizerEnabled: false,
+				expectedImages: []string{
+					"rancher/mirrored-sig-storage-csi-attacher:v4.3.0",
+					"rancher/mirrored-sig-storage-csi-snapshotter:v6.2.2",
 					"rancher/mirrored-cloud-provider-vsphere-csi-release-driver:v3.1.2",
 					"rancher/mirrored-sig-storage-livenessprobe:v2.10.0",
 					"rancher/mirrored-cloud-provider-vsphere-csi-release-syncer:v3.1.2",
@@ -536,6 +602,28 @@ func TestCSITemplateRenderedControllerDeployment(t *testing.T) {
 			},
 		},
 		{
+			name: "Kubernetes 1.25 with CSI Snapshotter Enabled",
+			args: args{
+				values: map[string]string{
+					"vCenter.clusterId":           random.UniqueId(),
+					"blockVolumeSnapshot.enabled": "true",
+				},
+				kubeVersion:       "1.25",
+				namespace:         "csitest-" + strings.ToLower(random.UniqueId()),
+				releaseName:       "csitest-" + strings.ToLower(random.UniqueId()),
+				chartRelPath:      csiChart,
+				csiResizerEnabled: false,
+				expectedImages: []string{
+					"rancher/mirrored-sig-storage-csi-attacher:v4.2.0",
+					"rancher/mirrored-sig-storage-csi-snapshotter:v6.2.1",
+					"rancher/mirrored-cloud-provider-vsphere-csi-release-driver:v3.0.2",
+					"rancher/mirrored-sig-storage-livenessprobe:v2.9.0",
+					"rancher/mirrored-cloud-provider-vsphere-csi-release-syncer:v3.0.2",
+					"rancher/mirrored-sig-storage-csi-provisioner:v3.4.0",
+				},
+			},
+		},
+		{
 			name: "Kubernetes 1.25",
 			args: args{
 				values:            map[string]string{"vCenter.clusterId": random.UniqueId()},
@@ -568,6 +656,28 @@ func TestCSITemplateRenderedControllerDeployment(t *testing.T) {
 				expectedImages: []string{
 					"rancher/mirrored-sig-storage-csi-attacher:v4.2.0",
 					"rancher/mirrored-sig-storage-csi-resizer:v1.7.0",
+					"rancher/mirrored-cloud-provider-vsphere-csi-release-driver:v3.0.2",
+					"rancher/mirrored-sig-storage-livenessprobe:v2.9.0",
+					"rancher/mirrored-cloud-provider-vsphere-csi-release-syncer:v3.0.2",
+					"rancher/mirrored-sig-storage-csi-provisioner:v3.4.0",
+				},
+			},
+		},
+		{
+			name: "Kubernetes 1.24 with CSI Snapshotter Enabled",
+			args: args{
+				values: map[string]string{
+					"vCenter.clusterId":           random.UniqueId(),
+					"blockVolumeSnapshot.enabled": "true",
+				},
+				kubeVersion:       "1.24",
+				namespace:         "csitest-" + strings.ToLower(random.UniqueId()),
+				releaseName:       "csitest-" + strings.ToLower(random.UniqueId()),
+				chartRelPath:      csiChart,
+				csiResizerEnabled: false,
+				expectedImages: []string{
+					"rancher/mirrored-sig-storage-csi-attacher:v4.2.0",
+					"rancher/mirrored-sig-storage-csi-snapshotter:v6.2.1",
 					"rancher/mirrored-cloud-provider-vsphere-csi-release-driver:v3.0.2",
 					"rancher/mirrored-sig-storage-livenessprobe:v2.9.0",
 					"rancher/mirrored-cloud-provider-vsphere-csi-release-syncer:v3.0.2",

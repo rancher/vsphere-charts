@@ -41,6 +41,9 @@ csiController:
     csiProvisioner:
       repository: rancher/mirrored-sig-storage-csi-provisioner
       tag: latest
+    csiSnapshotter:
+      repository: rancher/mirrored-sig-storage-csi-snapshotter
+      tag: latest
   ## Node labels for pod assignment
   ## Ref: https://kubernetes.io/docs/user-guide/node-selection/
   ##
@@ -166,6 +169,9 @@ versionOverrides:
           csiProvisioner:
             repository: rancher/mirrored-sig-storage-csi-provisioner
             tag: v3.5.0
+          csiSnapshotter:
+            repository: rancher/mirrored-sig-storage-csi-snapshotter
+            tag: v6.2.2
       csiNode:
         image:
           repository: rancher/mirrored-cloud-provider-vsphere-csi-release-driver
@@ -198,6 +204,9 @@ versionOverrides:
           csiProvisioner:
             repository: rancher/mirrored-sig-storage-csi-provisioner
             tag: v3.4.0
+          csiSnapshotter:
+            repository: rancher/mirrored-sig-storage-csi-snapshotter
+            tag: v6.2.1
       csiNode:
         image:
           repository: rancher/mirrored-cloud-provider-vsphere-csi-release-driver

@@ -116,6 +116,26 @@ spec:
             - mountPath: /csi
               name: socket-dir
 {{- end }}
+{{- if .Values.blockVolumeSnapshot.enabled }}
+        - name: csi-snapshotter
+          image: "{{ template "system_default_registry" . }}{{ .Values.csiController.image.csiSnapshotter.repository }}:{{ .Values.csiController.image.csiSnapshotter.tag }}"
+          args:
+            - "--v=4"
+            - "--kube-api-qps=100"
+            - "--kube-api-burst=100"
+            - "--timeout=300s"
+            - "--csi-address=$(ADDRESS)"
+            - "--leader-election"
+            - "--leader-election-lease-duration=120s"
+            - "--leader-election-renew-deadline=60s"
+            - "--leader-election-retry-period=30s"
+          env:
+            - name: ADDRESS
+              value: /csi/csi.sock
+          volumeMounts:
+            - mountPath: /csi
+              name: socket-dir
+{{- end }}
         - name: vsphere-csi-controller
           image: "{{ template "system_default_registry" . }}{{ .Values.csiController.image.repository }}:{{ .Values.csiController.image.tag }}"
           args:
