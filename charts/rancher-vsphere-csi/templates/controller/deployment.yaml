@@ -85,6 +85,7 @@ spec:
       containers:
         - name: csi-attacher
           image: "{{ template "system_default_registry" . }}{{ .Values.csiController.image.csiAttacher.repository }}:{{ .Values.csiController.image.csiAttacher.tag }}"
+          imagePullPolicy: {{ .Values.csiController.image.csiAttacher.imagePullPolicy | quote }}
           args:
             - "--v=4"
             - "--timeout=300s"
@@ -101,6 +102,7 @@ spec:
 {{- if .Values.csiController.csiResizer.enabled }}
         - name: csi-resizer
           image: "{{ template "system_default_registry" . }}{{ .Values.csiController.image.csiResizer.repository }}:{{ .Values.csiController.image.csiResizer.tag }}"
+          imagePullPolicy: {{ .Values.csiController.image.csiResizer.imagePullPolicy | quote }}
           args:
             - "--v=4"
             - "--timeout=300s"
@@ -119,6 +121,7 @@ spec:
 {{- if .Values.blockVolumeSnapshot.enabled }}
         - name: csi-snapshotter
           image: "{{ template "system_default_registry" . }}{{ .Values.csiController.image.csiSnapshotter.repository }}:{{ .Values.csiController.image.csiSnapshotter.tag }}"
+          imagePullPolicy: {{ .Values.csiController.image.csiSnapshotter.imagePullPolicy | quote }}
           args:
             - "--v=4"
             - "--kube-api-qps=100"
@@ -138,13 +141,13 @@ spec:
 {{- end }}
         - name: vsphere-csi-controller
           image: "{{ template "system_default_registry" . }}{{ .Values.csiController.image.repository }}:{{ .Values.csiController.image.tag }}"
+          imagePullPolicy: {{ .Values.csiController.image.imagePullPolicy | quote }}
           args:
             - "--fss-name=internal-feature-states.csi.vsphere.vmware.com"
             - "--fss-namespace=$(CSI_NAMESPACE)"
             {{- if semverCompare "< 1.24" $.Capabilities.KubeVersion.Version }}
             - "--use-gocsi=false"
             {{- end }}
-          imagePullPolicy: "Always"
           env:
             - name: CSI_ENDPOINT
               value: unix:///csi/csi.sock
@@ -189,6 +192,7 @@ spec:
             failureThreshold: 3
         - name: liveness-probe
           image: "{{ template "system_default_registry" . }}{{ .Values.csiController.image.livenessProbe.repository }}:{{ .Values.csiController.image.livenessProbe.tag }}"
+          imagePullPolicy: {{ .Values.csiController.image.livenessProbe.imagePullPolicy | quote }}
           args:
             - "--v=4"
             - "--csi-address=/csi/csi.sock"
@@ -197,11 +201,11 @@ spec:
               mountPath: /csi
         - name: vsphere-syncer
           image: "{{ template "system_default_registry" . }}{{ .Values.csiController.image.vsphereSyncer.repository }}:{{ .Values.csiController.image.vsphereSyncer.tag }}"
+          imagePullPolicy: {{ .Values.csiController.image.vsphereSyncer.imagePullPolicy | quote }}
           args:
             - "--leader-election"
             - "--fss-name=internal-feature-states.csi.vsphere.vmware.com"
             - "--fss-namespace=$(CSI_NAMESPACE)"
-          imagePullPolicy: "Always"
           ports:
             - containerPort: 2113
               name: prometheus
@@ -227,6 +231,7 @@ spec:
               readOnly: true
         - name: csi-provisioner
           image: "{{ template "system_default_registry" . }}{{ .Values.csiController.image.csiProvisioner.repository }}:{{ .Values.csiController.image.csiProvisioner.tag }}"
+          imagePullPolicy: {{ .Values.csiController.image.csiProvisioner.imagePullPolicy | quote }}
           args:
             - "--v=4"
             - "--timeout=300s"
