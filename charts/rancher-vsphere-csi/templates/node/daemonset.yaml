@@ -78,6 +78,10 @@ spec:
               value: /csi/csi.sock
             - name: DRIVER_REG_SOCK_PATH
               value: {{ .Values.csiNode.prefixPath }}/var/lib/kubelet/plugins/csi.vsphere.vmware.com/csi.sock
+          {{- with .Values.csiNode.image.nodeDriverRegistrar.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
           volumeMounts:
             - name: plugin-dir
               mountPath: /csi
@@ -122,6 +126,10 @@ spec:
                   fieldPath: metadata.namespace
             - name: NODEGETINFO_WATCH_TIMEOUT_MINUTES
               value: "1"
+          {{- with .Values.csiNode.image.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
           securityContext:
             privileged: true
             capabilities:
@@ -159,6 +167,10 @@ spec:
           args:
             - "--v=4"
             - "--csi-address=/csi/csi.sock"
+          {{- with .Values.csiNode.image.livenessProbe.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
           volumeMounts:
             - name: plugin-dir
               mountPath: /csi
