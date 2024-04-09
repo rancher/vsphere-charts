@@ -125,6 +125,7 @@ storageClass:
   isDefault: true
   storagePolicyName: ""
   datastoreURL: ""
+  reclaimPolicy: Delete
 
 global:
   cattle:
