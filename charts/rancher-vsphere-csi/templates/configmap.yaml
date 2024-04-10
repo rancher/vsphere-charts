@@ -16,6 +16,8 @@ data:
   "cnsmgr-suspend-create-volume": {{ .Values.cnsmgrSuspendCreateVolume.enabled | quote }}
   "topology-preferential-datastores": {{ .Values.topologyPreferentialDatastores.enabled | quote }}
   "max-pvscsi-targets-per-vm": {{ .Values.maxPvscsiTargetsPerVm.enabled | quote }}
+  # this one does not support being disabled but needs to be present, so we just have it set to true
+  "multi-vcenter-csi-topology": "true"
 kind: ConfigMap
 metadata:
   name: internal-feature-states.csi.vsphere.vmware.com
