@@ -22,7 +22,9 @@ data:
       {{ .host | quote }}:
         server: {{ .host | quote }}
         datacenters:
-          - {{ .datacenters | quote }}
+      {{- range $datacenter := .datacenters }}
+          - {{ $datacenter | quote }}
+      {{- end }}
     {{- if .labels.generate }}
 
     # labels for regions and zones
