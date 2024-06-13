@@ -97,7 +97,6 @@ spec:
             {{- if semverCompare "< 1.24" $.Capabilities.KubeVersion.Version }}
             - "--use-gocsi=false"
             {{- end }}
-          imagePullPolicy: "Always"
           env:
             - name: NODE_NAME
               valueFrom:
