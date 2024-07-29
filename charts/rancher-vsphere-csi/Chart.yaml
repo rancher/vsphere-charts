@@ -21,4 +21,4 @@ maintainers:
 name: rancher-vsphere-csi
 sources:
 - https://github.com/kubernetes-sigs/vsphere-csi-driver
-version: 3.3.0-rancher1
+version: 3.3.0-rancher2

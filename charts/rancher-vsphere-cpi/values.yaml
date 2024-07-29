@@ -52,51 +52,6 @@ versionOverrides:
       cloudControllerManager:
         repository: rancher/mirrored-cloud-provider-vsphere-cpi-release-manager
         tag: v1.27.0
-  - constraint: "~ 1.26"
-    values:
-      cloudControllerManager:
-        repository: rancher/mirrored-cloud-provider-vsphere-cpi-release-manager
-        tag: v1.26.2
-  - constraint: "~ 1.25"
-    values:
-      cloudControllerManager:
-        repository: rancher/mirrored-cloud-provider-vsphere-cpi-release-manager
-        tag: v1.25.3
-  - constraint: ">= 1.24 < 1.25"
-    values:
-      cloudControllerManager:
-        repository: rancher/mirrored-cloud-provider-vsphere-cpi-release-manager
-        tag: v1.24.6
-  - constraint: ">= 1.23 < 1.24"
-    values:
-      cloudControllerManager:
-        repository: rancher/mirrored-cloud-provider-vsphere-cpi-release-manager
-        tag: v1.23.4
-  - constraint: "~ 1.22"
-    values:
-      cloudControllerManager:
-        repository: rancher/mirrored-cloud-provider-vsphere-cpi-release-manager
-        tag: v1.22.8
-  - constraint: "~ 1.21"
-    values:
-      cloudControllerManager:
-        repository: rancher/mirrored-cloud-provider-vsphere-cpi-release-manager
-        tag: v1.21.3
-  - constraint: "~ 1.20"
-    values:
-      cloudControllerManager:
-        repository: rancher/mirrored-cloud-provider-vsphere-cpi-release-manager
-        tag: v1.20.1
-  - constraint: "~ 1.19"
-    values:
-      cloudControllerManager:
-        repository: rancher/mirrored-cloud-provider-vsphere-cpi-release-manager
-        tag: v1.19.0
-  - constraint: "~ 1.18"
-    values:
-      cloudControllerManager:
-        repository: rancher/mirrored-cloud-provider-vsphere-cpi-release-manager
-        tag: v1.18.0
 
 cloudControllerManager:
   repository: rancher/mirrored-cloud-provider-vsphere-cpi-release-manager

@@ -21,4 +21,4 @@ maintainers:
 name: rancher-vsphere-cpi
 sources:
 - https://github.com/kubernetes/cloud-provider-vsphere
-version: 1.8.0
+version: 1.8.1
