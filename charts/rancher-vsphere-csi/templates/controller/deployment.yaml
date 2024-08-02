@@ -95,6 +95,10 @@ spec:
           env:
             - name: ADDRESS
               value: /csi/csi.sock
+          {{- with .Values.csiController.image.csiAttacher.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
           volumeMounts:
             - mountPath: /csi
               name: socket-dir
@@ -112,6 +116,10 @@ spec:
           env:
             - name: ADDRESS
               value: /csi/csi.sock
+          {{- with .Values.csiController.image.csiResizer.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
           volumeMounts:
             - mountPath: /csi
               name: socket-dir
@@ -132,6 +140,10 @@ spec:
           env:
             - name: ADDRESS
               value: /csi/csi.sock
+          {{- with .Values.csiController.image.csiSnapshotter.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
           volumeMounts:
             - mountPath: /csi
               name: socket-dir
@@ -166,6 +178,10 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.namespace
+          {{- with .Values.csiController.image.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
           volumeMounts:
             - mountPath: /etc/cloud
               name: vsphere-config-volume
@@ -192,6 +208,10 @@ spec:
           args:
             - "--v=4"
             - "--csi-address=/csi/csi.sock"
+          {{- with .Values.csiController.image.livenessProbe.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
           volumeMounts:
             - name: socket-dir
               mountPath: /csi
@@ -221,6 +241,10 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.namespace
+          {{- with .Values.csiController.image.vsphereSyncer.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
           volumeMounts:
             - mountPath: /etc/cloud
               name: vsphere-config-volume
@@ -243,6 +267,10 @@ spec:
           env:
             - name: ADDRESS
               value: /csi/csi.sock
+          {{- with .Values.csiController.image.csiProvisioner.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
           volumeMounts:
             - mountPath: /csi
               name: socket-dir
