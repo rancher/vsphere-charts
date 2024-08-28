@@ -36,7 +36,7 @@ func TestCPITemplateRenderedDaemonset(t *testing.T) {
 				namespace:     "cpitest-" + strings.ToLower(random.UniqueId()),
 				releaseName:   "cpitest-" + strings.ToLower(random.UniqueId()),
 				chartRelPath:  cpiChart,
-				expectedImage: "rancher/mirrored-cloud-provider-vsphere-cpi-release-manager:v1.31.0",
+				expectedImage: "rancher/mirrored-cloud-provider-vsphere:v1.31.0",
 			},
 		},
 		{
