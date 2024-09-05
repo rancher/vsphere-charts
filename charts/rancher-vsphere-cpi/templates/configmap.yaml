@@ -10,13 +10,16 @@ metadata:
 data:
   vsphere.yaml: |
     # Global properties in this section will be used for all specified vCenters unless overriden in VirtualCenter section.
-    {{ with .Values.vCenter }}
     global:
-      secretName: {{ .credentialsSecret.name | quote }}
+      secretName: {{ .Values.vCenter.credentialsSecret.name | quote }}
       secretNamespace: {{ $.Release.Namespace | quote }}
-      port: {{ .port }}
-      insecureFlag: {{ .insecureFlag }}
-
+      port: {{ .Values.vCenter.port }}
+      insecureFlag: {{ .Values.vCenter.insecureFlag }}
+      {{- with .Values.global.ipFamily }}
+      ipFamily:
+        {{- splitList "," . | toYaml | nindent 8 }}
+      {{- end }}
+    {{ with .Values.vCenter }}
     # vcenter section
     vcenter:
       {{ .host | quote }}:
@@ -29,5 +32,11 @@ data:
     labels:
       region: {{ .labels.region | quote }}
       zone: {{ .labels.zone | quote }}
+    {{- end }}
+    {{- end }}
+    {{- if .Values.nodesEnable }}
+    {{- with .Values.nodes }}
+    nodes:
+    {{- toYaml . | nindent 6 }}
     {{- end }}
     {{- end }}
