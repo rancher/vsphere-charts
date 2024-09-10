@@ -68,6 +68,7 @@ spec:
       containers:
         - name: node-driver-registrar
           image: "{{ template "system_default_registry" . }}{{ .Values.csiNode.image.nodeDriverRegistrar.repository }}:{{ .Values.csiNode.image.nodeDriverRegistrar.tag }}"
+          imagePullPolicy: {{ .Values.csiNode.image.nodeDriverRegistrar.imagePullPolicy | quote }}
           args:
             - "--v=5"
             - "--csi-address=$(ADDRESS)"
@@ -91,13 +92,13 @@ spec:
             initialDelaySeconds: 3
         - name: vsphere-csi-node
           image: "{{ template "system_default_registry" . }}{{ .Values.csiNode.image.repository }}:{{ .Values.csiNode.image.tag }}"
+          imagePullPolicy: {{ .Values.csiNode.image.imagePullPolicy | quote }}
           args:
             - "--fss-name=internal-feature-states.csi.vsphere.vmware.com"
             - "--fss-namespace=$(CSI_NAMESPACE)"
             {{- if semverCompare "< 1.24" $.Capabilities.KubeVersion.Version }}
             - "--use-gocsi=false"
             {{- end }}
-          imagePullPolicy: "Always"
           env:
             - name: NODE_NAME
               valueFrom:
@@ -154,6 +155,7 @@ spec:
             failureThreshold: 3
         - name: liveness-probe
           image: "{{ template "system_default_registry" . }}{{ .Values.csiNode.image.livenessProbe.repository }}:{{ .Values.csiNode.image.livenessProbe.tag }}"
+          imagePullPolicy: {{ .Values.csiNode.image.livenessProbe.imagePullPolicy | quote }}
           args:
             - "--v=4"
             - "--csi-address=/csi/csi.sock"
