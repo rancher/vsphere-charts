@@ -27,30 +27,87 @@ csiController:
     repository: rancher/mirrored-cloud-provider-vsphere-csi-release-driver
     tag: latest
     imagePullPolicy: ""
+    resources: {}
+    #resources:
+    # limits:
+    #   cpu: 100m
+    #   memory: 256Mi
+    # requests:
+    #   cpu: 50m
+    #   memory: 128Mi
     csiAttacher:
       repository: rancher/mirrored-sig-storage-csi-attacher
       tag: latest
       imagePullPolicy: ""
+      resources: {}
+      #resources:
+      # limits:
+      #   cpu: 100m
+      #   memory: 256Mi
+      # requests:
+      #   cpu: 50m
+      #   memory: 128Mi
     csiResizer:
       repository: rancher/mirrored-sig-storage-csi-resizer
       tag: latest
       imagePullPolicy: ""
+      resources: {}
+      #resources:
+      # limits:
+      #   cpu: 100m
+      #   memory: 256Mi
+      # requests:
+      #   cpu: 50m
+      #   memory: 128Mi
     livenessProbe:
       repository: rancher/mirrored-sig-storage-livenessprobe
       tag: latest
       imagePullPolicy: ""
+      resources: {}
+      #resources:
+      # limits:
+      #   cpu: 100m
+      #   memory: 256Mi
+      # requests:
+      #   cpu: 50m
+      #   memory: 128Mi
     vsphereSyncer:
       repository: rancher/mirrored-cloud-provider-vsphere-csi-release-syncer
       tag: latest
       imagePullPolicy: ""
+      resources: {}
+      #resources:
+      # limits:
+      #   cpu: 100m
+      #   memory: 256Mi
+      # requests:
+      #   cpu: 50m
+      #   memory: 128Mi
     csiProvisioner:
       repository: rancher/mirrored-sig-storage-csi-provisioner
       tag: latest
       imagePullPolicy: ""
+      resources: {}
+      #resources:
+      # limits:
+      #   cpu: 100m
+      #   memory: 256Mi
+      # requests:
+      #   cpu: 50m
+      #   memory: 128Mi
     csiSnapshotter:
       repository: rancher/mirrored-sig-storage-csi-snapshotter
       tag: latest
       imagePullPolicy: ""
+      resources: {}
+      #resources:
+      # limits:
+      #   cpu: 100m
+      #   memory: 256Mi
+      # requests:
+      #   cpu: 50m
+      #   memory: 128Mi
+
   ## Node labels for pod assignment
   ## Ref: https://kubernetes.io/docs/user-guide/node-selection/
   ##
@@ -121,14 +178,38 @@ csiNode:
     repository: rancher/mirrored-cloud-provider-vsphere-csi-release-driver
     tag: latest
     imagePullPolicy: ""
+    resources: {}
+    #resources:
+    # limits:
+    #   cpu: 100m
+    #   memory: 256Mi
+    # requests:
+    #   cpu: 50m
+    #   memory: 128Mi
     nodeDriverRegistrar:
       repository: rancher/mirrored-sig-storage-csi-node-driver-registrar
       tag: latest
       imagePullPolicy: ""
+      resources: {}
+      #resources:
+      # limits:
+      #   cpu: 100m
+      #   memory: 256Mi
+      # requests:
+      #   cpu: 50m
+      #   memory: 128Mi
     livenessProbe:
       repository: rancher/mirrored-sig-storage-livenessprobe
       tag: latest
       imagePullPolicy: ""
+      resources: {}
+      #resources:
+      # limits:
+      #   cpu: 500m
+      #   memory: 256Mi
+      # requests:
+      #   cpu: 50m
+      #   memory: 128Mi
 
 storageClass:
   enabled: true
