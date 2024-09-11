@@ -9,11 +9,22 @@ vCenter:
     name: "vsphere-cpi-creds"
     generate: true
 
-# vSphere Tags used to determine the zone and region of a Kubernetes node. This labels will be propagated to NodeLabels
+  # vSphere Tags used to determine the zone and region of a Kubernetes node. This labels will be propagated to NodeLabels
   labels:
     region: "k8s-region"
     zone: "k8s-zone"
     generate: false
+
+# Nodes defines the way that the Node IPs are selected from the addresses assigned to the Node in kube-api
+# See https://github.com/kubernetes/cloud-provider-vsphere/blob/master/docs/book/cloud_config.md#nodes for details
+nodesEnable: false
+nodes:
+  internalNetworkSubnetCidr: ""
+  externalNetworkSubnetCidr: ""
+  internalVmNetworkName: ""
+  externalVmNetworkName: ""
+  excludeInternalNetworkSubnetCidr: ""
+  excludeExternalNetworkSubnetCidr: ""
 
 # A list of Semver constraint strings (defined by https://github.com/Masterminds/semver) and values.yaml overrides.
 #
@@ -67,7 +78,10 @@ cloudControllerManager:
   podLabels: {}
   rbac:
     enabled: true
+  env: []
 
 global:
   cattle:
     systemDefaultRegistry: ""
+  # Set the IP Family to set Node addresses for (ipv4 or ipv6 or dual-stack, defaults to ipv4 only)
+  ipFamily: ""

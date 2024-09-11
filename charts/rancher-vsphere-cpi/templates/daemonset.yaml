@@ -102,6 +102,16 @@ spec:
           resources:
             requests:
               cpu: 200m
+          {{- if or (.Values.cloudControllerManager.env) (.Values.global.ipFamily) }}
+          env:
+          {{- if .Values.global.ipFamily }}
+            - name: ENABLE_ALPHA_DUAL_STACK
+              value: "true"
+          {{- end }}
+          {{- with .Values.cloudControllerManager.env }}
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- end }}
       hostNetwork: true
       volumes:
       - name: vsphere-config-volume
