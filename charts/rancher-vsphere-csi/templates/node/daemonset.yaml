@@ -91,7 +91,7 @@ spec:
             exec:
               command:
               - /csi-node-driver-registrar
-              - --kubelet-registration-path=/var/lib/kubelet/plugins/csi.vsphere.vmware.com/csi.sock
+              - --kubelet-registration-path={{ .Values.csiNode.prefixPath }}/var/lib/kubelet/plugins/csi.vsphere.vmware.com/csi.sock
               - --mode=kubelet-registration-probe
             initialDelaySeconds: 3
         - name: vsphere-csi-node
