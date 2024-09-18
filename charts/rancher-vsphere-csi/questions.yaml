@@ -111,6 +111,13 @@ questions:
     default: false
     group: Storage
 
+  - variable: blockVolumeSnapshot.enabled
+    label: Enable CSI Volume Snapshots
+    description: Enables CSI Snapshot support for vSphere PVs
+    type: boolean
+    default: false
+    group: Storage
+
   - variable: storageClass.enabled
     default: true
     label: Create Storage Class
