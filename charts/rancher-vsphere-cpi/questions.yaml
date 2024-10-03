@@ -22,6 +22,11 @@ questions:
     group: vCenter
     show_subquestion_if: true
     subquestions:
+      - variable:    vCenter.credentialsSecret.rancherManaged
+        label:       Manage generated secret via Rancher
+        description: Rancher hosts the secret and synchronizes it to the target cluster
+        type:        boolean
+        group: vCenter
       - variable: vCenter.username
         label: Username
         description: Username for vCenter

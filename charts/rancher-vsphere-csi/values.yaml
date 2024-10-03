@@ -9,6 +9,9 @@ vCenter:
   configSecret:
     name: "vsphere-config-secret"
     generate: true
+    # Only applicable when installed via Rancher Cluster Management
+    rancherManaged: false
+    # Any changes should be mirrored by the UI when it creates it's version of the secret
     configTemplate: |
       [Global]
       cluster-id = {{ required ".Values.vCenter.clusterId must be provided" (default .Values.vCenter.clusterId .Values.global.cattle.clusterId) | quote }}

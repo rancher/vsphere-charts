@@ -8,6 +8,11 @@ questions:
     group: vCenter Configuration
     show_subquestion_if: true
     subquestions:
+      - variable:    vCenter.configSecret.rancherManaged
+        label:       Manage generated secret via Rancher
+        description: Rancher hosts the secret and synchronizes it to the target cluster
+        type:        boolean
+
       - variable: vCenter.host
         label: vCenter Host
         description: IP address or FQDN of the vCenter

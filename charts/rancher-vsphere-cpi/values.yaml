@@ -8,6 +8,8 @@ vCenter:
   credentialsSecret:
     name: "vsphere-cpi-creds"
     generate: true
+    # Only applicable when installed via Rancher Cluster Management
+    rancherManaged: false
 
   # vSphere Tags used to determine the zone and region of a Kubernetes node. This labels will be propagated to NodeLabels
   labels:
