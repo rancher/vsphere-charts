@@ -27,7 +27,6 @@ csiController:
     repository: rancher/mirrored-cloud-provider-vsphere-csi-release-driver
     tag: latest
     imagePullPolicy: ""
-    logFormat: text
     resources: {}
     #resources:
     # limits:
@@ -79,7 +78,6 @@ csiController:
       repository: rancher/mirrored-cloud-provider-vsphere-csi-release-syncer
       tag: latest
       imagePullPolicy: ""
-      logFormat: text
       resources: {}
       #resources:
       # limits:
@@ -92,7 +90,6 @@ csiController:
       repository: rancher/mirrored-sig-storage-csi-provisioner
       tag: latest
       imagePullPolicy: ""
-      logFormat: text
       resources: {}
       #resources:
       # limits:
@@ -105,7 +102,6 @@ csiController:
       repository: rancher/mirrored-sig-storage-csi-snapshotter
       tag: latest
       imagePullPolicy: ""
-      logFormat: text
       resources: {}
       #resources:
       # limits:
@@ -185,7 +181,6 @@ csiNode:
     repository: rancher/mirrored-cloud-provider-vsphere-csi-release-driver
     tag: latest
     imagePullPolicy: ""
-    logFormat: text
     resources: {}
     #resources:
     # limits:
@@ -198,7 +193,7 @@ csiNode:
       repository: rancher/mirrored-sig-storage-csi-node-driver-registrar
       tag: latest
       imagePullPolicy: ""
-      logFormat: text
+      logFormat: "text"
       resources: {}
       #resources:
       # limits:
@@ -211,7 +206,7 @@ csiNode:
       repository: rancher/mirrored-sig-storage-livenessprobe
       tag: latest
       imagePullPolicy: ""
-      logFormat: text
+      logFormat: "text"
       resources: {}
       #resources:
       # limits:
