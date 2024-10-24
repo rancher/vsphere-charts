@@ -39,7 +39,7 @@ csiController:
       repository: rancher/mirrored-sig-storage-csi-attacher
       tag: latest
       imagePullPolicy: ""
-      logFormat: text
+      additionalArgs: []
       resources: {}
       #resources:
       # limits:
@@ -52,7 +52,7 @@ csiController:
       repository: rancher/mirrored-sig-storage-csi-resizer
       tag: latest
       imagePullPolicy: ""
-      logFormat: text
+      additionalArgs: []
       resources: {}
       #resources:
       # limits:
@@ -65,7 +65,7 @@ csiController:
       repository: rancher/mirrored-sig-storage-livenessprobe
       tag: latest
       imagePullPolicy: ""
-      logFormat: text
+      additionalArgs: []
       resources: {}
       #resources:
       # limits:
@@ -193,7 +193,7 @@ csiNode:
       repository: rancher/mirrored-sig-storage-csi-node-driver-registrar
       tag: latest
       imagePullPolicy: ""
-      logFormat: "text"
+      additionalArgs: []
       resources: {}
       #resources:
       # limits:
@@ -206,7 +206,7 @@ csiNode:
       repository: rancher/mirrored-sig-storage-livenessprobe
       tag: latest
       imagePullPolicy: ""
-      logFormat: "text"
+      additionalArgs: []
       resources: {}
       #resources:
       # limits:

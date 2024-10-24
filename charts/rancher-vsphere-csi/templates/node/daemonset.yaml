@@ -73,7 +73,9 @@ spec:
             - "--v=5"
             - "--csi-address=$(ADDRESS)"
             - "--kubelet-registration-path=$(DRIVER_REG_SOCK_PATH)"
-            - "--logging-format={{ .Values.csiNode.image.nodeDriverRegistrar.logFormat }}"
+            {{- range .Values.csiNode.image.nodeDriverRegistrar.additionalArgs }}
+            - {{ . }}
+            {{- end }}
           env:
             - name: ADDRESS
               value: /csi/csi.sock
@@ -168,7 +170,9 @@ spec:
           args:
             - "--v=4"
             - "--csi-address=/csi/csi.sock"
-            - "--logging-format={{ .Values.csiNode.image.livenessProbe.logFormat }}"
+            {{- range .Values.csiNode.image.livenessProbe.additionalArgs }}
+            - {{ . }}
+            {{- end }}
           {{- with .Values.csiNode.image.livenessProbe.resources }}
           resources:
             {{- toYaml . | nindent 12 }}

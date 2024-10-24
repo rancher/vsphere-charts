@@ -93,7 +93,9 @@ spec:
             - "--leader-election"
             - "--kube-api-qps=100"
             - "--kube-api-burst=100"
-            - "--logging-format={{ .Values.csiController.image.csiAttacher.logFormat }}"
+            {{- range .Values.csiController.image.csiAttacher.additionalArgs }}
+            - {{ . }}
+            {{- end }}
           env:
             - name: ADDRESS
               value: /csi/csi.sock
@@ -116,7 +118,9 @@ spec:
             - "--kube-api-qps=100"
             - "--kube-api-burst=100"
             - "--leader-election"
-            - "--logging-format={{ .Values.csiController.image.csiResizer.logFormat }}"
+            {{- range .Values.csiController.image.csiResizer.additionalArgs }}
+            - {{ . }}
+            {{- end }}
           env:
             - name: ADDRESS
               value: /csi/csi.sock
@@ -214,7 +218,9 @@ spec:
           args:
             - "--v=4"
             - "--csi-address=/csi/csi.sock"
-            - "--logging-format={{ .Values.csiController.image.livenessProbe.logFormat }}"
+            {{- range .Values.csiController.image.livenessProbe.additionalArgs }}
+            - {{ . }}
+            {{- end }}
           {{- with .Values.csiController.image.livenessProbe.resources }}
           resources:
             {{- toYaml . | nindent 12 }}
