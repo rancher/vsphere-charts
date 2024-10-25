@@ -93,6 +93,9 @@ spec:
             - "--leader-election"
             - "--kube-api-qps=100"
             - "--kube-api-burst=100"
+            {{- range .Values.csiController.image.csiAttacher.additionalArgs }}
+            - {{ . | quote }}
+            {{- end }}
           env:
             - name: ADDRESS
               value: /csi/csi.sock
@@ -115,6 +118,9 @@ spec:
             - "--kube-api-qps=100"
             - "--kube-api-burst=100"
             - "--leader-election"
+            {{- range .Values.csiController.image.csiResizer.additionalArgs }}
+            - {{ . | quote }}
+            {{- end }}
           env:
             - name: ADDRESS
               value: /csi/csi.sock
@@ -140,6 +146,9 @@ spec:
             - "--leader-election-lease-duration=120s"
             - "--leader-election-renew-deadline=60s"
             - "--leader-election-retry-period=30s"
+            {{- range .Values.csiController.image.csiSnapshotter.additionalArgs }}
+            - {{ . | quote }}
+            {{- end }}
           env:
             - name: ADDRESS
               value: /csi/csi.sock
@@ -159,6 +168,9 @@ spec:
             - "--fss-namespace=$(CSI_NAMESPACE)"
             {{- if semverCompare "< 1.24" $.Capabilities.KubeVersion.Version }}
             - "--use-gocsi=false"
+            {{- end }}
+            {{- range .Values.csiController.image.additionalArgs }}
+            - {{ . | quote }}
             {{- end }}
           env:
             - name: CSI_ENDPOINT
@@ -212,6 +224,9 @@ spec:
           args:
             - "--v=4"
             - "--csi-address=/csi/csi.sock"
+            {{- range .Values.csiController.image.livenessProbe.additionalArgs }}
+            - {{ . | quote }}
+            {{- end }}
           {{- with .Values.csiController.image.livenessProbe.resources }}
           resources:
             {{- toYaml . | nindent 12 }}
@@ -226,6 +241,9 @@ spec:
             - "--leader-election"
             - "--fss-name=internal-feature-states.csi.vsphere.vmware.com"
             - "--fss-namespace=$(CSI_NAMESPACE)"
+            {{- range .Values.csiController.image.vsphereSyncer.additionalArgs }}
+            - {{ . | quote }}
+            {{- end }}
           ports:
             - containerPort: 2113
               name: prometheus
@@ -268,6 +286,9 @@ spec:
             # needed only for topology aware setup
             - "--feature-gates=Topology=true"
             - "--strict-topology"
+            {{- end }}
+            {{- range .Values.csiController.image.csiProvisioner.additionalArgs }}
+            - {{ . | quote }}
             {{- end }}
           env:
             - name: ADDRESS

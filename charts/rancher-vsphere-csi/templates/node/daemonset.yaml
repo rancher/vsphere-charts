@@ -73,6 +73,9 @@ spec:
             - "--v=5"
             - "--csi-address=$(ADDRESS)"
             - "--kubelet-registration-path=$(DRIVER_REG_SOCK_PATH)"
+            {{- range .Values.csiNode.image.nodeDriverRegistrar.additionalArgs }}
+            - {{ . | quote }}
+            {{- end }}
           env:
             - name: ADDRESS
               value: /csi/csi.sock
@@ -102,6 +105,9 @@ spec:
             - "--fss-namespace=$(CSI_NAMESPACE)"
             {{- if semverCompare "< 1.24" $.Capabilities.KubeVersion.Version }}
             - "--use-gocsi=false"
+            {{- end }}
+            {{- range .Values.csiNode.image.additionalArgs }}
+            - {{ . | quote }}
             {{- end }}
           env:
             - name: NODE_NAME
@@ -167,6 +173,9 @@ spec:
           args:
             - "--v=4"
             - "--csi-address=/csi/csi.sock"
+            {{- range .Values.csiNode.image.livenessProbe.additionalArgs }}
+            - {{ . | quote }}
+            {{- end }}
           {{- with .Values.csiNode.image.livenessProbe.resources }}
           resources:
             {{- toYaml . | nindent 12 }}
