@@ -117,7 +117,15 @@ spec:
             - name: CSI_ENDPOINT
               value: unix:///csi/csi.sock
             - name: MAX_VOLUMES_PER_NODE
-              value: "59" # Maximum number of volumes that controller can publish to the node. If value is not set or zero Kubernetes decide how many volumes can be published by the controller to the node.
+              {{- if .Values.maxPvscsiTargetsPerVm.enabled }}
+              {{-   if gt .Values.csiNode.maxVolumesPerNode 255 }}
+              value: "255"
+              {{-   else }}
+              value: "{{ .Values.csiNode.maxVolumesPerNode }}"
+              {{-   end }}
+              {{- else }}
+              value: "59"
+              {{- end }} 
             - name: X_CSI_MODE
               value: "node"
             - name: X_CSI_SPEC_REQ_VALIDATION
