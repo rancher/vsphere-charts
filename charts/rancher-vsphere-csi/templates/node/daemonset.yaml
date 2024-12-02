@@ -117,8 +117,8 @@ spec:
             - name: CSI_ENDPOINT
               value: unix:///csi/csi.sock
             - name: MAX_VOLUMES_PER_NODE
-              {{- if .Values.maxPvscsiTargetsPerVm.enabled }}
-              {{-   if gt .Values.csiNode.maxVolumesPerNode 255 }}
+              {{- if and (.Values.maxPvscsiTargetsPerVm.enabled) (gt (int .Values.csiNode.maxVolumesPerNode) 0 ) }}
+              {{-   if gt (int .Values.csiNode.maxVolumesPerNode) 255 }}
               value: "255"
               {{-   else }}
               value: "{{ .Values.csiNode.maxVolumesPerNode }}"
