@@ -119,10 +119,9 @@ spec:
             # Maximum number of volumes that controller can publish to the node. 
             # If value is not set or zero Kubernetes decide how many volumes can be published by the controller to the node.
             - name: MAX_VOLUMES_PER_NODE
-            # To be able to attach more than 59 CNS disks per VM, it is necessary to set the feature gate pvscsiCtrlr256DiskSupportEnabled 
-            # to true in the vCenter server appliance (/usr/lib/vmware-vsan/VsanVcMgmtConfig.xml or /usr/lib/vmware-vpx/vsan-health/VsanVcMgmtConfig.xml),
-            # depending on your vCenter version. Do not forget to restart vsan-health service: service-control --restart vmware-vsan-health
-            # This feature seems to be available from vSphere 7 update 3. Your VM also need a Virtual Hardware Version that allows for 64 disks per PvSCSI controller.
+            # Attaching more than 59 CNS disks per VM is possible since vSphere 8. To use it, set the feature gate pvscsiCtrlr256DiskSupportEnabled to true
+            # in the vCenter server appliance (/usr/lib/vmware-vsan/VsanVcMgmtConfig.xml). Do not forget to restart vsan-health service: service-control --restart vmware-vsan-health
+            # Your VM also need a Virtual Hardware Version that allows for 64 disks per PvSCSI controller.
               {{- if and (.Values.maxPvscsiTargetsPerVm.enabled) (gt (int .Values.csiNode.maxVolumesPerNode) 0 ) }}
               {{-   if gt (int .Values.csiNode.maxVolumesPerNode) 255 }}
               value: "255"
