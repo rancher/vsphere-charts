@@ -29,6 +29,17 @@ func TestCPITemplateRenderedDaemonset(t *testing.T) {
 		args args
 	}{
 		{
+			name: "Kubernetes 1.32",
+			args: args{
+				values:        map[string]string{},
+				kubeVersion:   "1.32",
+				namespace:     "cpitest-" + strings.ToLower(random.UniqueId()),
+				releaseName:   "cpitest-" + strings.ToLower(random.UniqueId()),
+				chartRelPath:  cpiChart,
+				expectedImage: "rancher/mirrored-cloud-provider-vsphere:v1.32.1",
+			},
+		},
+		{
 			name: "Kubernetes 1.31",
 			args: args{
 				values:        map[string]string{},
@@ -36,7 +47,7 @@ func TestCPITemplateRenderedDaemonset(t *testing.T) {
 				namespace:     "cpitest-" + strings.ToLower(random.UniqueId()),
 				releaseName:   "cpitest-" + strings.ToLower(random.UniqueId()),
 				chartRelPath:  cpiChart,
-				expectedImage: "rancher/mirrored-cloud-provider-vsphere:v1.31.0",
+				expectedImage: "rancher/mirrored-cloud-provider-vsphere:v1.31.1",
 			},
 		},
 		{
