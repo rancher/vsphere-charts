@@ -63,6 +63,10 @@ spec:
           operator: Exists
       {{- end }}
       serviceAccountName: vsphere-csi-node
+      {{- with .Values.global.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       hostNetwork: true
       dnsPolicy: "ClusterFirstWithHostNet"
       containers:
