@@ -234,6 +234,7 @@ storageClass:
   reclaimPolicy: Delete
 
 global:
+  imagePullSecrets: []
   cattle:
     systemDefaultRegistry: ""
 
