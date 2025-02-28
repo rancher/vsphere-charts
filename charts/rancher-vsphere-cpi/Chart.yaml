@@ -5,10 +5,10 @@ annotations:
   catalog.cattle.io/namespace: kube-system
   catalog.cattle.io/os: linux
   catalog.cattle.io/permits-os: linux,windows
-  catalog.cattle.io/rancher-version: '>= 2.9.0-0'
+  catalog.cattle.io/rancher-version: '>= 2.11.0-0'
   catalog.cattle.io/release-name: vsphere-cpi
 apiVersion: v1
-appVersion: 1.32.1
+appVersion: 1.32.2
 description: vSphere Cloud Provider Interface (CPI)
 icon: https://charts.rancher.io/assets/logos/vsphere-cpi.svg
 keywords:
@@ -21,4 +21,4 @@ maintainers:
 name: rancher-vsphere-cpi
 sources:
 - https://github.com/kubernetes/cloud-provider-vsphere
-version: 1.10.0
+version: 1.10.1
