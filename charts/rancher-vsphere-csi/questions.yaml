@@ -28,6 +28,11 @@ questions:
         description: Password for vCenter
         type: password
 
+      - variable: vCenter.labels.topologyCategories
+        label: Topology Categories
+        description: "Specify topology categories for CSI (comma-separated list)"
+        type: string
+
   - variable: vCenter.configSecret.name
     label: CSI vSphere Config Secret Name
     description: Name of the Secret that contains a CSI vSphere config and credentials (Will not be visible in the API. More info in the README)
