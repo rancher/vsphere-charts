@@ -6,6 +6,8 @@ vCenter:
   datacenters: ""
   username: ""
   password: ""
+  labels:
+    topologyCategories: ""
   configSecret:
     name: "vsphere-config-secret"
     generate: true
@@ -19,6 +21,12 @@ vCenter:
 
       [VirtualCenter {{ .Values.vCenter.host | quote }}]
       datacenters = {{ .Values.vCenter.datacenters | quote }}
+
+
+      {{- if .Values.vCenter.labels.topologyCategories }}
+      [Labels]
+      topology-categories = {{ .Values.vCenter.labels.topologyCategories | quote }}
+      {{- end }}
 
 csiController:
   csiResizer:
