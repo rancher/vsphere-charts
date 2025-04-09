@@ -116,4 +116,4 @@ spec:
       volumes:
       - name: vsphere-config-volume
         configMap:
-          name: vsphere-cloud-config
+          name: {{ .Values.vCenter.cloudConfig.name | default "vsphere-cloud-config" | quote }}

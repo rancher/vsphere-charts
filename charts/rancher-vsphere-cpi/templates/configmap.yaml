@@ -1,7 +1,8 @@
+{{- if .Values.vCenter.cloudConfig.generate }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: vsphere-cloud-config
+  name: {{ .Values.vCenter.cloudConfig.name | default "vsphere-cloud-config" | quote }}
   labels:
     vsphere-cpi-infra: config
     component: {{ .Chart.Name }}-cloud-controller-manager
@@ -40,3 +41,4 @@ data:
     {{- toYaml . | nindent 6 }}
     {{- end }}
     {{- end }}
+{{- end }}
