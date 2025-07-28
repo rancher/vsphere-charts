@@ -6,6 +6,9 @@ metadata:
     {{- include "labels" . | nindent 4 }}
 rules:
   - apiGroups: [""]
+    resources: ["configmaps"]
+    verbs: ["get", "list", "watch", "create"]
+  - apiGroups: [""]
     resources: ["nodes", "pods", "configmaps"]
     verbs: ["get", "list", "watch"]
   - apiGroups: [""]

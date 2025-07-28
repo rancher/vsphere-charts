@@ -2,10 +2,10 @@ vCenter:
   host: ""
   port: 443
   insecureFlag: "1"
-  clusterId: ""
-  datacenters: ""
-  username: ""
-  password: ""
+  clusterId: "a"
+  datacenters: "a"
+  username: "a"
+  password: "a"
   labels:
     topologyCategories: ""
   configSecret:
@@ -176,6 +176,8 @@ topologyPreferentialDatastores:
 maxPvscsiTargetsPerVm:
   enabled: false
 multiVcenterCsiTopology:
+  enabled: true
+csiInternalGeneratedClusterId:
   enabled: true
 
 csiNode:
