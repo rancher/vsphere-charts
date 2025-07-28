@@ -9,7 +9,7 @@ rules:
     resources: ["configmaps"]
     verbs: ["get", "list", "watch", "create"]
   - apiGroups: [""]
-    resources: ["nodes", "pods", "configmaps"]
+    resources: ["nodes", "pods"]
     verbs: ["get", "list", "watch"]
   - apiGroups: [""]
     resources: ["persistentvolumeclaims"]
