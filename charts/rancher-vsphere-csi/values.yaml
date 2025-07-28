@@ -2,10 +2,10 @@ vCenter:
   host: ""
   port: 443
   insecureFlag: "1"
-  clusterId: "a"
-  datacenters: "a"
-  username: "a"
-  password: "a"
+  clusterId: ""
+  datacenters: ""
+  username: ""
+  password: ""
   labels:
     topologyCategories: ""
   configSecret:
