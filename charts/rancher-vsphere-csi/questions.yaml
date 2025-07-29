@@ -94,7 +94,14 @@ questions:
     type: boolean
     default: true
     group: Driver Configuration
-
+    
+  - variable: csiInternalGeneratedClusterId.enabled
+    label: Enable Internally Generated Cluster ID
+    description: Optional value used to support the vSphere CSI driver auto-generated cluster IDs. The CSI driver will generate and persist a unique cluster ID using a ConfigMap.
+    type: boolean
+    default: true
+    group: Driver Configuration
+    
   - variable: csiWindowsSupport.enabled
     label: Enable CSI Windows Support
     description: Enables Windows support.
