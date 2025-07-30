@@ -178,7 +178,7 @@ maxPvscsiTargetsPerVm:
 multiVcenterCsiTopology:
   enabled: true
 csiInternalGeneratedClusterId:
-  enabled: true
+  enabled: false
 
 csiNode:
   ## Node labels for pod assignment
