@@ -99,7 +99,7 @@ questions:
     label: Enable Internally Generated Cluster ID
     description: Enables the vSphere CSI Driver to auto-generate cluster IDs. The CSI driver will generate and persist a unique cluster ID using a ConfigMap if user doesn't provide it in the vSphere config.
     type: boolean
-    default: true
+    default: false
     group: Driver Configuration
     
   - variable: csiWindowsSupport.enabled
