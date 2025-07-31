@@ -17,6 +17,7 @@ data:
   "topology-preferential-datastores": {{ .Values.topologyPreferentialDatastores.enabled | quote }}
   "max-pvscsi-targets-per-vm": {{ .Values.maxPvscsiTargetsPerVm.enabled | quote }}
   "multi-vcenter-csi-topology": {{ .Values.multiVcenterCsiTopology.enabled | quote }}
+  "csi-internal-generated-cluster-id": {{ .Values.csiInternalGeneratedClusterId.enabled | quote }}
 kind: ConfigMap
 metadata:
   name: internal-feature-states.csi.vsphere.vmware.com
