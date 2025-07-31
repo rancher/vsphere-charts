@@ -27,7 +27,7 @@ Features and upstream releases are the primary reason to be working in this repo
 * Check the upstream manifests for changes and new image versions
 * Update the [image-mirror](https://github.com/rancher/image-mirror) repository for new images
 * Update the charts with the new images and manifest changes
-* Update the chart versions (if necessary)
+* Update the chart metadata
 * Update the chart tests
 * Locally compile and deploy to a Kubernetes cluster to ensure that the chart functions
 * Check with RKE2 on the next release cycle and plan out PRs for getting these changes included by the target release date.
@@ -65,7 +65,7 @@ Here are some examples:
 
 NOTE: the charts _do not match_ the upstream charts exactly - the `rancher/vsphere-charts` package actually predates those by a lot due to the fact that upstream did NOT ship a chart instead they just shipped raw manifests which isn't very easy to package/update. Engineers used those initial manifests and made these from them.
 
-There are two goals when checking upstream manifests. The first goal is to check to see if any image versions have been updated and the second is to check if any changes in the manifests have occured.
+There are two goals when checking upstream manifests. The first goal is to check to see if any image versions have been updated and the second is to check if any changes in the manifests have occurred.
 
 If you find that image versions have been updated, then you will need to make a pull request to the [image-mirror](https://github.com/rancher/image-mirror) repository first before proceeding. [Here](https://github.com/rancher/image-mirror/pull/261) is an example PR and follow the requirements outlined in the PR template for those changes. After the images have been checked and image-mirror updated with any new images or image versions, then proceed to check check the manifests.
 
@@ -73,9 +73,27 @@ Checking the manifests is best done by doing a tag compare in each upstream char
 
 Make sure that the unit tests for each chart have been updated, or new tests or test cases are added based on the set of manifest changes.
 
-Finally increment the chart version, if necessary. We need to update the chart version anytime that a new tag of CSI/CPI is released and we update to that version of upstream.
+Finally, update the chart’s metadata in the Chart.yaml file. There are two key fields to adjust:
 
-CPI and CSI versioning is different because CSI tracks the version from upstream so it needs a `-rancher1` for when we need to do a Rancher specific patch, whereas CPI doesn’t track the same version from upstream (they have multiple CPIs based on Kubernetes version. Our CPI chart is based on all of them together). We use our own versioning so we can bump the patch for Rancher specific versions. [Here](https://github.com/rancher/vsphere-charts/pull/36/commits/5bb4f6a042dc31ace66522fe670a72930d5d3e63) is an example.
+- `appVersion`: Indicates the **latest** version of the upstream application used in the chart. Update this whenever a new CSI/CPI tag is incorporated.
+- `version`: Represents the chart’s own version. Update this whenever any change is made to the chart.
+
+**Notes on the CPI Chart**
+
+Upstream CPI releases are aligned with different Kubernetes versions, but our CPI chart does not track a single upstream version,
+instead, it consolidates all of them into a single chart, and the version of the app to be deployed is based on the cluster's version.
+
+Therefore, we use our own versioning scheme, which allows us to increment the patch version for Rancher-specific updates.
+
+**Notes on the CSI Chart**
+
+Previously, both the `appVersion` and `version` fields in the CSI chart included a `-rancher<X>` suffix.  
+This was because the CSI chart was tied to a specific version of the upstream chart, and the suffix was used to indicate Rancher-specific patches.
+
+However, adding the `-rancher<X>` suffix to the `appVersion` field was a mistake, as `appVersion` is intended to match the upstream application's version exactly.
+
+With the CPI chart now supporting multiple Kubernetes versions, it is no longer tied to a single upstream chart release.  
+Therefore, the `-rancher<X>` suffix has been removed from the `appVersion` field for correction, while it remains in the `version` field for consistency.
 
 
 ### Step 2: Compile and check locally
