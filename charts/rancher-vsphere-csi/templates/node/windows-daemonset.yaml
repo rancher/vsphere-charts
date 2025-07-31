@@ -43,6 +43,9 @@ spec:
           operator: Exists
       {{- end }}
       serviceAccountName: vsphere-csi-node
+      {{- if .Values.csiNode.priorityClassName }}
+      priorityClassName: {{ .Values.csiNode.priorityClassName | quote }}
+      {{- end }}
       containers:
         - name: node-driver-registrar
           image: "{{ template "system_default_registry" . }}{{ .Values.csiNode.image.nodeDriverRegistrar.repository }}:{{ .Values.csiNode.image.nodeDriverRegistrar.tag }}"

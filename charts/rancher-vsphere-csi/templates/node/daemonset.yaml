@@ -63,6 +63,9 @@ spec:
           operator: Exists
       {{- end }}
       serviceAccountName: vsphere-csi-node
+      {{- if .Values.csiNode.priorityClassName }}
+      priorityClassName: {{ .Values.csiNode.priorityClassName | quote }}
+      {{- end }}
       {{- with .Values.global.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
