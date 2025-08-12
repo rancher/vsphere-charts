@@ -141,6 +141,9 @@ csiController:
   ##
   ## Optional additional labels to add to pods
   podLabels: {}
+  ## Pod priority class
+  ## https://kubernetes.io/docs/concepts/scheduling-eviction/pod-priority-preemption/#priorityclass
+  priorityClassName: ""
 
 # Internal features
 csiMigration:
@@ -191,9 +194,12 @@ csiNode:
   podLabels: {}
   prefixPath: ""
   prefixPathWindows: ""
-  # Maximum number of volumes that controller can publish to the node. 
+  # Maximum number of volumes that controller can publish to the node.
   # If value is not set or zero Kubernetes decide how many volumes can be published by the controller to the node.
-  maxVolumesPerNode: "59" 
+  maxVolumesPerNode: "59"
+  ## Pod priority class
+  ## https://kubernetes.io/docs/concepts/scheduling-eviction/pod-priority-preemption/#priorityclass
+  priorityClassName: ""
   image:
     repository: rancher/mirrored-cloud-provider-vsphere-csi-release-driver
     tag: latest

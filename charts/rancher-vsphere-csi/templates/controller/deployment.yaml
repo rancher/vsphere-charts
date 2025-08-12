@@ -81,6 +81,9 @@ spec:
           effect: NoExecute
           operator: Exists
       {{- end }}
+      {{- if .Values.csiController.priorityClassName }}
+      priorityClassName: {{ .Values.csiController.priorityClassName | quote }}
+      {{- end }}
       {{- with .Values.global.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
