@@ -91,6 +91,9 @@ cloudControllerManager:
   rbac:
     enabled: true
   env: []
+  # Pod DNS policy
+  # Ref: https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/
+  dnsPolicy: "ClusterFirstWithHostNet"
 
 global:
   cattle:
