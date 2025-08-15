@@ -141,6 +141,9 @@ csiController:
   ##
   ## Optional additional labels to add to pods
   podLabels: {}
+  # Pod DNS policy
+  # Ref: https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/
+  dnsPolicy: "Default"
 
 # Internal features
 csiMigration:
@@ -194,6 +197,9 @@ csiNode:
   # Maximum number of volumes that controller can publish to the node. 
   # If value is not set or zero Kubernetes decide how many volumes can be published by the controller to the node.
   maxVolumesPerNode: "59" 
+  # Pod DNS policy
+  # Ref: https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/
+  dnsPolicy: "ClusterFirstWithHostNet"
   image:
     repository: rancher/mirrored-cloud-provider-vsphere-csi-release-driver
     tag: latest

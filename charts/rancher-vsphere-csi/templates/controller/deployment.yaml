@@ -85,7 +85,7 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      dnsPolicy: "Default"
+      dnsPolicy: {{ .Values.csiController.dnsPolicy | default "Default" }}
       containers:
         - name: csi-attacher
           image: "{{ template "system_default_registry" . }}{{ .Values.csiController.image.csiAttacher.repository }}:{{ .Values.csiController.image.csiAttacher.tag }}"

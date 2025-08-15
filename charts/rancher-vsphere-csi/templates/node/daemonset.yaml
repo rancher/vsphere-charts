@@ -68,7 +68,7 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       hostNetwork: true
-      dnsPolicy: "ClusterFirstWithHostNet"
+      dnsPolicy: {{ .Values.csiNode.dnsPolicy | default "ClusterFirstWithHostNet" }}
       containers:
         - name: node-driver-registrar
           image: "{{ template "system_default_registry" . }}{{ .Values.csiNode.image.nodeDriverRegistrar.repository }}:{{ .Values.csiNode.image.nodeDriverRegistrar.tag }}"
