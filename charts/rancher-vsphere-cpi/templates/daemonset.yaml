@@ -113,7 +113,7 @@ spec:
           {{- end }}
           {{- end }}
       hostNetwork: true
-      dnsPolicy: {{ .Values.cloudControllerManager.dnsPolicy | default "ClusterFirstWithHostNet" }}
+      dnsPolicy: {{ .Values.cloudControllerManager.dnsPolicy | default "Default" }}
       volumes:
       - name: vsphere-config-volume
         configMap:

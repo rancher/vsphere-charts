@@ -98,7 +98,10 @@ cloudControllerManager:
   env: []
   # Pod DNS policy
   # Ref: https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/
-  dnsPolicy: "ClusterFirstWithHostNet"
+  # Note that CPI pods run with host network and need to communicate with the
+  # vsphere server in order to clear the uninitialized taint from nodes before
+  # CoreDNS can start, so this pod SHOULD NOT rely on cluster DNS.
+  dnsPolicy: "Default"
 
 global:
   cattle:
