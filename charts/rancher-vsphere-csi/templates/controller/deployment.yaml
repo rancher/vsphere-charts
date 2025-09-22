@@ -33,6 +33,10 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       {{- else }}
+      {{- if .Values.csiController.affinity }}
+      affinity:
+        {{- toYaml .Values.csiController.affinity | nindent 8 }}
+      {{- else }}
       affinity:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
@@ -59,6 +63,7 @@ spec:
                 operator: NotIn
                 values:
                 - "windows"
+      {{- end }}
       {{- end }}
       {{- if .Values.csiController.tolerations }}
       tolerations: {{ include "linux-node-tolerations" . | nindent 8 }}
