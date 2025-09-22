@@ -59,6 +59,19 @@ spec:
                 operator: NotIn
                 values:
                 - "windows"
+          {{- with .Values.csiController.additionalNodeAffinity }}
+          {{- if .requiredDuringSchedulingIgnoredDuringExecution }}
+          {{- if .requiredDuringSchedulingIgnoredDuringExecution.nodeSelectorTerms }}
+            {{- range .requiredDuringSchedulingIgnoredDuringExecution.nodeSelectorTerms }}
+            - {{- toYaml . | nindent 14 }}
+            {{- end }}
+          {{- end }}
+          {{- end }}
+          {{- if .preferredDuringSchedulingIgnoredDuringExecution }}
+          preferredDuringSchedulingIgnoredDuringExecution:
+            {{- toYaml .preferredDuringSchedulingIgnoredDuringExecution | nindent 12 }}
+          {{- end }}
+          {{- end }}
       {{- end }}
       {{- if .Values.csiController.tolerations }}
       tolerations: {{ include "linux-node-tolerations" . | nindent 8 }}

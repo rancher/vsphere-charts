@@ -127,6 +127,28 @@ csiController:
   ## Ref: https://kubernetes.io/docs/user-guide/node-selection/
   ##
   nodeSelector: {}
+  ## Additional node affinity rules to add to the default control plane node affinity
+  ## These will be merged with the default nodeAffinity requirements
+  ## Ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#node-affinity
+  ##
+  additionalNodeAffinity: {}
+  # Example - Add additional required and preferred scheduling rules:
+  # additionalNodeAffinity:
+  #   requiredDuringSchedulingIgnoredDuringExecution:
+  #     nodeSelectorTerms:
+  #     - matchExpressions:
+  #       - key: kubernetes.io/arch
+  #         operator: In
+  #         values:
+  #         - arm64
+  #   preferredDuringSchedulingIgnoredDuringExecution:
+  #   - weight: 50
+  #     preference:
+  #       matchExpressions:
+  #       - key: zone
+  #         operator: In
+  #         values:
+  #         - us-west
   # Uncomment below toleration if you need an aggressive pod eviction in case when
   # node becomes not-ready or unreachable. Default is 300 seconds if not specified.
   tolerations: []
