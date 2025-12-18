@@ -29,6 +29,40 @@ func TestCSITemplateRenderedNodeDaemonset(t *testing.T) {
 		args args
 	}{
 		{
+			name: "Kubernetes 1.35 Linux Only",
+			args: args{
+				values:         map[string]string{"vCenter.clusterId": random.UniqueId()},
+				kubeVersion:    "1.35",
+				namespace:      "csitest-" + strings.ToLower(random.UniqueId()),
+				releaseName:    "csitest-" + strings.ToLower(random.UniqueId()),
+				chartRelPath:   csiChart,
+				windowsEnabled: false,
+				expectedImages: []string{
+					"rancher/mirrored-sig-storage-csi-node-driver-registrar:v2.13.0",
+					"rancher/mirrored-cloud-provider-vsphere-csi-release-driver:v3.5.0",
+					"rancher/mirrored-sig-storage-livenessprobe:v2.15.0",
+				},
+			},
+		},
+		{
+			name: "Kubernetes 1.35 Linux and Windows",
+			args: args{
+				values: map[string]string{
+					"vCenter.clusterId":         random.UniqueId(),
+					"csiWindowsSupport:enabled": "true",
+				},
+				kubeVersion:  "1.35",
+				namespace:    "csitest-" + strings.ToLower(random.UniqueId()),
+				releaseName:  "csitest-" + strings.ToLower(random.UniqueId()),
+				chartRelPath: csiChart,
+				expectedImages: []string{
+					"rancher/mirrored-sig-storage-csi-node-driver-registrar:v2.13.0",
+					"rancher/mirrored-cloud-provider-vsphere-csi-release-driver:v3.5.0",
+					"rancher/mirrored-sig-storage-livenessprobe:v2.15.0",
+				},
+			},
+		},
+		{
 			name: "Kubernetes 1.34 Linux Only",
 			args: args{
 				values:         map[string]string{"vCenter.clusterId": random.UniqueId()},
@@ -359,6 +393,24 @@ func TestCSITemplateRenderedControllerDeployment(t *testing.T) {
 		name string
 		args args
 	}{
+		{
+			name: "Kubernetes 1.35",
+			args: args{
+				values:            map[string]string{"vCenter.clusterId": random.UniqueId()},
+				kubeVersion:       "1.35",
+				namespace:         "csitest-" + strings.ToLower(random.UniqueId()),
+				releaseName:       "csitest-" + strings.ToLower(random.UniqueId()),
+				chartRelPath:      csiChart,
+				csiResizerEnabled: false,
+				expectedImages: []string{
+					"rancher/mirrored-sig-storage-csi-attacher:v4.8.1",
+					"rancher/mirrored-cloud-provider-vsphere-csi-release-driver:v3.5.0",
+					"rancher/mirrored-sig-storage-livenessprobe:v2.15.0",
+					"rancher/mirrored-cloud-provider-vsphere-csi-release-syncer:v3.5.0",
+					"rancher/mirrored-sig-storage-csi-provisioner:v4.0.1",
+				},
+			},
+		},
 		{
 			name: "Kubernetes 1.34",
 			args: args{
@@ -724,6 +776,20 @@ func TestCSITemplateRenderedControllerDeploymentArgs(t *testing.T) {
 		args args
 	}{
 		{
+			name: "Kubernetes 1.35",
+			args: args{
+				values:       map[string]string{"vCenter.clusterId": random.UniqueId()},
+				kubeVersion:  "1.35",
+				namespace:    "csitest-" + strings.ToLower(random.UniqueId()),
+				releaseName:  "csitest-" + strings.ToLower(random.UniqueId()),
+				chartRelPath: csiChart,
+				expectedArgs: []string{
+					"--fss-name=internal-feature-states.csi.vsphere.vmware.com",
+					"--fss-namespace=$(CSI_NAMESPACE)",
+				},
+			},
+		},
+		{
 			name: "Kubernetes 1.34",
 			args: args{
 				values:       map[string]string{"vCenter.clusterId": random.UniqueId()},
@@ -882,6 +948,20 @@ func TestCSITemplateRenderedNodeDaemonSetArgs(t *testing.T) {
 		name string
 		args args
 	}{
+		{
+			name: "Kubernetes 1.35",
+			args: args{
+				values:       map[string]string{"vCenter.clusterId": random.UniqueId()},
+				kubeVersion:  "1.35",
+				namespace:    "csitest-" + strings.ToLower(random.UniqueId()),
+				releaseName:  "csitest-" + strings.ToLower(random.UniqueId()),
+				chartRelPath: csiChart,
+				expectedArgs: []string{
+					"--fss-name=internal-feature-states.csi.vsphere.vmware.com",
+					"--fss-namespace=$(CSI_NAMESPACE)",
+				},
+			},
+		},
 		{
 			name: "Kubernetes 1.34",
 			args: args{
