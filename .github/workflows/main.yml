@@ -22,7 +22,18 @@ jobs:
           go-version-file: go.mod
       - name: Install Helm
         run: |
-          curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
-          chmod 700 get_helm.sh && ./get_helm.sh
+          set -euo pipefail
+
+          HELM_VERSION="v3.20.1"
+          HELM_TARBALL="helm-${HELM_VERSION}-linux-amd64.tar.gz"
+          HELM_SHA256="0165ee4a2db012cc657381001e593e981f42aa5707acdd50658326790c9d0dc3"
+
+          curl -fsSLO "https://get.helm.sh/${HELM_TARBALL}"
+
+          echo "${HELM_SHA256}  ${HELM_TARBALL}" | sha256sum -c -
+
+          tar -xzf "${HELM_TARBALL}"
+          sudo mv linux-amd64/helm /usr/local/bin/helm
+          helm version --short
       - name: Run CI
         run: make
