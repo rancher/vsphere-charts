@@ -30,3 +30,4 @@ Any images consumed by this chart need to be mirrored in the following [reposito
 
 Charts from this repository should be consumed by commit hash based on the version and features that you want to have
 included.
+
