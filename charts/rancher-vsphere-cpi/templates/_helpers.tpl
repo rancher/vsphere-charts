@@ -17,7 +17,6 @@ merged with the prime config, e.g.:
 {{- $tag := .tag -}}
 {{- if and .prime .prime.enabled .primeRepository -}}
 {{- $repo = .primeRepository -}}
-{{- $tag = default .tag .primeTag -}}
 {{- end -}}
 {{- printf "%s:%s" $repo $tag -}}
 {{- end -}}
