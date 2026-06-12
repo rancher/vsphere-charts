@@ -71,7 +71,7 @@ spec:
       dnsPolicy: {{ .Values.csiNode.dnsPolicy | default "ClusterFirstWithHostNet" }}
       containers:
         - name: node-driver-registrar
-          image: "{{ template "system_default_registry" . }}{{ .Values.csiNode.image.nodeDriverRegistrar.repository }}:{{ .Values.csiNode.image.nodeDriverRegistrar.tag }}"
+          image: "{{ template "system_default_registry" . }}{{ include "vsphere.image" (merge (dict "prime" $.Values.global.prime) .Values.csiNode.image.nodeDriverRegistrar) }}"
           imagePullPolicy: {{ .Values.csiNode.image.nodeDriverRegistrar.imagePullPolicy | quote }}
           args:
             - "--v=5"
@@ -102,7 +102,7 @@ spec:
               - --mode=kubelet-registration-probe
             initialDelaySeconds: 3
         - name: vsphere-csi-node
-          image: "{{ template "system_default_registry" . }}{{ .Values.csiNode.image.repository }}:{{ .Values.csiNode.image.tag }}"
+          image: "{{ template "system_default_registry" . }}{{ include "vsphere.image" (merge (dict "prime" $.Values.global.prime) .Values.csiNode.image) }}"
           imagePullPolicy: {{ .Values.csiNode.image.imagePullPolicy | quote }}
           args:
             - "--fss-name=internal-feature-states.csi.vsphere.vmware.com"
@@ -185,7 +185,7 @@ spec:
             periodSeconds: 5
             failureThreshold: 3
         - name: liveness-probe
-          image: "{{ template "system_default_registry" . }}{{ .Values.csiNode.image.livenessProbe.repository }}:{{ .Values.csiNode.image.livenessProbe.tag }}"
+          image: "{{ template "system_default_registry" . }}{{ include "vsphere.image" (merge (dict "prime" $.Values.global.prime) .Values.csiNode.image.livenessProbe) }}"
           imagePullPolicy: {{ .Values.csiNode.image.livenessProbe.imagePullPolicy | quote }}
           args:
             - "--v=4"

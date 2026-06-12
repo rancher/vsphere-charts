@@ -40,6 +40,33 @@ func TestCPITemplateRenderedDaemonset(t *testing.T) {
 			},
 		},
 		{
+			name: "Kubernetes 1.36 Prime",
+			args: args{
+				values: map[string]string{
+					"global.prime.enabled": "true",
+				},
+				kubeVersion:   "1.36",
+				namespace:     "cpitest-" + strings.ToLower(random.UniqueId()),
+				releaseName:   "cpitest-" + strings.ToLower(random.UniqueId()),
+				chartRelPath:  cpiChart,
+				expectedImage: "rancher/hardened-cloud-provider-vsphere:v1.36.0",
+			},
+		},
+		{
+			name: "Kubernetes 1.30 Prime with system default registry",
+			args: args{
+				values: map[string]string{
+					"global.prime.enabled":                "true",
+					"global.cattle.systemDefaultRegistry": "registry.rancher.com",
+				},
+				kubeVersion:   "1.30",
+				namespace:     "cpitest-" + strings.ToLower(random.UniqueId()),
+				releaseName:   "cpitest-" + strings.ToLower(random.UniqueId()),
+				chartRelPath:  cpiChart,
+				expectedImage: "registry.rancher.com/rancher/hardened-cloud-provider-vsphere:v1.30.1",
+			},
+		},
+		{
 			name: "Kubernetes 1.35",
 			args: args{
 				values:        map[string]string{},

@@ -45,6 +45,26 @@ func TestCSITemplateRenderedNodeDaemonset(t *testing.T) {
 			},
 		},
 		{
+			name: "Kubernetes 1.36 Linux Only Prime with system default registry",
+			args: args{
+				values: map[string]string{
+					"vCenter.clusterId":                   random.UniqueId(),
+					"global.prime.enabled":                "true",
+					"global.cattle.systemDefaultRegistry": "registry.rancher.com",
+				},
+				kubeVersion:    "1.36",
+				namespace:      "csitest-" + strings.ToLower(random.UniqueId()),
+				releaseName:    "csitest-" + strings.ToLower(random.UniqueId()),
+				chartRelPath:   csiChart,
+				windowsEnabled: false,
+				expectedImages: []string{
+					"registry.rancher.com/rancher/hardened-csi-node-driver-registrar:v2.13.0",
+					"registry.rancher.com/rancher/hardened-vsphere-csi-driver:v3.6.0",
+					"registry.rancher.com/rancher/hardened-livenessprobe:v2.15.0",
+				},
+			},
+		},
+		{
 			name: "Kubernetes 1.36 Linux and Windows",
 			args: args{
 				values: map[string]string{
@@ -442,6 +462,28 @@ func TestCSITemplateRenderedControllerDeployment(t *testing.T) {
 					"rancher/mirrored-sig-storage-livenessprobe:v2.15.0",
 					"rancher/mirrored-cloud-provider-vsphere-csi-release-syncer:v3.7.2",
 					"rancher/mirrored-sig-storage-csi-provisioner:v4.0.1",
+				},
+			},
+		},
+		{
+			name: "Kubernetes 1.35 Prime with system default registry",
+			args: args{
+				values: map[string]string{
+					"vCenter.clusterId":                   random.UniqueId(),
+					"global.prime.enabled":                "true",
+					"global.cattle.systemDefaultRegistry": "registry.rancher.com",
+				},
+				kubeVersion:       "1.35",
+				namespace:         "csitest-" + strings.ToLower(random.UniqueId()),
+				releaseName:       "csitest-" + strings.ToLower(random.UniqueId()),
+				chartRelPath:      csiChart,
+				csiResizerEnabled: false,
+				expectedImages: []string{
+					"registry.rancher.com/rancher/hardened-csi-attacher:v4.9.0",
+					"registry.rancher.com/rancher/hardened-vsphere-csi-driver:v3.6.0",
+					"registry.rancher.com/rancher/hardened-livenessprobe:v2.15.0",
+					"registry.rancher.com/rancher/hardened-vsphere-csi-syncer:v3.6.0",
+					"registry.rancher.com/rancher/hardened-csi-provisioner:v4.0.1",
 				},
 			},
 		},
