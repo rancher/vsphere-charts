@@ -33,6 +33,7 @@ csiController:
     enabled: false
   image:
     repository: rancher/mirrored-cloud-provider-vsphere-csi-release-driver
+    primeRepository: rancher/hardened-vsphere-csi-driver
     tag: latest
     imagePullPolicy: ""
     additionalArgs: []
@@ -46,6 +47,7 @@ csiController:
     #   memory: 128Mi
     csiAttacher:
       repository: rancher/mirrored-sig-storage-csi-attacher
+      primeRepository: rancher/hardened-csi-attacher
       tag: latest
       imagePullPolicy: ""
       additionalArgs: []
@@ -59,6 +61,7 @@ csiController:
       #   memory: 128Mi
     csiResizer:
       repository: rancher/mirrored-sig-storage-csi-resizer
+      primeRepository: rancher/hardened-csi-resizer
       tag: latest
       imagePullPolicy: ""
       additionalArgs: []
@@ -72,6 +75,7 @@ csiController:
       #   memory: 128Mi
     livenessProbe:
       repository: rancher/mirrored-sig-storage-livenessprobe
+      primeRepository: rancher/hardened-livenessprobe
       tag: latest
       imagePullPolicy: ""
       additionalArgs: []
@@ -85,6 +89,7 @@ csiController:
       #   memory: 128Mi
     vsphereSyncer:
       repository: rancher/mirrored-cloud-provider-vsphere-csi-release-syncer
+      primeRepository: rancher/hardened-vsphere-csi-syncer
       tag: latest
       imagePullPolicy: ""
       additionalArgs: []
@@ -98,6 +103,7 @@ csiController:
       #   memory: 128Mi
     csiProvisioner:
       repository: rancher/mirrored-sig-storage-csi-provisioner
+      primeRepository: rancher/hardened-csi-provisioner
       tag: latest
       imagePullPolicy: ""
       additionalArgs: []
@@ -111,6 +117,7 @@ csiController:
       #   memory: 128Mi
     csiSnapshotter:
       repository: rancher/mirrored-sig-storage-csi-snapshotter
+      primeRepository: rancher/hardened-csi-snapshotter
       tag: latest
       imagePullPolicy: ""
       additionalArgs: []
@@ -224,6 +231,7 @@ csiNode:
   dnsPolicy: "ClusterFirstWithHostNet"
   image:
     repository: rancher/mirrored-cloud-provider-vsphere-csi-release-driver
+    primeRepository: rancher/hardened-vsphere-csi-driver
     tag: latest
     imagePullPolicy: ""
     additionalArgs: []
@@ -237,6 +245,7 @@ csiNode:
     #   memory: 128Mi
     nodeDriverRegistrar:
       repository: rancher/mirrored-sig-storage-csi-node-driver-registrar
+      primeRepository: rancher/hardened-csi-node-driver-registrar
       tag: latest
       imagePullPolicy: ""
       additionalArgs: []
@@ -250,6 +259,7 @@ csiNode:
       #   memory: 128Mi
     livenessProbe:
       repository: rancher/mirrored-sig-storage-livenessprobe
+      primeRepository: rancher/hardened-livenessprobe
       tag: latest
       imagePullPolicy: ""
       additionalArgs: []
@@ -275,6 +285,13 @@ global:
   imagePullSecrets: []
   cattle:
     systemDefaultRegistry: ""
+  # When prime.enabled is true, images are pulled from their `primeRepository`
+  # (the hardened `rancher/hardened-*` images published to the Rancher Prime
+  # registry) instead of the community `rancher/mirrored-*` images. Set
+  # global.cattle.systemDefaultRegistry to the Prime registry host alongside
+  # this. This flag is enabled automatically for Rancher Prime installs.
+  prime:
+    enabled: false
 
 # A list of Semver constraint strings (defined by https://github.com/Masterminds/semver) and values.yaml overrides.
 #

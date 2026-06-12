@@ -90,7 +90,7 @@ spec:
       serviceAccountName: {{ .Chart.Name }}-cloud-controller-manager
       containers:
         - name: {{ .Chart.Name }}-cloud-controller-manager
-          image: {{ template "system_default_registry" . }}{{ .Values.cloudControllerManager.repository }}:{{ .Values.cloudControllerManager.tag }}
+          image: {{ template "system_default_registry" . }}{{ include "vsphere.image" (merge (dict "prime" $.Values.global.prime) .Values.cloudControllerManager) }}
           args:
             - --cloud-provider=vsphere
             - --v=2

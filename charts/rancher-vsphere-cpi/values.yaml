@@ -98,6 +98,7 @@ versionOverrides:
 
 cloudControllerManager:
   repository: rancher/mirrored-cloud-provider-vsphere-cpi-release-manager
+  primeRepository: rancher/hardened-cloud-provider-vsphere
   tag: latest
   nodeSelector: {}
   tolerations: []
@@ -116,5 +117,12 @@ cloudControllerManager:
 global:
   cattle:
     systemDefaultRegistry: ""
+  # When prime.enabled is true, the cloud controller manager image is pulled
+  # from its `primeRepository` (the hardened `rancher/hardened-cloud-provider-vsphere`
+  # image published to the Rancher Prime registry) instead of the community
+  # `rancher/mirrored-*` image. Set global.cattle.systemDefaultRegistry to the
+  # Prime registry host alongside this. Enabled automatically for Rancher Prime.
+  prime:
+    enabled: false
   # Set the IP Family to set Node addresses for (ipv4 or ipv6 or dual-stack, defaults to ipv4 only)
   ipFamily: ""

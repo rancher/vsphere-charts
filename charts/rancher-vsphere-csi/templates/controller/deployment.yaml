@@ -93,7 +93,7 @@ spec:
       dnsPolicy: {{ .Values.csiController.dnsPolicy | default "Default" }}
       containers:
         - name: csi-attacher
-          image: "{{ template "system_default_registry" . }}{{ .Values.csiController.image.csiAttacher.repository }}:{{ .Values.csiController.image.csiAttacher.tag }}"
+          image: "{{ template "system_default_registry" . }}{{ include "vsphere.image" (merge (dict "prime" $.Values.global.prime) .Values.csiController.image.csiAttacher) }}"
           imagePullPolicy: {{ .Values.csiController.image.csiAttacher.imagePullPolicy | quote }}
           args:
             - "--v=4"
@@ -117,7 +117,7 @@ spec:
               name: socket-dir
 {{- if .Values.csiController.csiResizer.enabled }}
         - name: csi-resizer
-          image: "{{ template "system_default_registry" . }}{{ .Values.csiController.image.csiResizer.repository }}:{{ .Values.csiController.image.csiResizer.tag }}"
+          image: "{{ template "system_default_registry" . }}{{ include "vsphere.image" (merge (dict "prime" $.Values.global.prime) .Values.csiController.image.csiResizer) }}"
           imagePullPolicy: {{ .Values.csiController.image.csiResizer.imagePullPolicy | quote }}
           args:
             - "--v=4"
@@ -143,7 +143,7 @@ spec:
 {{- end }}
 {{- if .Values.blockVolumeSnapshot.enabled }}
         - name: csi-snapshotter
-          image: "{{ template "system_default_registry" . }}{{ .Values.csiController.image.csiSnapshotter.repository }}:{{ .Values.csiController.image.csiSnapshotter.tag }}"
+          image: "{{ template "system_default_registry" . }}{{ include "vsphere.image" (merge (dict "prime" $.Values.global.prime) .Values.csiController.image.csiSnapshotter) }}"
           imagePullPolicy: {{ .Values.csiController.image.csiSnapshotter.imagePullPolicy | quote }}
           args:
             - "--v=4"
@@ -170,7 +170,7 @@ spec:
               name: socket-dir
 {{- end }}
         - name: vsphere-csi-controller
-          image: "{{ template "system_default_registry" . }}{{ .Values.csiController.image.repository }}:{{ .Values.csiController.image.tag }}"
+          image: "{{ template "system_default_registry" . }}{{ include "vsphere.image" (merge (dict "prime" $.Values.global.prime) .Values.csiController.image) }}"
           imagePullPolicy: {{ .Values.csiController.image.imagePullPolicy | quote }}
           args:
             - "--fss-name=internal-feature-states.csi.vsphere.vmware.com"
@@ -228,7 +228,7 @@ spec:
             periodSeconds: 5
             failureThreshold: 3
         - name: liveness-probe
-          image: "{{ template "system_default_registry" . }}{{ .Values.csiController.image.livenessProbe.repository }}:{{ .Values.csiController.image.livenessProbe.tag }}"
+          image: "{{ template "system_default_registry" . }}{{ include "vsphere.image" (merge (dict "prime" $.Values.global.prime) .Values.csiController.image.livenessProbe) }}"
           imagePullPolicy: {{ .Values.csiController.image.livenessProbe.imagePullPolicy | quote }}
           args:
             - "--v=4"
@@ -244,7 +244,7 @@ spec:
             - name: socket-dir
               mountPath: /csi
         - name: vsphere-syncer
-          image: "{{ template "system_default_registry" . }}{{ .Values.csiController.image.vsphereSyncer.repository }}:{{ .Values.csiController.image.vsphereSyncer.tag }}"
+          image: "{{ template "system_default_registry" . }}{{ include "vsphere.image" (merge (dict "prime" $.Values.global.prime) .Values.csiController.image.vsphereSyncer) }}"
           imagePullPolicy: {{ .Values.csiController.image.vsphereSyncer.imagePullPolicy | quote }}
           args:
             - "--leader-election"
@@ -281,7 +281,7 @@ spec:
               name: vsphere-config-volume
               readOnly: true
         - name: csi-provisioner
-          image: "{{ template "system_default_registry" . }}{{ .Values.csiController.image.csiProvisioner.repository }}:{{ .Values.csiController.image.csiProvisioner.tag }}"
+          image: "{{ template "system_default_registry" . }}{{ include "vsphere.image" (merge (dict "prime" $.Values.global.prime) .Values.csiController.image.csiProvisioner) }}"
           imagePullPolicy: {{ .Values.csiController.image.csiProvisioner.imagePullPolicy | quote }}
           args:
             - "--v=4"

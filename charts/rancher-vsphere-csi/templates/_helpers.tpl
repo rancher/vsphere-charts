@@ -6,6 +6,22 @@
 {{- end -}}
 {{- end -}}
 
+{{/*
+Render "repository:tag" for an image, selecting the hardened Prime image when
+global.prime.enabled is true and a primeRepository is set. Pass the image dict
+merged with the prime config, e.g.:
+  {{ include "vsphere.image" (merge (dict "prime" .Values.global.prime) .Values.csiController.image) }}
+*/}}
+{{- define "vsphere.image" -}}
+{{- $repo := .repository -}}
+{{- $tag := .tag -}}
+{{- if and .prime .prime.enabled .primeRepository -}}
+{{- $repo = .primeRepository -}}
+{{- $tag = default .tag .primeTag -}}
+{{- end -}}
+{{- printf "%s:%s" $repo $tag -}}
+{{- end -}}
+
 {{- define "applyVersionOverrides" -}}
 {{- $overrides := dict -}}
 {{- range $override := .Values.versionOverrides -}}
