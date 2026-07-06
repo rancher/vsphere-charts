@@ -8,7 +8,8 @@
 
 {{/*
 Render "repository:tag" for an image, selecting the hardened Prime image when
-global.prime.enabled is true and a primeRepository is set. Pass the image dict
+global.prime.enabled is true and a primeRepository is set. If primeTag is set,
+it is used as the image tag in Prime mode as well. Pass the image dict
 merged with the prime config, e.g.:
   {{ include "vsphere.image" (merge (dict "prime" .Values.global.prime) .Values.cloudControllerManager) }}
 */}}
@@ -17,6 +18,9 @@ merged with the prime config, e.g.:
 {{- $tag := .tag -}}
 {{- if and .prime .prime.enabled .primeRepository -}}
 {{- $repo = .primeRepository -}}
+{{- if .primeTag -}}
+{{- $tag = .primeTag -}}
+{{- end -}}
 {{- end -}}
 {{- printf "%s:%s" $repo $tag -}}
 {{- end -}}
