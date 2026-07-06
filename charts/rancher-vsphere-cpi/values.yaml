@@ -100,6 +100,7 @@ cloudControllerManager:
   repository: rancher/mirrored-cloud-provider-vsphere-cpi-release-manager
   primeRepository: rancher/hardened-cloud-provider-vsphere
   tag: latest
+  primeTag: v1.36.0-build20260702
   nodeSelector: {}
   tolerations: []
   ## Optional additional labels to add to pods
