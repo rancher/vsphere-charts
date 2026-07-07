@@ -158,6 +158,66 @@ targets:
       file: charts/rancher-vsphere-csi/values.yaml
       key: csiNode.image.nodeDriverRegistrar.primeTag
 
+  csiNodeDriverRegistrarPrimeTagTest:
+    name: Update CSI node-driver-registrar prime tags in tests
+    kind: file
+    scmid: default
+    sourceid: nodeDriverRegistrarPrime
+    spec:
+      file: tests/unit/csi_template_test.go
+      matchpattern: 'registry.rancher.com/rancher/hardened-csi-node-driver-registrar:[^"]+'
+      replacepattern: 'registry.rancher.com/rancher/hardened-csi-node-driver-registrar:{{ source "nodeDriverRegistrarPrime" }}'
+
+  csiDriverPrimeTagTest:
+    name: Update CSI driver prime tags in tests
+    kind: file
+    scmid: default
+    sourceid: csiDriverPrime
+    spec:
+      file: tests/unit/csi_template_test.go
+      matchpattern: 'registry.rancher.com/rancher/hardened-vsphere-csi-driver:[^"]+'
+      replacepattern: 'registry.rancher.com/rancher/hardened-vsphere-csi-driver:{{ source "csiDriverPrime" }}'
+
+  csiLivenessProbePrimeTagTest:
+    name: Update CSI livenessprobe prime tags in tests
+    kind: file
+    scmid: default
+    sourceid: livenessProbePrime
+    spec:
+      file: tests/unit/csi_template_test.go
+      matchpattern: 'registry.rancher.com/rancher/hardened-livenessprobe:[^"]+'
+      replacepattern: 'registry.rancher.com/rancher/hardened-livenessprobe:{{ source "livenessProbePrime" }}'
+
+  csiAttacherPrimeTagTest:
+    name: Update CSI attacher prime tags in tests
+    kind: file
+    scmid: default
+    sourceid: csiAttacherPrime
+    spec:
+      file: tests/unit/csi_template_test.go
+      matchpattern: 'registry.rancher.com/rancher/hardened-csi-attacher:[^"]+'
+      replacepattern: 'registry.rancher.com/rancher/hardened-csi-attacher:{{ source "csiAttacherPrime" }}'
+
+  csiSyncerPrimeTagTest:
+    name: Update CSI syncer prime tags in tests
+    kind: file
+    scmid: default
+    sourceid: vsphereSyncerPrime
+    spec:
+      file: tests/unit/csi_template_test.go
+      matchpattern: 'registry.rancher.com/rancher/hardened-vsphere-csi-syncer:[^"]+'
+      replacepattern: 'registry.rancher.com/rancher/hardened-vsphere-csi-syncer:{{ source "vsphereSyncerPrime" }}'
+
+  csiProvisionerPrimeTagTest:
+    name: Update CSI provisioner prime tags in tests
+    kind: file
+    scmid: default
+    sourceid: csiProvisionerPrime
+    spec:
+      file: tests/unit/csi_template_test.go
+      matchpattern: 'registry.rancher.com/rancher/hardened-csi-provisioner:[^"]+'
+      replacepattern: 'registry.rancher.com/rancher/hardened-csi-provisioner:{{ source "csiProvisionerPrime" }}'
+
 scms:
   default:
     kind: github
