@@ -20,5 +20,23 @@ targets:
       file: charts/rancher-vsphere-cpi/values.yaml
       key: cloudControllerManager.primeTag
 
+  cpiPrimeTagTestNoRegistry:
+    name: Update CPI prime tag in tests without system default registry
+    kind: file
+    sourceid: cpiPrime
+    spec:
+      file: tests/unit/cpi_template_test.go
+      matchpattern: 'expectedImage: "rancher/hardened-cloud-provider-vsphere:[^"]+"'
+      replacepattern: 'expectedImage: "rancher/hardened-cloud-provider-vsphere:{{ source "cpiPrime" }}"'
+
+  cpiPrimeTagTestWithRegistry:
+    name: Update CPI prime tag in tests with system default registry
+    kind: file
+    sourceid: cpiPrime
+    spec:
+      file: tests/unit/cpi_template_test.go
+      matchpattern: 'expectedImage: "registry.rancher.com/rancher/hardened-cloud-provider-vsphere:[^"]+"'
+      replacepattern: 'expectedImage: "registry.rancher.com/rancher/hardened-cloud-provider-vsphere:{{ source "cpiPrime" }}"'
+
 
 # We don't have SCM or Action sections because we group the CSI and CPI updates into a single PR. 
