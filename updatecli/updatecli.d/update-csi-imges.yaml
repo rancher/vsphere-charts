@@ -1,0 +1,193 @@
+name: "Update Rancher vSphere CSI prime tags"
+
+sources:
+  csiDriverPrime:
+    name: Get latest hardened vSphere CSI driver tag
+    kind: dockerimage
+    spec:
+      image: '{{ .images.primeRegistryRepo }}/hardened-vsphere-csi-driver'
+      tagfilter: '^v[0-9]+\.[0-9]+\.[0-9]+-build[0-9]+$'
+      versionfilter:
+        kind: semver
+        pattern: ">=0.0.0"
+
+  csiAttacherPrime:
+    name: Get latest hardened CSI attacher tag
+    kind: dockerimage
+    spec:
+      image: '{{ .images.primeRegistryRepo }}/hardened-csi-attacher'
+      tagfilter: '^v[0-9]+\.[0-9]+\.[0-9]+-build[0-9]+$'
+      versionfilter:
+        kind: semver
+        pattern: ">=0.0.0"
+
+  csiResizerPrime:
+    name: Get latest hardened CSI resizer tag
+    kind: dockerimage
+    spec:
+      image: '{{ .images.primeRegistryRepo }}/hardened-csi-resizer'
+      tagfilter: '^v[0-9]+\.[0-9]+\.[0-9]+-build[0-9]+$'
+      versionfilter:
+        kind: semver
+        pattern: ">=0.0.0"
+
+  livenessProbePrime:
+    name: Get latest hardened livenessprobe tag
+    kind: dockerimage
+    spec:
+      image: '{{ .images.primeRegistryRepo }}/hardened-livenessprobe'
+      tagfilter: '^v[0-9]+\.[0-9]+\.[0-9]+-build[0-9]+$'
+      versionfilter:
+        kind: semver
+        pattern: ">=0.0.0"
+
+  vsphereSyncerPrime:
+    name: Get latest hardened vSphere CSI syncer tag
+    kind: dockerimage
+    spec:
+      image: '{{ .images.primeRegistryRepo }}/hardened-vsphere-csi-syncer'
+      tagfilter: '^v[0-9]+\.[0-9]+\.[0-9]+-build[0-9]+$'
+      versionfilter:
+        kind: semver
+        pattern: ">=0.0.0"
+
+  csiProvisionerPrime:
+    name: Get latest hardened CSI provisioner tag
+    kind: dockerimage
+    spec:
+      image: '{{ .images.primeRegistryRepo }}/hardened-csi-provisioner'
+      tagfilter: '^v[0-9]+\.[0-9]+\.[0-9]+-build[0-9]+$'
+      versionfilter:
+        kind: semver
+        pattern: ">=0.0.0"
+
+  csiSnapshotterPrime:
+    name: Get latest hardened CSI snapshotter tag
+    kind: dockerimage
+    spec:
+      image: '{{ .images.primeRegistryRepo }}/hardened-csi-snapshotter'
+      tagfilter: '^v[0-9]+\.[0-9]+\.[0-9]+-build[0-9]+$'
+      versionfilter:
+        kind: semver
+        pattern: ">=0.0.0"
+
+  nodeDriverRegistrarPrime:
+    name: Get latest hardened CSI node-driver-registrar tag
+    kind: dockerimage
+    spec:
+      image: '{{ .images.primeRegistryRepo }}/hardened-csi-node-driver-registrar'
+      tagfilter: '^v[0-9]+\.[0-9]+\.[0-9]+-build[0-9]+$'
+      versionfilter:
+        kind: semver
+        pattern: ">=0.0.0"
+
+targets:
+  csiDriverPrimeTag:
+    name: Update CSI driver primeTag values
+    kind: yaml
+    scmid: default
+    sourceid: csiDriverPrime
+    spec:
+      file: charts/rancher-vsphere-csi/values.yaml
+      keys:
+        - csiController.image.primeTag
+        - csiNode.image.primeTag
+
+  vsphereSyncerPrimeTag:
+    name: Update vSphere syncer primeTag
+    kind: yaml
+    scmid: default
+    sourceid: vsphereSyncerPrime
+    spec:
+      file: charts/rancher-vsphere-csi/values.yaml
+      key: csiController.image.vsphereSyncer.primeTag
+
+  csiAttacherPrimeTag:
+    name: Update CSI attacher primeTag
+    kind: yaml
+    scmid: default
+    sourceid: csiAttacherPrime
+    spec:
+      file: charts/rancher-vsphere-csi/values.yaml
+      key: csiController.image.csiAttacher.primeTag
+
+  csiResizerPrimeTag:
+    name: Update CSI resizer primeTag
+    kind: yaml
+    scmid: default
+    sourceid: csiResizerPrime
+    spec:
+      file: charts/rancher-vsphere-csi/values.yaml
+      key: csiController.image.csiResizer.primeTag
+
+  livenessProbePrimeTag:
+    name: Update liveness probe primeTag values
+    kind: yaml
+    scmid: default
+    sourceid: livenessProbePrime
+    spec:
+      file: charts/rancher-vsphere-csi/values.yaml
+      keys:
+        - csiController.image.livenessProbe.primeTag
+        - csiNode.image.livenessProbe.primeTag
+
+  csiProvisionerPrimeTag:
+    name: Update CSI provisioner primeTag
+    kind: yaml
+    scmid: default
+    sourceid: csiProvisionerPrime
+    spec:
+      file: charts/rancher-vsphere-csi/values.yaml
+      key: csiController.image.csiProvisioner.primeTag
+
+  csiSnapshotterPrimeTag:
+    name: Update CSI snapshotter primeTag
+    kind: yaml
+    scmid: default
+    sourceid: csiSnapshotterPrime
+    spec:
+      file: charts/rancher-vsphere-csi/values.yaml
+      key: csiController.image.csiSnapshotter.primeTag
+
+  nodeDriverRegistrarPrimeTag:
+    name: Update node-driver-registrar primeTag
+    kind: yaml
+    scmid: default
+    sourceid: nodeDriverRegistrarPrime
+    spec:
+      file: charts/rancher-vsphere-csi/values.yaml
+      key: csiNode.image.nodeDriverRegistrar.primeTag
+
+scms:
+  default:
+    kind: github
+    spec:
+      token: '{{ requiredEnv .github.token }}'
+      username: '{{ requiredEnv .github.username }}'
+      user: '{{ .github.user }}'
+      email: '{{ .github.email }}'
+      owner: '{{ .github.owner }}'
+      repository: '{{ .github.repository }}'
+      branch: '{{ .github.branch }}'
+      commitusingapi: true
+
+actions:
+  default:
+    title: '[updatecli] Bump Rancher vSphere CSI Prime image tags'
+    kind: github/pullrequest
+    scmid: default
+    spec:
+      automerge: false
+      mergemethod: squash
+      description: |
+        This automated PR updates Rancher Prime image tags in the CSI chart.
+
+        Updated sources:
+        - hardened-vsphere-csi-driver: {{ source "csiDriverPrime" }}
+        - hardened-csi-attacher: {{ source "csiAttacherPrime" }}
+        - hardened-csi-resizer: {{ source "csiResizerPrime" }}
+        - hardened-livenessprobe: {{ source "livenessProbePrime" }}
+        - hardened-vsphere-csi-syncer: {{ source "vsphereSyncerPrime" }}
+        - hardened-csi-provisioner: {{ source "csiProvisionerPrime" }}
+        - hardened-csi-snapshotter: {{ source "csiSnapshotterPrime" }}
+        - hardened-csi-node-driver-registrar: {{ source "nodeDriverRegistrarPrime" }}

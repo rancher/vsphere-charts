@@ -1,0 +1,24 @@
+name: "Update Rancher vSphere CPI prime tags"
+
+sources:
+  cpiPrime:
+    name: Get latest hardened vSphere CPI tag
+    kind: dockerimage
+    spec:
+      image: '{{ .images.primeRegistryRepo }}/hardened-cloud-provider-vsphere'
+      tagfilter: '^v[0-9]+\.[0-9]+\.[0-9]+-build[0-9]+$'
+      versionfilter:
+        kind: semver
+        pattern: ">=0.0.0"
+
+targets:
+  cpiPrimeTag:
+    name: Update CPI cloudControllerManager primeTag
+    kind: yaml
+    sourceid: cpiPrime
+    spec:
+      file: charts/rancher-vsphere-cpi/values.yaml
+      key: cloudControllerManager.primeTag
+
+
+# We don't have SCM or Action sections because we group the CSI and CPI updates into a single PR. 
