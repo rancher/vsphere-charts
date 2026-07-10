@@ -2,14 +2,20 @@ name: "Update Rancher vSphere CPI prime tags"
 
 sources:
   cpiPrime:
-    name: Get latest hardened vSphere CPI tag
-    kind: dockerimage
+    name: Get latest vSphere CPI release tag
+    kind: githubrelease
     spec:
-      image: '{{ .images.primeRegistryRepo }}/hardened-cloud-provider-vsphere'
-      tagfilter: '^v[0-9]+\.[0-9]+\.[0-9]+-build[0-9]+$'
+      owner: rancher
+      repository: image-build-cloud-provider-vsphere
+      token: '{{ requiredEnv .github.token }}'
+      username: '{{ requiredEnv .github.username }}'
+      typefilter:
+        release: true
+        draft: false
+        prerelease: false
       versionfilter:
-        kind: semver
-        pattern: ">=0.0.0"
+        kind: regex
+        pattern: '^v[0-9]+\.[0-9]+\.[0-9]+-build[0-9]+$'
 
 targets:
   cpiPrimeTag:
