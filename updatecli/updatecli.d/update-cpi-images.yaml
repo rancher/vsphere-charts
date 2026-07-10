@@ -1,0 +1,153 @@
+name: "Update Rancher vSphere CPI prime tags"
+
+sources:
+  cpiPrime136:
+    name: Get latest vSphere CPI 1.36 release tag
+    kind: githubrelease
+    spec:
+      owner: rancher
+      repository: image-build-cloud-provider-vsphere
+      token: '{{ requiredEnv .github.token }}'
+      username: '{{ requiredEnv .github.username }}'
+      typefilter:
+        release: true
+        draft: false
+        prerelease: false
+      versionfilter:
+        kind: regex
+        pattern: '^v1\.36\.[0-9]+-build[0-9]+$'
+
+  cpiPrime135:
+    name: Get latest vSphere CPI 1.35 release tag
+    kind: githubrelease
+    spec:
+      owner: rancher
+      repository: image-build-cloud-provider-vsphere
+      token: '{{ requiredEnv .github.token }}'
+      username: '{{ requiredEnv .github.username }}'
+      typefilter:
+        release: true
+        draft: false
+        prerelease: false
+      versionfilter:
+        kind: regex
+        pattern: '^v1\.35\.[0-9]+-build[0-9]+$'
+
+  cpiPrime134:
+    name: Get latest vSphere CPI 1.34 release tag
+    kind: githubrelease
+    spec:
+      owner: rancher
+      repository: image-build-cloud-provider-vsphere
+      token: '{{ requiredEnv .github.token }}'
+      username: '{{ requiredEnv .github.username }}'
+      typefilter:
+        release: true
+        draft: false
+        prerelease: false
+      versionfilter:
+        kind: regex
+        pattern: '^v1\.34\.[0-9]+-build[0-9]+$'
+
+  cpiPrime133:
+    name: Get latest vSphere CPI 1.33 release tag
+    kind: githubrelease
+    spec:
+      owner: rancher
+      repository: image-build-cloud-provider-vsphere
+      token: '{{ requiredEnv .github.token }}'
+      username: '{{ requiredEnv .github.username }}'
+      typefilter:
+        release: true
+        draft: false
+        prerelease: false
+      versionfilter:
+        kind: regex
+        pattern: '^v1\.33\.[0-9]+-build[0-9]+$'
+
+targets:
+  cpiPrimeTag136:
+    name: Update CPI cloudControllerManager primeTag for 1.36
+    kind: yaml
+    scmid: default
+    sourceid: cpiPrime136
+    spec:
+      file: charts/rancher-vsphere-cpi/values.yaml
+      key: versionOverrides[0].values.cloudControllerManager.primeTag
+
+  cpiPrimeTag135:
+    name: Update CPI cloudControllerManager primeTag for 1.35
+    kind: yaml
+    scmid: default
+    sourceid: cpiPrime135
+    spec:
+      file: charts/rancher-vsphere-cpi/values.yaml
+      key: versionOverrides[1].values.cloudControllerManager.primeTag
+
+  cpiPrimeTag134:
+    name: Update CPI cloudControllerManager primeTag for 1.34
+    kind: yaml
+    scmid: default
+    sourceid: cpiPrime134
+    spec:
+      file: charts/rancher-vsphere-cpi/values.yaml
+      key: versionOverrides[2].values.cloudControllerManager.primeTag
+
+  cpiPrimeTag133:
+    name: Update CPI cloudControllerManager primeTag for 1.33
+    kind: yaml
+    scmid: default
+    sourceid: cpiPrime133
+    spec:
+      file: charts/rancher-vsphere-cpi/values.yaml
+      key: versionOverrides[3].values.cloudControllerManager.primeTag
+
+  cpiPrimeTagTestNoRegistry:
+    name: Update CPI prime tag in tests without system default registry
+    kind: file
+    scmid: default
+    sourceid: cpiPrime136
+    spec:
+      file: tests/unit/cpi_template_test.go
+      matchpattern: 'expectedImage: "rancher/hardened-cloud-provider-vsphere:[^"]+"'
+      replacepattern: 'expectedImage: "rancher/hardened-cloud-provider-vsphere:{{ source "cpiPrime136" }}"'
+
+  cpiPrimeTagTestWithRegistry:
+    name: Update CPI prime tag in tests with system default registry
+    kind: file
+    scmid: default
+    sourceid: cpiPrime136
+    spec:
+      file: tests/unit/cpi_template_test.go
+      matchpattern: 'expectedImage: "registry.rancher.com/rancher/hardened-cloud-provider-vsphere:[^"]+"'
+      replacepattern: 'expectedImage: "registry.rancher.com/rancher/hardened-cloud-provider-vsphere:{{ source "cpiPrime136" }}"'
+
+scms:
+  default:
+    kind: github
+    spec:
+      token: '{{ requiredEnv .github.token }}'
+      username: '{{ requiredEnv .github.username }}'
+      user: '{{ .github.user }}'
+      email: '{{ .github.email }}'
+      owner: '{{ .github.owner }}'
+      repository: '{{ .github.repository }}'
+      branch: '{{ .github.branch }}'
+      commitusingapi: true
+
+actions:
+  default:
+    title: '[updatecli] Bump Rancher vSphere CPI Prime image tags'
+    kind: github/pullrequest
+    scmid: default
+    spec:
+      automerge: false
+      mergemethod: squash
+      description: |
+        This automated PR updates the Rancher Prime image tag in the vSphere CPI chart.
+
+        Updated sources:
+        - hardened-cloud-provider-vsphere (1.36): {{ source "cpiPrime136" }}
+        - hardened-cloud-provider-vsphere (1.35): {{ source "cpiPrime135" }}
+        - hardened-cloud-provider-vsphere (1.34): {{ source "cpiPrime134" }}
+        - hardened-cloud-provider-vsphere (1.33): {{ source "cpiPrime133" }}

@@ -59,7 +59,7 @@ func TestCPITemplateRenderedDaemonset(t *testing.T) {
 					"global.prime.enabled":                "true",
 					"global.cattle.systemDefaultRegistry": "registry.rancher.com",
 				},
-				kubeVersion:   "1.30",
+				kubeVersion:   "1.36",
 				namespace:     "cpitest-" + strings.ToLower(random.UniqueId()),
 				releaseName:   "cpitest-" + strings.ToLower(random.UniqueId()),
 				chartRelPath:  cpiChart,
@@ -74,7 +74,7 @@ func TestCPITemplateRenderedDaemonset(t *testing.T) {
 				namespace:     "cpitest-" + strings.ToLower(random.UniqueId()),
 				releaseName:   "cpitest-" + strings.ToLower(random.UniqueId()),
 				chartRelPath:  cpiChart,
-				expectedImage: "rancher/mirrored-cloud-provider-vsphere:v1.35.0",
+				expectedImage: "rancher/mirrored-cloud-provider-vsphere:v1.35.1",
 			},
 		},
 		{
@@ -96,7 +96,7 @@ func TestCPITemplateRenderedDaemonset(t *testing.T) {
 				namespace:     "cpitest-" + strings.ToLower(random.UniqueId()),
 				releaseName:   "cpitest-" + strings.ToLower(random.UniqueId()),
 				chartRelPath:  cpiChart,
-				expectedImage: "rancher/mirrored-cloud-provider-vsphere:v1.33.0",
+				expectedImage: "rancher/mirrored-cloud-provider-vsphere:v1.33.1",
 			},
 		},
 		{
