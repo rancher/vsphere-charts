@@ -1,4 +1,4 @@
-name: "Update Rancher vSphere CSI prime tags"
+name: "Update Rancher vSphere CSI and CPI prime tags"
 
 sources:
   csiDriverPrime:
@@ -80,6 +80,22 @@ sources:
       versionfilter:
         kind: semver
         pattern: ">=0.0.0-0"
+
+  cpiPrime:
+    name: Get latest vSphere CPI release tag
+    kind: githubrelease
+    spec:
+      owner: rancher
+      repository: image-build-cloud-provider-vsphere
+      token: '{{ requiredEnv .github.token }}'
+      username: '{{ requiredEnv .github.username }}'
+      typefilter:
+        release: true
+        draft: false
+        prerelease: false
+      versionfilter:
+        kind: regex
+        pattern: '^v[0-9]+\.[0-9]+\.[0-9]+-build[0-9]+$'
 
 targets:
   csiDriverPrimeTag:
@@ -218,6 +234,35 @@ targets:
       matchpattern: 'registry.rancher.com/rancher/hardened-csi-provisioner:[^"]+'
       replacepattern: 'registry.rancher.com/rancher/hardened-csi-provisioner:{{ source "csiProvisionerPrime" }}'
 
+  cpiPrimeTag:
+    name: Update CPI cloudControllerManager primeTag
+    kind: yaml
+    scmid: default
+    sourceid: cpiPrime
+    spec:
+      file: charts/rancher-vsphere-cpi/values.yaml
+      key: cloudControllerManager.primeTag
+
+  cpiPrimeTagTestNoRegistry:
+    name: Update CPI prime tag in tests without system default registry
+    kind: file
+    scmid: default
+    sourceid: cpiPrime
+    spec:
+      file: tests/unit/cpi_template_test.go
+      matchpattern: 'expectedImage: "rancher/hardened-cloud-provider-vsphere:[^"]+"'
+      replacepattern: 'expectedImage: "rancher/hardened-cloud-provider-vsphere:{{ source "cpiPrime" }}"'
+
+  cpiPrimeTagTestWithRegistry:
+    name: Update CPI prime tag in tests with system default registry
+    kind: file
+    scmid: default
+    sourceid: cpiPrime
+    spec:
+      file: tests/unit/cpi_template_test.go
+      matchpattern: 'expectedImage: "registry.rancher.com/rancher/hardened-cloud-provider-vsphere:[^"]+"'
+      replacepattern: 'expectedImage: "registry.rancher.com/rancher/hardened-cloud-provider-vsphere:{{ source "cpiPrime" }}"'
+
 scms:
   default:
     kind: github
@@ -233,14 +278,14 @@ scms:
 
 actions:
   default:
-    title: '[updatecli] Bump Rancher vSphere CSI Prime image tags'
+    title: '[updatecli] Bump Rancher vSphere CSI and CPI Prime image tags'
     kind: github/pullrequest
     scmid: default
     spec:
       automerge: false
       mergemethod: squash
       description: |
-        This automated PR updates Rancher Prime image tags in the CSI chart.
+        This automated PR updates Rancher Prime image tags in the vSphere CSI and CPI charts.
 
         Updated sources:
         - hardened-vsphere-csi-driver: {{ source "csiDriverPrime" }}
@@ -251,3 +296,4 @@ actions:
         - hardened-csi-provisioner: {{ source "csiProvisionerPrime" }}
         - hardened-csi-snapshotter: {{ source "csiSnapshotterPrime" }}
         - hardened-csi-node-driver-registrar: {{ source "nodeDriverRegistrarPrime" }}
+        - hardened-cloud-provider-vsphere: {{ source "cpiPrime" }}
