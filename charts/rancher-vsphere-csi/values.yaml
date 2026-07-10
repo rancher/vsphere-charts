@@ -95,7 +95,7 @@ csiController:
       repository: rancher/mirrored-cloud-provider-vsphere-csi-release-syncer
       primeRepository: rancher/hardened-vsphere-csi-syncer
       tag: latest
-      primeTag: v3.7.2-build20260702
+      primeTag: v3.7.2-build20260710
       imagePullPolicy: ""
       additionalArgs: []
       resources: {}
