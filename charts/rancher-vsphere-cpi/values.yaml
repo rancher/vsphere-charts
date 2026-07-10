@@ -50,21 +50,25 @@ versionOverrides:
       cloudControllerManager:
         repository: rancher/mirrored-cloud-provider-vsphere
         tag: v1.36.0
+        primeTag: v1.36.0-build20260710
   - constraint: "~ 1.35"
     values:
       cloudControllerManager:
         repository: rancher/mirrored-cloud-provider-vsphere
-        tag: v1.35.0
+        tag: v1.35.1
+        primeTag: v1.35.1-build20260710
   - constraint: "~ 1.34"
     values:
       cloudControllerManager:
         repository: rancher/mirrored-cloud-provider-vsphere
         tag: v1.34.0
+        primeTag: v1.34.0-build20260710
   - constraint: "~ 1.33"
     values:
       cloudControllerManager:
         repository: rancher/mirrored-cloud-provider-vsphere
-        tag: v1.33.0
+        tag: v1.33.1
+        primeTag: v1.33.1-build20260710
   - constraint: "~ 1.32"
     values:
       cloudControllerManager:
@@ -100,7 +104,7 @@ cloudControllerManager:
   repository: rancher/mirrored-cloud-provider-vsphere-cpi-release-manager
   primeRepository: rancher/hardened-cloud-provider-vsphere
   tag: latest
-  primeTag: v1.36.0-build20260710
+  primeTag: latest
   nodeSelector: {}
   tolerations: []
   ## Optional additional labels to add to pods
