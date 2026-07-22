@@ -50,7 +50,7 @@ versionOverrides:
       cloudControllerManager:
         repository: rancher/mirrored-cloud-provider-vsphere
         tag: v1.36.0
-        primeTag: v1.36.0-build20260710
+        primeTag: v1.36.0-build20260722
   - constraint: "~ 1.35"
     values:
       cloudControllerManager:
