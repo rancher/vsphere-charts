@@ -163,6 +163,15 @@ csiController:
   #           operator: In
   #           values:
   #           - us-west
+  ## Topology spread constraints for controller pod assignment
+  ## Ref: https://kubernetes.io/docs/concepts/scheduling-eviction/topology-spread-constraints/
+  topologySpreadConstraints: []
+  # - maxSkew: 1
+  #   topologyKey: kubernetes.io/hostname
+  #   whenUnsatisfiable: DoNotSchedule
+  #   labelSelector:
+  #     matchLabels:
+  #       app: vsphere-csi-controller
   # Uncomment below toleration if you need an aggressive pod eviction in case when
   # node becomes not-ready or unreachable. Default is 300 seconds if not specified.
   tolerations: []
