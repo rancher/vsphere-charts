@@ -43,6 +43,9 @@ spec:
           operator: Exists
       {{- end }}
       serviceAccountName: vsphere-csi-node
+      {{- if .Values.csiNode.priorityClassName }}
+      priorityClassName: {{ .Values.csiNode.priorityClassName | quote }}
+      {{- end }}
       containers:
         - name: node-driver-registrar
           image: "{{ template "system_default_registry" . }}{{ include "vsphere.image" (merge (dict "prime" $.Values.global.prime) .Values.csiNode.image.nodeDriverRegistrar) }}"
