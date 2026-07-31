@@ -19,7 +19,11 @@ sources:
       tagfilter: '^v[0-9]+\.[0-9]+\.[0-9]+-build[0-9]+$'
       versionfilter:
         kind: semver
-        pattern: ">=0.0.0-0"
+        # Pin to the v4.9.x line to match the csi-attacher version pinned by the
+        # vSphere CSI driver manifest. The hardened repo also publishes a newer
+        # v4.12.0 line, so an unconstrained ">=0.0.0-0" filter drifts prime ahead
+        # of mirrored.
+        pattern: '>=4.9.0-0 <4.10.0-0'
 
   csiResizerPrime:
     name: Get latest hardened CSI resizer tag
@@ -29,7 +33,11 @@ sources:
       tagfilter: '^v[0-9]+\.[0-9]+\.[0-9]+-build[0-9]+$'
       versionfilter:
         kind: semver
-        pattern: ">=0.0.0-0"
+        # Pin to the v1.12.x line to match the csi-resizer version pinned by the
+        # vSphere CSI driver manifest. The hardened repo also publishes a v2.2.1
+        # line that does not correspond to any upstream external-resizer release,
+        # so an unconstrained ">=0.0.0-0" filter drifts prime ahead of mirrored.
+        pattern: '>=1.12.0-0 <1.13.0-0'
 
   livenessProbePrime:
     name: Get latest hardened livenessprobe tag
@@ -39,7 +47,11 @@ sources:
       tagfilter: '^v[0-9]+\.[0-9]+\.[0-9]+-build[0-9]+$'
       versionfilter:
         kind: semver
-        pattern: ">=0.0.0-0"
+        # Pin to the v2.15.x line to match the livenessprobe version pinned by
+        # the vSphere CSI driver manifest. The hardened repo also publishes a
+        # newer v2.19.0 line, so an unconstrained ">=0.0.0-0" filter drifts prime
+        # ahead of mirrored.
+        pattern: '>=2.15.0-0 <2.16.0-0'
 
   vsphereSyncerPrime:
     name: Get latest hardened vSphere CSI syncer tag
@@ -79,7 +91,11 @@ sources:
       tagfilter: '^v[0-9]+\.[0-9]+\.[0-9]+-build[0-9]+$'
       versionfilter:
         kind: semver
-        pattern: ">=0.0.0-0"
+        # Pin to the v2.13.x line to match the node-driver-registrar version
+        # pinned by the vSphere CSI driver manifest. The hardened repo also
+        # publishes a newer v2.17.0 line, so an unconstrained ">=0.0.0-0" filter
+        # drifts prime ahead of mirrored.
+        pattern: '>=2.13.0-0 <2.14.0-0'
 
 targets:
   csiDriverPrimeTag:

@@ -50,7 +50,7 @@ csiController:
       repository: rancher/mirrored-sig-storage-csi-attacher
       primeRepository: rancher/hardened-csi-attacher
       tag: latest
-      primeTag: v4.12.0-build20260722
+      primeTag: v4.9.0-build20260731
       imagePullPolicy: ""
       additionalArgs: []
       resources: {}
@@ -65,7 +65,7 @@ csiController:
       repository: rancher/mirrored-sig-storage-csi-resizer
       primeRepository: rancher/hardened-csi-resizer
       tag: latest
-      primeTag: v2.2.1-build20260722
+      primeTag: v1.12.0-build20260731
       imagePullPolicy: ""
       additionalArgs: []
       resources: {}
@@ -80,7 +80,7 @@ csiController:
       repository: rancher/mirrored-sig-storage-livenessprobe
       primeRepository: rancher/hardened-livenessprobe
       tag: latest
-      primeTag: v2.19.0-build20260722
+      primeTag: v2.15.0-build20260731
       imagePullPolicy: ""
       additionalArgs: []
       resources: {}
@@ -261,7 +261,7 @@ csiNode:
       repository: rancher/mirrored-sig-storage-csi-node-driver-registrar
       primeRepository: rancher/hardened-csi-node-driver-registrar
       tag: latest
-      primeTag: v2.17.0-build20260722
+      primeTag: v2.13.0-build20260731
       imagePullPolicy: ""
       additionalArgs: []
       resources: {}
@@ -276,7 +276,7 @@ csiNode:
       repository: rancher/mirrored-sig-storage-livenessprobe
       primeRepository: rancher/hardened-livenessprobe
       tag: latest
-      primeTag: v2.19.0-build20260722
+      primeTag: v2.15.0-build20260731
       imagePullPolicy: ""
       additionalArgs: []
       resources: {}
