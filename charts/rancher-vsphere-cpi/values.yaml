@@ -112,6 +112,10 @@ cloudControllerManager:
   rbac:
     enabled: true
   env: []
+  # Container resource requests and limits
+  resources:
+    requests:
+      cpu: 200m
   # Pod DNS policy
   # Ref: https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/
   # Note that CPI pods run with host network and need to communicate with the
