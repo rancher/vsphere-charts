@@ -110,7 +110,7 @@ csiController:
       repository: rancher/mirrored-sig-storage-csi-provisioner
       primeRepository: rancher/hardened-csi-provisioner
       tag: latest
-      primeTag: v4.0.1-build20260730
+      primeTag: v6.3.0-build20260722
       imagePullPolicy: ""
       additionalArgs: []
       resources: {}
