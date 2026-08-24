@@ -125,7 +125,7 @@ csiController:
       repository: rancher/mirrored-sig-storage-csi-snapshotter
       primeRepository: rancher/hardened-csi-snapshotter
       tag: latest
-      primeTag: v8.6.0-build20260722
+      primeTag: v8.6.0-build20260819
       imagePullPolicy: ""
       additionalArgs: []
       resources: {}
