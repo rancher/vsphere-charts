@@ -261,7 +261,7 @@ csiNode:
       repository: rancher/mirrored-sig-storage-csi-node-driver-registrar
       primeRepository: rancher/hardened-csi-node-driver-registrar
       tag: latest
-      primeTag: v2.17.0-build20260722
+      primeTag: v2.13.0-build20260731
       imagePullPolicy: ""
       additionalArgs: []
       resources: {}
