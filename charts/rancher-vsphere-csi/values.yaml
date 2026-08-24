@@ -80,7 +80,7 @@ csiController:
       repository: rancher/mirrored-sig-storage-livenessprobe
       primeRepository: rancher/hardened-livenessprobe
       tag: latest
-      primeTag: v2.19.0-build20260722
+      primeTag: v2.15.0-build20260731
       imagePullPolicy: ""
       additionalArgs: []
       resources: {}
@@ -276,7 +276,7 @@ csiNode:
       repository: rancher/mirrored-sig-storage-livenessprobe
       primeRepository: rancher/hardened-livenessprobe
       tag: latest
-      primeTag: v2.19.0-build20260722
+      primeTag: v2.15.0-build20260731
       imagePullPolicy: ""
       additionalArgs: []
       resources: {}
