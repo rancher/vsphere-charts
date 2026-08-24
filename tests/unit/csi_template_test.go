@@ -483,7 +483,7 @@ func TestCSITemplateRenderedControllerDeployment(t *testing.T) {
 					"registry.rancher.com/rancher/hardened-vsphere-csi-driver:v3.7.2-build20260731",
 					"registry.rancher.com/rancher/hardened-livenessprobe:v2.19.0-build20260722",
 					"registry.rancher.com/rancher/hardened-vsphere-csi-syncer:v3.7.2-build20260731",
-					"registry.rancher.com/rancher/hardened-csi-provisioner:v4.0.1-build20260730",
+					"registry.rancher.com/rancher/hardened-csi-provisioner:v6.3.0-build20260722",
 				},
 			},
 		},
