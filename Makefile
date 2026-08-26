@@ -24,5 +24,14 @@ unit-tests: package setup
 	### running unit tests ###
 	go test -v -tags helm ./tests/unit
 
+.PHONY: validate-csi-prime-images
+validate-csi-prime-images:
+	@test -n "$(PRIME_REGISTRY)" || (echo "PRIME_REGISTRY must be set"; exit 1)
+	@for image in $$(yq -r '.. | select(type == "!!map" and has("primeRepository") and has("primeTag")) | "\(.primeRepository):\(.primeTag)"' charts/rancher-vsphere-csi/values.yaml | sort -u); do \
+		full_image="$${PRIME_REGISTRY%/}/$$image"; \
+		echo "Validating $$image"; \
+		docker manifest inspect "$$full_image" > /dev/null || exit 1; \
+	done
+
 .PHONY: ci
 ci: unit-tests
