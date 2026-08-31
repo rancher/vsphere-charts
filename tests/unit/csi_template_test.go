@@ -60,7 +60,7 @@ func TestCSITemplateRenderedNodeDaemonset(t *testing.T) {
 				expectedImages: []string{
 					"registry.rancher.com/rancher/hardened-csi-node-driver-registrar:v2.13.0-build20260826",
 					"registry.rancher.com/rancher/hardened-vsphere-csi-driver:v3.7.3-build20260826",
-					"registry.rancher.com/rancher/hardened-livenessprobe:v2.15.0-build20260731",
+					"registry.rancher.com/rancher/hardened-livenessprobe:v2.15.0-build20260826",
 				},
 			},
 		},
@@ -481,7 +481,7 @@ func TestCSITemplateRenderedControllerDeployment(t *testing.T) {
 				expectedImages: []string{
 					"registry.rancher.com/rancher/hardened-csi-attacher:v4.9.0-build20260826",
 					"registry.rancher.com/rancher/hardened-vsphere-csi-driver:v3.7.3-build20260826",
-					"registry.rancher.com/rancher/hardened-livenessprobe:v2.15.0-build20260731",
+					"registry.rancher.com/rancher/hardened-livenessprobe:v2.15.0-build20260826",
 					"registry.rancher.com/rancher/hardened-vsphere-csi-syncer:v3.7.3-build20260826",
 					"registry.rancher.com/rancher/hardened-csi-provisioner:v6.3.0-build20260722",
 				},
