@@ -35,7 +35,7 @@ csiController:
     repository: rancher/mirrored-cloud-provider-vsphere-csi-release-driver
     primeRepository: rancher/hardened-vsphere-csi-driver
     tag: latest
-    primeTag: v3.7.2-build20260731
+    primeTag: v3.7.3-build20260826
     imagePullPolicy: ""
     additionalArgs: []
     resources: {}
@@ -246,7 +246,7 @@ csiNode:
     repository: rancher/mirrored-cloud-provider-vsphere-csi-release-driver
     primeRepository: rancher/hardened-vsphere-csi-driver
     tag: latest
-    primeTag: v3.7.2-build20260731
+    primeTag: v3.7.3-build20260826
     imagePullPolicy: ""
     additionalArgs: []
     resources: {}
