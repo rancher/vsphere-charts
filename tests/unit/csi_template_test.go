@@ -58,7 +58,7 @@ func TestCSITemplateRenderedNodeDaemonset(t *testing.T) {
 				chartRelPath:   csiChart,
 				windowsEnabled: false,
 				expectedImages: []string{
-					"registry.rancher.com/rancher/hardened-csi-node-driver-registrar:v2.13.0-build20260731",
+					"registry.rancher.com/rancher/hardened-csi-node-driver-registrar:v2.13.0-build20260826",
 					"registry.rancher.com/rancher/hardened-vsphere-csi-driver:v3.7.2-build20260731",
 					"registry.rancher.com/rancher/hardened-livenessprobe:v2.15.0-build20260731",
 				},
