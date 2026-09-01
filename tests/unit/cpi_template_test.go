@@ -29,6 +29,30 @@ func TestCPITemplateRenderedDaemonset(t *testing.T) {
 		args args
 	}{
 		{
+			name: "Kubernetes 1.37",
+			args: args{
+				values:        map[string]string{},
+				kubeVersion:   "1.37",
+				namespace:     "cpitest-" + strings.ToLower(random.UniqueId()),
+				releaseName:   "cpitest-" + strings.ToLower(random.UniqueId()),
+				chartRelPath:  cpiChart,
+				expectedImage: "rancher/mirrored-cloud-provider-vsphere:v1.37.0",
+			},
+		},
+		{
+			name: "Kubernetes 1.37 Prime",
+			args: args{
+				values: map[string]string{
+					"global.prime.enabled": "true",
+				},
+				kubeVersion:   "1.37",
+				namespace:     "cpitest-" + strings.ToLower(random.UniqueId()),
+				releaseName:   "cpitest-" + strings.ToLower(random.UniqueId()),
+				chartRelPath:  cpiChart,
+				expectedImage: "rancher/hardened-cloud-provider-vsphere:v1.37.0-build20260901",
+			},
+		},
+		{
 			name: "Kubernetes 1.36",
 			args: args{
 				values:        map[string]string{},
