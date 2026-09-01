@@ -45,6 +45,12 @@ nodes:
 # Supported versions can be found at:
 # https://github.com/kubernetes/cloud-provider-vsphere#compatibility-with-kubernetes
 versionOverrides:
+  - constraint: "~ 1.37"
+    values:
+      cloudControllerManager:
+        repository: rancher/mirrored-cloud-provider-vsphere
+        tag: v1.37.0
+        primeTag: v1.37.0-build20260901
   - constraint: "~ 1.36"
     values:
       cloudControllerManager:
