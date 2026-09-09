@@ -1,151 +1,59 @@
+{{/* Add new CPI minors to cpi.primeMinors in updatecli/values.yaml. */}}
+{{- $latestMinor := index .cpi.primeMinors 0 -}}
+{{- $latestSourceID := printf "cpiPrime%s" (replace "." "" $latestMinor) -}}
 name: "Update Rancher vSphere CPI prime tags"
 
 sources:
-  cpiPrime137:
-    name: Get latest vSphere CPI 1.37 release tag
+{{- range $minor := .cpi.primeMinors }}
+  cpiPrime{{ replace "." "" $minor }}:
+    name: Get latest vSphere CPI {{ $minor }} release tag
     kind: githubrelease
     spec:
       owner: rancher
       repository: image-build-cloud-provider-vsphere
-      token: '{{ requiredEnv .github.token }}'
-      username: '{{ requiredEnv .github.username }}'
+      token: '{{ requiredEnv $.github.token }}'
+      username: '{{ requiredEnv $.github.username }}'
       typefilter:
         release: true
         draft: false
         prerelease: false
       versionfilter:
         kind: regex
-        pattern: '^v1\.37\.[0-9]+-build[0-9]+$'
-
-  cpiPrime136:
-    name: Get latest vSphere CPI 1.36 release tag
-    kind: githubrelease
-    spec:
-      owner: rancher
-      repository: image-build-cloud-provider-vsphere
-      token: '{{ requiredEnv .github.token }}'
-      username: '{{ requiredEnv .github.username }}'
-      typefilter:
-        release: true
-        draft: false
-        prerelease: false
-      versionfilter:
-        kind: regex
-        pattern: '^v1\.36\.[0-9]+-build[0-9]+$'
-
-  cpiPrime135:
-    name: Get latest vSphere CPI 1.35 release tag
-    kind: githubrelease
-    spec:
-      owner: rancher
-      repository: image-build-cloud-provider-vsphere
-      token: '{{ requiredEnv .github.token }}'
-      username: '{{ requiredEnv .github.username }}'
-      typefilter:
-        release: true
-        draft: false
-        prerelease: false
-      versionfilter:
-        kind: regex
-        pattern: '^v1\.35\.[0-9]+-build[0-9]+$'
-
-  cpiPrime134:
-    name: Get latest vSphere CPI 1.34 release tag
-    kind: githubrelease
-    spec:
-      owner: rancher
-      repository: image-build-cloud-provider-vsphere
-      token: '{{ requiredEnv .github.token }}'
-      username: '{{ requiredEnv .github.username }}'
-      typefilter:
-        release: true
-        draft: false
-        prerelease: false
-      versionfilter:
-        kind: regex
-        pattern: '^v1\.34\.[0-9]+-build[0-9]+$'
-
-  cpiPrime133:
-    name: Get latest vSphere CPI 1.33 release tag
-    kind: githubrelease
-    spec:
-      owner: rancher
-      repository: image-build-cloud-provider-vsphere
-      token: '{{ requiredEnv .github.token }}'
-      username: '{{ requiredEnv .github.username }}'
-      typefilter:
-        release: true
-        draft: false
-        prerelease: false
-      versionfilter:
-        kind: regex
-        pattern: '^v1\.33\.[0-9]+-build[0-9]+$'
+        pattern: '^v{{ $minor }}\.[0-9]+-build[0-9]+$'
+{{- end }}
 
 targets:
-  cpiPrimeTag137:
-    name: Update CPI cloudControllerManager primeTag for 1.37
+{{- range $minor := .cpi.primeMinors }}
+  cpiPrimeTag{{ replace "." "" $minor }}:
+    name: Update CPI cloudControllerManager primeTag for {{ $minor }}
     kind: yaml
     scmid: default
-    sourceid: cpiPrime137
+    sourceid: cpiPrime{{ replace "." "" $minor }}
     spec:
       file: charts/rancher-vsphere-cpi/values.yaml
-      key: versionOverrides[0].values.cloudControllerManager.primeTag
-
-  cpiPrimeTag136:
-    name: Update CPI cloudControllerManager primeTag for 1.36
-    kind: yaml
-    scmid: default
-    sourceid: cpiPrime136
-    spec:
-      file: charts/rancher-vsphere-cpi/values.yaml
-      key: versionOverrides[1].values.cloudControllerManager.primeTag
-
-  cpiPrimeTag135:
-    name: Update CPI cloudControllerManager primeTag for 1.35
-    kind: yaml
-    scmid: default
-    sourceid: cpiPrime135
-    spec:
-      file: charts/rancher-vsphere-cpi/values.yaml
-      key: versionOverrides[2].values.cloudControllerManager.primeTag
-
-  cpiPrimeTag134:
-    name: Update CPI cloudControllerManager primeTag for 1.34
-    kind: yaml
-    scmid: default
-    sourceid: cpiPrime134
-    spec:
-      file: charts/rancher-vsphere-cpi/values.yaml
-      key: versionOverrides[3].values.cloudControllerManager.primeTag
-
-  cpiPrimeTag133:
-    name: Update CPI cloudControllerManager primeTag for 1.33
-    kind: yaml
-    scmid: default
-    sourceid: cpiPrime133
-    spec:
-      file: charts/rancher-vsphere-cpi/values.yaml
-      key: versionOverrides[4].values.cloudControllerManager.primeTag
+      engine: yamlpath
+      key: $.versionOverrides[?(@.constraint == '~ {{ $minor }}')].values.cloudControllerManager.primeTag
+{{- end }}
 
   cpiPrimeTagTestNoRegistry:
     name: Update CPI prime tag in tests without system default registry
     kind: file
     scmid: default
-    sourceid: cpiPrime137
+    sourceid: {{ $latestSourceID }}
     spec:
       file: tests/unit/cpi_template_test.go
       matchpattern: 'expectedImage: "rancher/hardened-cloud-provider-vsphere:[^"]+"'
-      replacepattern: 'expectedImage: "rancher/hardened-cloud-provider-vsphere:{{ source "cpiPrime137" }}"'
+      replacepattern: 'expectedImage: "rancher/hardened-cloud-provider-vsphere:{{ source $latestSourceID }}"'
 
   cpiPrimeTagTestWithRegistry:
     name: Update CPI prime tag in tests with system default registry
     kind: file
     scmid: default
-    sourceid: cpiPrime137
+    sourceid: {{ $latestSourceID }}
     spec:
       file: tests/unit/cpi_template_test.go
       matchpattern: 'expectedImage: "registry.rancher.com/rancher/hardened-cloud-provider-vsphere:[^"]+"'
-      replacepattern: 'expectedImage: "registry.rancher.com/rancher/hardened-cloud-provider-vsphere:{{ source "cpiPrime137" }}"'
+      replacepattern: 'expectedImage: "registry.rancher.com/rancher/hardened-cloud-provider-vsphere:{{ source $latestSourceID }}"'
 
 scms:
   default:
@@ -172,8 +80,6 @@ actions:
         This automated PR updates the Rancher Prime image tag in the vSphere CPI chart.
 
         Updated sources:
-        - hardened-cloud-provider-vsphere (1.37): {{ source "cpiPrime137" }}
-        - hardened-cloud-provider-vsphere (1.36): {{ source "cpiPrime136" }}
-        - hardened-cloud-provider-vsphere (1.35): {{ source "cpiPrime135" }}
-        - hardened-cloud-provider-vsphere (1.34): {{ source "cpiPrime134" }}
-        - hardened-cloud-provider-vsphere (1.33): {{ source "cpiPrime133" }}
+      {{- range $minor := .cpi.primeMinors }}
+        - hardened-cloud-provider-vsphere ({{ $minor }}): {{ source (printf "cpiPrime%s" (replace "." "" $minor)) }}
+      {{- end }}
