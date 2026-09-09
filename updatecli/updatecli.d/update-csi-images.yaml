@@ -11,6 +11,64 @@ sources:
         kind: semver
         pattern: ">=0.0.0-0"
 
+  # When the public driver version is updated we need to bump the CSI chart version accordingly
+  csiDriverVersion:
+    name: Extract vSphere CSI driver version from the mirrored driver tag
+    kind: shell
+    scmid: default
+    spec:
+      command: |
+        driver_version="$(awk '
+          /versionOverrides:/ { in_overrides = 1 }
+          in_overrides && /repository: rancher\/mirrored-cloud-provider-vsphere-csi-release-driver/ { expect_tag = 1; next }
+          expect_tag && /^[[:space:]]+tag: v[0-9]+\.[0-9]+\.[0-9]+$/ { sub(/^.*v/, ""); print; exit }
+        ' charts/rancher-vsphere-csi/values.yaml)"
+
+        case "$driver_version" in
+          [0-9]*.[0-9]*.[0-9]*) printf '%s\n' "$driver_version" ;;
+          *) echo "unable to find mirrored CSI driver version" >&2; exit 1 ;;
+        esac
+
+  # We only need to bump the -rancherX suffix when the primeTags are updated to a newer -buildXXXX version
+  csiChartVersion:
+    name: Calculate CSI chart version for the Prime tag update
+    kind: shell
+    scmid: default
+    spec:
+      command: |
+        chart_version="$(awk '/^version:/ { print $2; exit }' charts/rancher-vsphere-csi/Chart.yaml)"
+        driver_version='{{ source "csiDriverVersion" }}'
+        chart_driver_version="${chart_version%-rancher*}"
+        chart_revision="${chart_version##*-rancher}"
+        set -- $(awk '/primeTag:/ { print $2 }' charts/rancher-vsphere-csi/values.yaml)
+
+        case "$chart_version" in
+          "$chart_driver_version"-rancher[0-9]*) ;;
+          *) echo "unexpected CSI chart version: $chart_version" >&2; exit 1 ;;
+        esac
+
+        if [ "$#" -ne 10 ]; then
+          echo "expected 10 CSI Prime image tags, found $#" >&2
+          exit 1
+        fi
+
+        if [ "$1" = '{{ source "csiDriverPrime" }}' ] && \
+          [ "$2" = '{{ source "csiAttacherPrime" }}' ] && \
+          [ "$3" = '{{ source "csiResizerPrime" }}' ] && \
+          [ "$4" = '{{ source "livenessProbePrime" }}' ] && \
+          [ "$5" = '{{ source "vsphereSyncerPrime" }}' ] && \
+          [ "$6" = '{{ source "csiProvisionerPrime" }}' ] && \
+          [ "$7" = '{{ source "csiSnapshotterPrime" }}' ] && \
+          [ "$8" = '{{ source "csiDriverPrime" }}' ] && \
+          [ "$9" = '{{ source "nodeDriverRegistrarPrime" }}' ] && \
+          [ "${10}" = '{{ source "livenessProbePrime" }}' ]; then
+          printf '%s\n' "$chart_version"
+        elif [ "$chart_driver_version" != "$driver_version" ]; then
+          printf '%s-rancher1\n' "$driver_version"
+        else
+          printf '%s-rancher%s\n' "$driver_version" "$((chart_revision + 1))"
+        fi
+
   csiAttacherPrime:
     name: Get latest hardened CSI attacher tag
     kind: dockerimage
@@ -102,6 +160,24 @@ sources:
         pattern: '>=2.13.0-0 <2.14.0-0'
 
 targets:
+  csiAppVersion:
+    name: Update CSI appVersion for a driver version update
+    kind: yaml
+    scmid: default
+    sourceid: csiDriverVersion
+    spec:
+      file: charts/rancher-vsphere-csi/Chart.yaml
+      key: appVersion
+
+  csiChartVersion:
+    name: Update CSI chart version for Prime image changes
+    kind: yaml
+    scmid: default
+    sourceid: csiChartVersion
+    spec:
+      file: charts/rancher-vsphere-csi/Chart.yaml
+      key: version
+
   csiDriverPrimeTag:
     name: Update CSI driver primeTag values
     kind: yaml
@@ -264,6 +340,7 @@ actions:
 
         Updated sources:
         - hardened-vsphere-csi-driver: {{ source "csiDriverPrime" }}
+        - rancher-vsphere-csi chart version: {{ source "csiChartVersion" }}
         - hardened-csi-attacher: {{ source "csiAttacherPrime" }}
         - hardened-csi-resizer: {{ source "csiResizerPrime" }}
         - hardened-livenessprobe: {{ source "livenessProbePrime" }}
