@@ -71,7 +71,11 @@ sources:
       tagfilter: '^v[0-9]+\.[0-9]+\.[0-9]+-build[0-9]+$'
       versionfilter:
         kind: semver
-        pattern: ">=0.0.0-0"
+        # Pin to the v4.x.x line to match the node-driver-registrar version
+        # pinned by the vSphere CSI driver manifest. The hardened repo also
+        # publishes a newer v6. line, so an unconstrained ">=0.0.0-0" filter
+        # drifts prime ahead of mirrored.
+        pattern: '>=4.0.0-0 <4.99.0-0'
 
   csiSnapshotterPrime:
     name: Get latest hardened CSI snapshotter tag
