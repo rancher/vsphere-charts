@@ -2,12 +2,8 @@ package unit
 
 import (
 	"path/filepath"
-	"strings"
 	"testing"
 
-	"github.com/gruntwork-io/terratest/modules/helm"
-	"github.com/gruntwork-io/terratest/modules/k8s"
-	"github.com/gruntwork-io/terratest/modules/random"
 	"github.com/stretchr/testify/require"
 	appsv1 "k8s.io/api/apps/v1"
 	v1 "k8s.io/api/core/v1"
@@ -33,8 +29,8 @@ func TestCPITemplateRenderedDaemonset(t *testing.T) {
 			args: args{
 				values:        map[string]string{},
 				kubeVersion:   "1.37",
-				namespace:     "cpitest-" + strings.ToLower(random.UniqueId()),
-				releaseName:   "cpitest-" + strings.ToLower(random.UniqueId()),
+				namespace:     "cpitest",
+				releaseName:   "cpitest",
 				chartRelPath:  cpiChart,
 				expectedImage: "rancher/mirrored-cloud-provider-vsphere:v1.37.0",
 			},
@@ -46,8 +42,8 @@ func TestCPITemplateRenderedDaemonset(t *testing.T) {
 					"global.prime.enabled": "true",
 				},
 				kubeVersion:   "1.37",
-				namespace:     "cpitest-" + strings.ToLower(random.UniqueId()),
-				releaseName:   "cpitest-" + strings.ToLower(random.UniqueId()),
+				namespace:     "cpitest",
+				releaseName:   "cpitest",
 				chartRelPath:  cpiChart,
 				expectedImage: "rancher/hardened-cloud-provider-vsphere:v1.37.0-build20260901",
 			},
@@ -57,8 +53,8 @@ func TestCPITemplateRenderedDaemonset(t *testing.T) {
 			args: args{
 				values:        map[string]string{},
 				kubeVersion:   "1.36",
-				namespace:     "cpitest-" + strings.ToLower(random.UniqueId()),
-				releaseName:   "cpitest-" + strings.ToLower(random.UniqueId()),
+				namespace:     "cpitest",
+				releaseName:   "cpitest",
 				chartRelPath:  cpiChart,
 				expectedImage: "rancher/mirrored-cloud-provider-vsphere:v1.36.0",
 			},
@@ -70,8 +66,8 @@ func TestCPITemplateRenderedDaemonset(t *testing.T) {
 					"global.prime.enabled": "true",
 				},
 				kubeVersion:   "1.36",
-				namespace:     "cpitest-" + strings.ToLower(random.UniqueId()),
-				releaseName:   "cpitest-" + strings.ToLower(random.UniqueId()),
+				namespace:     "cpitest",
+				releaseName:   "cpitest",
 				chartRelPath:  cpiChart,
 				expectedImage: "rancher/hardened-cloud-provider-vsphere:v1.36.0-build20260722",
 			},
@@ -84,8 +80,8 @@ func TestCPITemplateRenderedDaemonset(t *testing.T) {
 					"global.cattle.systemDefaultRegistry": "registry.rancher.com",
 				},
 				kubeVersion:   "1.36",
-				namespace:     "cpitest-" + strings.ToLower(random.UniqueId()),
-				releaseName:   "cpitest-" + strings.ToLower(random.UniqueId()),
+				namespace:     "cpitest",
+				releaseName:   "cpitest",
 				chartRelPath:  cpiChart,
 				expectedImage: "registry.rancher.com/rancher/hardened-cloud-provider-vsphere:v1.36.0-build20260722",
 			},
@@ -95,8 +91,8 @@ func TestCPITemplateRenderedDaemonset(t *testing.T) {
 			args: args{
 				values:        map[string]string{},
 				kubeVersion:   "1.35",
-				namespace:     "cpitest-" + strings.ToLower(random.UniqueId()),
-				releaseName:   "cpitest-" + strings.ToLower(random.UniqueId()),
+				namespace:     "cpitest",
+				releaseName:   "cpitest",
 				chartRelPath:  cpiChart,
 				expectedImage: "rancher/mirrored-cloud-provider-vsphere:v1.35.1",
 			},
@@ -106,8 +102,8 @@ func TestCPITemplateRenderedDaemonset(t *testing.T) {
 			args: args{
 				values:        map[string]string{},
 				kubeVersion:   "1.34",
-				namespace:     "cpitest-" + strings.ToLower(random.UniqueId()),
-				releaseName:   "cpitest-" + strings.ToLower(random.UniqueId()),
+				namespace:     "cpitest",
+				releaseName:   "cpitest",
 				chartRelPath:  cpiChart,
 				expectedImage: "rancher/mirrored-cloud-provider-vsphere:v1.34.0",
 			},
@@ -117,8 +113,8 @@ func TestCPITemplateRenderedDaemonset(t *testing.T) {
 			args: args{
 				values:        map[string]string{},
 				kubeVersion:   "1.33",
-				namespace:     "cpitest-" + strings.ToLower(random.UniqueId()),
-				releaseName:   "cpitest-" + strings.ToLower(random.UniqueId()),
+				namespace:     "cpitest",
+				releaseName:   "cpitest",
 				chartRelPath:  cpiChart,
 				expectedImage: "rancher/mirrored-cloud-provider-vsphere:v1.33.1",
 			},
@@ -128,8 +124,8 @@ func TestCPITemplateRenderedDaemonset(t *testing.T) {
 			args: args{
 				values:        map[string]string{},
 				kubeVersion:   "1.32",
-				namespace:     "cpitest-" + strings.ToLower(random.UniqueId()),
-				releaseName:   "cpitest-" + strings.ToLower(random.UniqueId()),
+				namespace:     "cpitest",
+				releaseName:   "cpitest",
 				chartRelPath:  cpiChart,
 				expectedImage: "rancher/mirrored-cloud-provider-vsphere:v1.32.2",
 			},
@@ -139,8 +135,8 @@ func TestCPITemplateRenderedDaemonset(t *testing.T) {
 			args: args{
 				values:        map[string]string{},
 				kubeVersion:   "1.31",
-				namespace:     "cpitest-" + strings.ToLower(random.UniqueId()),
-				releaseName:   "cpitest-" + strings.ToLower(random.UniqueId()),
+				namespace:     "cpitest",
+				releaseName:   "cpitest",
 				chartRelPath:  cpiChart,
 				expectedImage: "rancher/mirrored-cloud-provider-vsphere:v1.31.1",
 			},
@@ -150,8 +146,8 @@ func TestCPITemplateRenderedDaemonset(t *testing.T) {
 			args: args{
 				values:        map[string]string{},
 				kubeVersion:   "1.30",
-				namespace:     "cpitest-" + strings.ToLower(random.UniqueId()),
-				releaseName:   "cpitest-" + strings.ToLower(random.UniqueId()),
+				namespace:     "cpitest",
+				releaseName:   "cpitest",
 				chartRelPath:  cpiChart,
 				expectedImage: "rancher/mirrored-cloud-provider-vsphere-cpi-release-manager:v1.30.1",
 			},
@@ -161,8 +157,8 @@ func TestCPITemplateRenderedDaemonset(t *testing.T) {
 			args: args{
 				values:        map[string]string{},
 				kubeVersion:   "1.29",
-				namespace:     "cpitest-" + strings.ToLower(random.UniqueId()),
-				releaseName:   "cpitest-" + strings.ToLower(random.UniqueId()),
+				namespace:     "cpitest",
+				releaseName:   "cpitest",
 				chartRelPath:  cpiChart,
 				expectedImage: "rancher/mirrored-cloud-provider-vsphere-cpi-release-manager:v1.29.0",
 			},
@@ -172,8 +168,8 @@ func TestCPITemplateRenderedDaemonset(t *testing.T) {
 			args: args{
 				values:        map[string]string{},
 				kubeVersion:   "1.28",
-				namespace:     "cpitest-" + strings.ToLower(random.UniqueId()),
-				releaseName:   "cpitest-" + strings.ToLower(random.UniqueId()),
+				namespace:     "cpitest",
+				releaseName:   "cpitest",
 				chartRelPath:  cpiChart,
 				expectedImage: "rancher/mirrored-cloud-provider-vsphere-cpi-release-manager:v1.28.0",
 			},
@@ -183,8 +179,8 @@ func TestCPITemplateRenderedDaemonset(t *testing.T) {
 			args: args{
 				values:        map[string]string{},
 				kubeVersion:   "1.27",
-				namespace:     "cpitest-" + strings.ToLower(random.UniqueId()),
-				releaseName:   "cpitest-" + strings.ToLower(random.UniqueId()),
+				namespace:     "cpitest",
+				releaseName:   "cpitest",
 				chartRelPath:  cpiChart,
 				expectedImage: "rancher/mirrored-cloud-provider-vsphere-cpi-release-manager:v1.27.0",
 			},
@@ -196,16 +192,11 @@ func TestCPITemplateRenderedDaemonset(t *testing.T) {
 			chartPath, err := filepath.Abs(tt.args.chartRelPath)
 			require.NoError(t, err)
 
-			options := &helm.Options{
-				SetValues:      tt.args.values,
-				KubectlOptions: k8s.NewKubectlOptions("", "", tt.args.namespace),
-			}
-
 			// act
-			output := helm.RenderTemplate(t, options, chartPath, tt.args.releaseName, []string{"templates/daemonset.yaml"}, "--kube-version", tt.args.kubeVersion)
+			output := renderTemplate(t, chartPath, tt.args.releaseName, tt.args.namespace, tt.args.kubeVersion, tt.args.values, "templates/daemonset.yaml")
 
 			var daemonSet appsv1.DaemonSet
-			helm.UnmarshalK8SYaml(t, output, &daemonSet)
+			unmarshalYAML(t, output, &daemonSet)
 
 			// assert
 			require.Equal(t, tt.args.namespace, daemonSet.Namespace)
@@ -221,18 +212,15 @@ func TestCPITemplateRenderedSecret(t *testing.T) {
 	chartPath, err := filepath.Abs(cpiChart)
 	require.NoError(t, err)
 
-	namespace := "cpitest-" + strings.ToLower(random.UniqueId())
-	releaseName := "cpitest-" + strings.ToLower(random.UniqueId())
-	options := &helm.Options{
-		SetValues:      map[string]string{"vCenter.host": "test", "vCenter.username": "test", "vCenter.password": "test"},
-		KubectlOptions: k8s.NewKubectlOptions("", "", namespace),
-	}
+	namespace := "cpitest"
+	releaseName := "cpitest"
+	values := map[string]string{"vCenter.host": "test", "vCenter.username": "test", "vCenter.password": "test"}
 
 	// act
-	output := helm.RenderTemplate(t, options, chartPath, releaseName, []string{"templates/secret.yaml"}, "--kube-version", "1.23")
+	output := renderTemplate(t, chartPath, releaseName, namespace, "1.23", values, "templates/secret.yaml")
 
 	var secret v1.Secret
-	helm.UnmarshalK8SYaml(t, output, &secret)
+	unmarshalYAML(t, output, &secret)
 
 	// assert
 	require.Equal(t, namespace, secret.Namespace)
@@ -246,16 +234,13 @@ func TestCPITemplateRenderedServiceAccount(t *testing.T) {
 	chartPath, err := filepath.Abs(cpiChart)
 	require.NoError(t, err)
 
-	namespace := "cpitest-" + strings.ToLower(random.UniqueId())
-	releaseName := "cpitest-" + strings.ToLower(random.UniqueId())
-	options := &helm.Options{
-		KubectlOptions: k8s.NewKubectlOptions("", "", namespace),
-	}
+	namespace := "cpitest"
+	releaseName := "cpitest"
 
 	// act
-	output := helm.RenderTemplate(t, options, chartPath, releaseName, []string{"templates/service-account.yaml"}, "--kube-version", "1.23")
+	output := renderTemplate(t, chartPath, releaseName, namespace, "1.23", nil, "templates/service-account.yaml")
 	var sa v1.ServiceAccount
-	helm.UnmarshalK8SYaml(t, output, &sa)
+	unmarshalYAML(t, output, &sa)
 
 	// assert
 	require.Equal(t, namespace, sa.Namespace)

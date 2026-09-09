@@ -5,9 +5,6 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/gruntwork-io/terratest/modules/helm"
-	"github.com/gruntwork-io/terratest/modules/k8s"
-	"github.com/gruntwork-io/terratest/modules/random"
 	"github.com/stretchr/testify/require"
 	appsv1 "k8s.io/api/apps/v1"
 )
@@ -395,16 +392,11 @@ func TestCSITemplateRenderedNodeDaemonset(t *testing.T) {
 			chartPath, err := filepath.Abs(tt.args.chartRelPath)
 			require.NoError(t, err)
 
-			options := &helm.Options{
-				SetValues:      tt.args.values,
-				KubectlOptions: k8s.NewKubectlOptions("", "", tt.args.namespace),
-			}
-
 			// act
-			output := helm.RenderTemplate(t, options, chartPath, tt.args.releaseName, []string{"templates/node/daemonset.yaml"}, "--kube-version", tt.args.kubeVersion)
+			output := renderTemplate(t, chartPath, tt.args.releaseName, tt.args.namespace, tt.args.kubeVersion, tt.args.values, "templates/node/daemonset.yaml")
 
 			var daemonSet appsv1.DaemonSet
-			helm.UnmarshalK8SYaml(t, output, &daemonSet)
+			unmarshalYAML(t, output, &daemonSet)
 
 			// assert
 			require.Equal(t, tt.args.namespace, daemonSet.Namespace)
@@ -416,10 +408,10 @@ func TestCSITemplateRenderedNodeDaemonset(t *testing.T) {
 
 			if tt.args.windowsEnabled {
 				// act
-				windowsOutput := helm.RenderTemplate(t, options, chartPath, tt.args.releaseName, []string{"templates/node/windows-daemonset.yaml"}, "--kube-version", tt.args.kubeVersion)
+				windowsOutput := renderTemplate(t, chartPath, tt.args.releaseName, tt.args.namespace, tt.args.kubeVersion, tt.args.values, "templates/node/windows-daemonset.yaml")
 
 				var windowsDaemonSet appsv1.DaemonSet
-				helm.UnmarshalK8SYaml(t, windowsOutput, &daemonSet)
+				unmarshalYAML(t, windowsOutput, &windowsDaemonSet)
 
 				// assert
 				require.Equal(t, tt.args.namespace, windowsDaemonSet.Namespace)
@@ -815,16 +807,11 @@ func TestCSITemplateRenderedControllerDeployment(t *testing.T) {
 			chartPath, err := filepath.Abs(tt.args.chartRelPath)
 			require.NoError(t, err)
 
-			options := &helm.Options{
-				SetValues:      tt.args.values,
-				KubectlOptions: k8s.NewKubectlOptions("", "", tt.args.namespace),
-			}
-
 			// act
-			output := helm.RenderTemplate(t, options, chartPath, tt.args.releaseName, []string{"templates/controller/deployment.yaml"}, "--kube-version", tt.args.kubeVersion)
+			output := renderTemplate(t, chartPath, tt.args.releaseName, tt.args.namespace, tt.args.kubeVersion, tt.args.values, "templates/controller/deployment.yaml")
 
 			var deployment appsv1.Deployment
-			helm.UnmarshalK8SYaml(t, output, &deployment)
+			unmarshalYAML(t, output, &deployment)
 
 			// assert
 			require.Equal(t, tt.args.namespace, deployment.Namespace)
@@ -984,16 +971,11 @@ func TestCSITemplateRenderedControllerDeploymentArgs(t *testing.T) {
 			chartPath, err := filepath.Abs(tt.args.chartRelPath)
 			require.NoError(t, err)
 
-			options := &helm.Options{
-				SetValues:      tt.args.values,
-				KubectlOptions: k8s.NewKubectlOptions("", "", tt.args.namespace),
-			}
-
 			// act
-			output := helm.RenderTemplate(t, options, chartPath, tt.args.releaseName, []string{"templates/controller/deployment.yaml"}, "--kube-version", tt.args.kubeVersion)
+			output := renderTemplate(t, chartPath, tt.args.releaseName, tt.args.namespace, tt.args.kubeVersion, tt.args.values, "templates/controller/deployment.yaml")
 
 			var deployment appsv1.Deployment
-			helm.UnmarshalK8SYaml(t, output, &deployment)
+			unmarshalYAML(t, output, &deployment)
 			var args []string
 			for _, container := range deployment.Spec.Template.Spec.Containers {
 				if container.Name == "vsphere-csi-controller" {
@@ -1157,16 +1139,11 @@ func TestCSITemplateRenderedNodeDaemonSetArgs(t *testing.T) {
 			chartPath, err := filepath.Abs(tt.args.chartRelPath)
 			require.NoError(t, err)
 
-			options := &helm.Options{
-				SetValues:      tt.args.values,
-				KubectlOptions: k8s.NewKubectlOptions("", "", tt.args.namespace),
-			}
-
 			// act
-			output := helm.RenderTemplate(t, options, chartPath, tt.args.releaseName, []string{"templates/node/daemonset.yaml"}, "--kube-version", tt.args.kubeVersion)
+			output := renderTemplate(t, chartPath, tt.args.releaseName, tt.args.namespace, tt.args.kubeVersion, tt.args.values, "templates/node/daemonset.yaml")
 
 			var deployment appsv1.Deployment
-			helm.UnmarshalK8SYaml(t, output, &deployment)
+			unmarshalYAML(t, output, &deployment)
 			var args []string
 			for _, container := range deployment.Spec.Template.Spec.Containers {
 				if container.Name == "vsphere-csi-node" {
