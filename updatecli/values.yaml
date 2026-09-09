@@ -9,3 +9,10 @@ github:
 
 images:
   primeRegistryRepo: "registry.rancher.com/rancher"
+
+cpi:
+  primeMinors:
+    - "1.37"
+    - "1.36"
+    - "1.35"
+    - "1.34"
