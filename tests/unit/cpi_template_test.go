@@ -49,7 +49,7 @@ func TestCPITemplateRenderedDaemonset(t *testing.T) {
 				namespace:     "cpitest-" + strings.ToLower(random.UniqueId()),
 				releaseName:   "cpitest-" + strings.ToLower(random.UniqueId()),
 				chartRelPath:  cpiChart,
-				expectedImage: "rancher/hardened-cloud-provider-vsphere:v1.37.0-build20260901",
+				expectedImage: "rancher/hardened-cloud-provider-vsphere:v1.37.0-build20260909",
 			},
 		},
 		{
