@@ -16,6 +16,32 @@ jobs:
     steps:
       - name: Checkout Repo
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1 https://github.com/actions/checkout/tags
+        with:
+          fetch-depth: 0
+      - name: Validate chart version bumps
+        if: github.event_name == 'pull_request'
+        env:
+          BASE_REF: ${{ github.event.pull_request.base.sha }}
+        run: |
+          set -euo pipefail
+
+          chart_version() {
+            git show "$1:$2/Chart.yaml" | awk '$1 == "version:" { print $2; exit }'
+          }
+
+          for chart_path in charts/rancher-vsphere-cpi charts/rancher-vsphere-csi; do
+            if git diff --quiet "${BASE_REF}...HEAD" -- "${chart_path}/values.yaml"; then
+              continue
+            fi
+
+            base_version=$(chart_version "${BASE_REF}" "${chart_path}")
+            head_version=$(chart_version HEAD "${chart_path}")
+
+            if [[ -z "${base_version}" || -z "${head_version}" || "${base_version}" == "${head_version}" ]]; then
+              echo "${chart_path}/values.yaml changed, but Chart.yaml version was not bumped (${base_version:-missing})." >&2
+              exit 1
+            fi
+          done
       - name: Setup Go
         uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0 https://github.com/actions/setup-go/tags
         with:
