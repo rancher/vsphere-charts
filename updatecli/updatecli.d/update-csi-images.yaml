@@ -6,7 +6,7 @@ sources:
     kind: dockerimage
     spec:
       image: '{{ .images.primeRegistryRepo }}/hardened-vsphere-csi-driver'
-      tagfilter: '^v[0-9]+\.[0-9]+\.[0-9]+-build[0-9]+$'
+      tagfilter: '^v{{ source "csiDriverVersion" }}-build[0-9]+$'
       versionfilter:
         kind: semver
         pattern: ">=0.0.0-0"
@@ -14,20 +14,75 @@ sources:
   # When the public driver version is updated we need to bump the CSI chart version accordingly
   csiDriverVersion:
     name: Extract vSphere CSI driver version from the mirrored driver tag
-    kind: shell
+    kind: yaml
     scmid: default
     spec:
-      command: |
-        driver_version="$(awk '
-          /versionOverrides:/ { in_overrides = 1 }
-          in_overrides && /repository: rancher\/mirrored-cloud-provider-vsphere-csi-release-driver/ { expect_tag = 1; next }
-          expect_tag && /^[[:space:]]+tag: v[0-9]+\.[0-9]+\.[0-9]+$/ { sub(/^.*v/, ""); print; exit }
-        ' charts/rancher-vsphere-csi/values.yaml)"
+      file: charts/rancher-vsphere-csi/values.yaml
+      engine: yamlpath
+      key: $.versionOverrides[0].values.csiController.image.tag
 
-        case "$driver_version" in
-          [0-9]*.[0-9]*.[0-9]*) printf '%s\n' "$driver_version" ;;
-          *) echo "unable to find mirrored CSI driver version" >&2; exit 1 ;;
-        esac
+  csiAttacherVersion:
+    name: Extract CSI attacher version from the mirrored driver manifest
+    kind: yaml
+    scmid: default
+    spec:
+      file: charts/rancher-vsphere-csi/values.yaml
+      engine: yamlpath
+      key: $.versionOverrides[0].values.csiController.image.csiAttacher.tag
+
+  csiResizerVersion:
+    name: Extract CSI resizer version from the mirrored driver manifest
+    kind: yaml
+    scmid: default
+    spec:
+      file: charts/rancher-vsphere-csi/values.yaml
+      engine: yamlpath
+      key: $.versionOverrides[0].values.csiController.image.csiResizer.tag
+
+  livenessProbeVersion:
+    name: Extract livenessprobe version from the mirrored driver manifest
+    kind: yaml
+    scmid: default
+    spec:
+      file: charts/rancher-vsphere-csi/values.yaml
+      engine: yamlpath
+      key: $.versionOverrides[0].values.csiController.image.livenessProbe.tag
+
+  vsphereSyncerVersion:
+    name: Extract vSphere CSI syncer version from the mirrored driver manifest
+    kind: yaml
+    scmid: default
+    spec:
+      file: charts/rancher-vsphere-csi/values.yaml
+      engine: yamlpath
+      key: $.versionOverrides[0].values.csiController.image.vsphereSyncer.tag
+
+  csiProvisionerVersion:
+    name: Extract CSI provisioner version from the mirrored driver manifest
+    kind: yaml
+    scmid: default
+    spec:
+      file: charts/rancher-vsphere-csi/values.yaml
+      engine: yamlpath
+      key: $.versionOverrides[0].values.csiController.image.csiProvisioner.tag
+
+  csiSnapshotterVersion:
+    name: Extract CSI snapshotter version from the mirrored driver manifest
+    kind: yaml
+    scmid: default
+    spec:
+      file: charts/rancher-vsphere-csi/values.yaml
+      engine: yamlpath
+      key: $.versionOverrides[0].values.csiController.image.csiSnapshotter.tag
+
+  nodeDriverRegistrarVersion:
+    name: Extract CSI node-driver-registrar version from the mirrored driver manifest
+    kind: yaml
+    scmid: default
+    spec:
+      file: charts/rancher-vsphere-csi/values.yaml
+      engine: yamlpath
+      key: $.versionOverrides[0].values.csiNode.image.nodeDriverRegistrar.tag
 
   # We only need to bump the -rancherX suffix when the primeTags are updated to a newer -buildXXXX version
   csiChartVersion:
@@ -38,6 +93,7 @@ sources:
       command: |
         chart_version="$(awk '/^version:/ { print $2; exit }' charts/rancher-vsphere-csi/Chart.yaml)"
         driver_version='{{ source "csiDriverVersion" }}'
+        driver_version="${driver_version#v}"
         chart_driver_version="${chart_version%-rancher*}"
         chart_revision="${chart_version##*-rancher}"
         set -- $(awk '/primeTag:/ { print $2 }' charts/rancher-vsphere-csi/values.yaml)
@@ -74,49 +130,37 @@ sources:
     kind: dockerimage
     spec:
       image: '{{ .images.primeRegistryRepo }}/hardened-csi-attacher'
-      tagfilter: '^v[0-9]+\.[0-9]+\.[0-9]+-build[0-9]+$'
+      tagfilter: '^{{ source "csiAttacherVersion" }}-build[0-9]+$'
       versionfilter:
         kind: semver
-        # Pin to the v4.9.x line to match the csi-attacher version pinned by the
-        # vSphere CSI driver manifest. The hardened repo also publishes a newer
-        # v4.12.0 line, so an unconstrained ">=0.0.0-0" filter drifts prime ahead
-        # of mirrored.
-        pattern: '>=4.9.0-0 <4.10.0-0'
+        pattern: ">=0.0.0-0"
 
   csiResizerPrime:
     name: Get latest hardened CSI resizer tag
     kind: dockerimage
     spec:
       image: '{{ .images.primeRegistryRepo }}/hardened-csi-resizer'
-      tagfilter: '^v[0-9]+\.[0-9]+\.[0-9]+-build[0-9]+$'
+      tagfilter: '^{{ source "csiResizerVersion" }}-build[0-9]+$'
       versionfilter:
         kind: semver
-        # Pin to the v1.12.x line to match the csi-resizer version pinned by the
-        # vSphere CSI driver manifest. The hardened repo also publishes a v2.2.1
-        # line that does not correspond to any upstream external-resizer release,
-        # so an unconstrained ">=0.0.0-0" filter drifts prime ahead of mirrored.
-        pattern: '>=1.12.0-0 <1.13.0-0'
+        pattern: ">=0.0.0-0"
 
   livenessProbePrime:
     name: Get latest hardened livenessprobe tag
     kind: dockerimage
     spec:
       image: '{{ .images.primeRegistryRepo }}/hardened-livenessprobe'
-      tagfilter: '^v[0-9]+\.[0-9]+\.[0-9]+-build[0-9]+$'
+      tagfilter: '^{{ source "livenessProbeVersion" }}-build[0-9]+$'
       versionfilter:
         kind: semver
-        # Pin to the v2.15.x line to match the livenessprobe version pinned by
-        # the vSphere CSI driver manifest. The hardened repo also publishes a
-        # newer v2.19.0 line, so an unconstrained ">=0.0.0-0" filter drifts prime
-        # ahead of mirrored.
-        pattern: '>=2.15.0-0 <2.16.0-0'
+        pattern: ">=0.0.0-0"
 
   vsphereSyncerPrime:
     name: Get latest hardened vSphere CSI syncer tag
     kind: dockerimage
     spec:
       image: '{{ .images.primeRegistryRepo }}/hardened-vsphere-csi-syncer'
-      tagfilter: '^v[0-9]+\.[0-9]+\.[0-9]+-build[0-9]+$'
+      tagfilter: '^{{ source "vsphereSyncerVersion" }}-build[0-9]+$'
       versionfilter:
         kind: semver
         pattern: ">=0.0.0-0"
@@ -126,7 +170,7 @@ sources:
     kind: dockerimage
     spec:
       image: '{{ .images.primeRegistryRepo }}/hardened-csi-provisioner'
-      tagfilter: '^v[0-9]+\.[0-9]+\.[0-9]+-build[0-9]+$'
+      tagfilter: '^{{ source "csiProvisionerVersion" }}-build[0-9]+$'
       versionfilter:
         kind: semver
         # Pin to the v4.x.x line to match the node-driver-registrar version
@@ -140,7 +184,7 @@ sources:
     kind: dockerimage
     spec:
       image: '{{ .images.primeRegistryRepo }}/hardened-csi-snapshotter'
-      tagfilter: '^v[0-9]+\.[0-9]+\.[0-9]+-build[0-9]+$'
+      tagfilter: '^{{ source "csiSnapshotterVersion" }}-build[0-9]+$'
       versionfilter:
         kind: semver
         pattern: ">=0.0.0-0"
@@ -150,14 +194,10 @@ sources:
     kind: dockerimage
     spec:
       image: '{{ .images.primeRegistryRepo }}/hardened-csi-node-driver-registrar'
-      tagfilter: '^v[0-9]+\.[0-9]+\.[0-9]+-build[0-9]+$'
+      tagfilter: '^{{ source "nodeDriverRegistrarVersion" }}-build[0-9]+$'
       versionfilter:
         kind: semver
-        # Pin to the v2.13.x line to match the node-driver-registrar version
-        # pinned by the vSphere CSI driver manifest. The hardened repo also
-        # publishes a newer v2.17.0 line, so an unconstrained ">=0.0.0-0" filter
-        # drifts prime ahead of mirrored.
-        pattern: '>=2.13.0-0 <2.14.0-0'
+        pattern: ">=0.0.0-0"
 
 targets:
   csiAppVersion:
@@ -168,6 +208,7 @@ targets:
     spec:
       file: charts/rancher-vsphere-csi/Chart.yaml
       key: appVersion
+      value: '{{ trimPrefix "v" (source "csiDriverVersion") }}'
 
   csiChartVersion:
     name: Update CSI chart version for Prime image changes
