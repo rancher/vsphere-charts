@@ -6,7 +6,7 @@ sources:
     kind: dockerimage
     spec:
       image: '{{ .images.primeRegistryRepo }}/hardened-vsphere-csi-driver'
-      tagfilter: '^v{{ source "csiDriverVersion" }}-build[0-9]+$'
+      tagfilter: '^{{ source "csiDriverVersion" }}-build[0-9]+$'
       versionfilter:
         kind: semver
         pattern: ">=0.0.0-0"
@@ -207,7 +207,7 @@ targets:
     sourceid: csiDriverVersion
     spec:
       file: charts/rancher-vsphere-csi/Chart.yaml
-      key: appVersion
+      key: $.appVersion
       value: '{{ trimPrefix "v" (source "csiDriverVersion") }}'
 
   csiChartVersion:
@@ -374,7 +374,8 @@ actions:
     kind: github/pullrequest
     scmid: default
     spec:
-      automerge: false
+      merge:
+        strategy: manual
       mergemethod: squash
       description: |
         This automated PR updates Rancher Prime image tags in the vSphere CSI chart.
