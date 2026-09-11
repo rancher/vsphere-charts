@@ -98,6 +98,19 @@ func TestCPITemplateRenderedDaemonset(t *testing.T) {
 			},
 		},
 		{
+			name: "Kubernetes 1.35 Prime",
+			args: args{
+				values: map[string]string{
+					"global.prime.enabled": "true",
+				},
+				kubeVersion:   "1.35",
+				namespace:     "cpitest",
+				releaseName:   "cpitest",
+				chartRelPath:  cpiChart,
+				expectedImage: "rancher/hardened-cloud-provider-vsphere:v1.35.1-build20260710",
+			},
+		},
+		{
 			name: "Kubernetes 1.34",
 			args: args{
 				values:        map[string]string{},
@@ -106,6 +119,19 @@ func TestCPITemplateRenderedDaemonset(t *testing.T) {
 				releaseName:   "cpitest",
 				chartRelPath:  cpiChart,
 				expectedImage: "rancher/mirrored-cloud-provider-vsphere:v1.34.0",
+			},
+		},
+		{
+			name: "Kubernetes 1.34 Prime",
+			args: args{
+				values: map[string]string{
+					"global.prime.enabled": "true",
+				},
+				kubeVersion:   "1.34",
+				namespace:     "cpitest",
+				releaseName:   "cpitest",
+				chartRelPath:  cpiChart,
+				expectedImage: "rancher/hardened-cloud-provider-vsphere:v1.34.0-build20260710",
 			},
 		},
 		{
