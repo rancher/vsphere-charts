@@ -350,7 +350,7 @@ versionOverrides:
             tag: v4.0.1
           csiSnapshotter:
             repository: rancher/mirrored-sig-storage-csi-snapshotter
-            tag: v8.2.0
+            tag: v8.6.0
       csiNode:
         image:
           repository: rancher/mirrored-cloud-provider-vsphere-csi-release-driver
