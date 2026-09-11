@@ -1,6 +1,4 @@
 {{/* Add new CPI minors to cpi.primeMinors in updatecli/values.yaml. */}}
-{{- $latestMinor := index .cpi.primeMinors 0 -}}
-{{- $latestSourceID := printf "cpiPrime%s" (replace "." "" $latestMinor) -}}
 name: "Update Rancher vSphere CPI prime tags"
 
 sources:
@@ -35,25 +33,28 @@ targets:
       key: $.versionOverrides[?(@.constraint == '~ {{ $minor }}')].values.cloudControllerManager.primeTag
 {{- end }}
 
-  cpiPrimeTagTestNoRegistry:
-    name: Update CPI prime tag in tests without system default registry
+{{- range $minor := .cpi.primeMinors }}
+  cpiPrimeTagTestNoRegistry{{ replace "." "" $minor }}:
+    name: Update CPI {{ $minor }} prime tag in tests without system default registry
     kind: file
     scmid: default
-    sourceid: {{ $latestSourceID }}
+    sourceid: cpiPrime{{ replace "." "" $minor }}
     spec:
       file: tests/unit/cpi_template_test.go
-      matchpattern: 'expectedImage: "rancher/hardened-cloud-provider-vsphere:[^"]+"'
-      replacepattern: 'expectedImage: "rancher/hardened-cloud-provider-vsphere:{{ source $latestSourceID }}"'
+      matchpattern: 'expectedImage: "rancher/hardened-cloud-provider-vsphere:v{{ $minor }}\.[^"]+"'
+      replacepattern: 'expectedImage: "rancher/hardened-cloud-provider-vsphere:{{ source (printf "cpiPrime%s" (replace "." "" $minor)) }}"'
+
+{{- end }}
 
   cpiPrimeTagTestWithRegistry:
-    name: Update CPI prime tag in tests with system default registry
+    name: Update CPI 1.36 prime tag in tests with system default registry
     kind: file
     scmid: default
-    sourceid: {{ $latestSourceID }}
+    sourceid: cpiPrime136
     spec:
       file: tests/unit/cpi_template_test.go
-      matchpattern: 'expectedImage: "registry.rancher.com/rancher/hardened-cloud-provider-vsphere:[^"]+"'
-      replacepattern: 'expectedImage: "registry.rancher.com/rancher/hardened-cloud-provider-vsphere:{{ source $latestSourceID }}"'
+      matchpattern: 'expectedImage: "registry.rancher.com/rancher/hardened-cloud-provider-vsphere:v1\.36\.[^"]+"'
+      replacepattern: 'expectedImage: "registry.rancher.com/rancher/hardened-cloud-provider-vsphere:{{ source "cpiPrime136" }}"'
 
 scms:
   default:
