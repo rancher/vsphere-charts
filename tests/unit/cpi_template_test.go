@@ -131,7 +131,7 @@ func TestCPITemplateRenderedDaemonset(t *testing.T) {
 				namespace:     "cpitest",
 				releaseName:   "cpitest",
 				chartRelPath:  cpiChart,
-				expectedImage: "rancher/hardened-cloud-provider-vsphere:v1.34.0-build20260710",
+				expectedImage: "rancher/hardened-cloud-provider-vsphere:v1.34.0-build20260911",
 			},
 		},
 		{
