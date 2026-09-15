@@ -100,8 +100,7 @@ spec:
               name: vsphere-config-volume
               readOnly: true
           resources:
-            requests:
-              cpu: 200m
+            {{- toYaml .Values.cloudControllerManager.resources | nindent 12 }}
           {{- if or (.Values.cloudControllerManager.env) (.Values.global.ipFamily) }}
           env:
           {{- if .Values.global.ipFamily }}
