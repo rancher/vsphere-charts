@@ -19,7 +19,7 @@ sources:
     spec:
       file: charts/rancher-vsphere-csi/values.yaml
       engine: yamlpath
-      key: $.versionOverrides[0].values.csiController.image.tag
+      key: $.csiController.image.tag
 
   csiAttacherVersion:
     name: Extract CSI attacher version from the mirrored driver manifest
@@ -28,7 +28,7 @@ sources:
     spec:
       file: charts/rancher-vsphere-csi/values.yaml
       engine: yamlpath
-      key: $.versionOverrides[0].values.csiController.image.csiAttacher.tag
+      key: $.csiController.image.csiAttacher.tag
 
   csiResizerVersion:
     name: Extract CSI resizer version from the mirrored driver manifest
@@ -37,7 +37,7 @@ sources:
     spec:
       file: charts/rancher-vsphere-csi/values.yaml
       engine: yamlpath
-      key: $.versionOverrides[0].values.csiController.image.csiResizer.tag
+      key: $.csiController.image.csiResizer.tag
 
   livenessProbeVersion:
     name: Extract livenessprobe version from the mirrored driver manifest
@@ -46,7 +46,7 @@ sources:
     spec:
       file: charts/rancher-vsphere-csi/values.yaml
       engine: yamlpath
-      key: $.versionOverrides[0].values.csiController.image.livenessProbe.tag
+      key: $.csiController.image.livenessProbe.tag
 
   vsphereSyncerVersion:
     name: Extract vSphere CSI syncer version from the mirrored driver manifest
@@ -55,7 +55,7 @@ sources:
     spec:
       file: charts/rancher-vsphere-csi/values.yaml
       engine: yamlpath
-      key: $.versionOverrides[0].values.csiController.image.vsphereSyncer.tag
+      key: $.csiController.image.vsphereSyncer.tag
 
   csiProvisionerVersion:
     name: Extract CSI provisioner version from the mirrored driver manifest
@@ -64,7 +64,7 @@ sources:
     spec:
       file: charts/rancher-vsphere-csi/values.yaml
       engine: yamlpath
-      key: $.versionOverrides[0].values.csiController.image.csiProvisioner.tag
+      key: $.csiController.image.csiProvisioner.tag
 
   csiSnapshotterVersion:
     name: Extract CSI snapshotter version from the mirrored driver manifest
@@ -73,7 +73,7 @@ sources:
     spec:
       file: charts/rancher-vsphere-csi/values.yaml
       engine: yamlpath
-      key: $.versionOverrides[0].values.csiController.image.csiSnapshotter.tag
+      key: $.csiController.image.csiSnapshotter.tag
 
   nodeDriverRegistrarVersion:
     name: Extract CSI node-driver-registrar version from the mirrored driver manifest
@@ -82,7 +82,7 @@ sources:
     spec:
       file: charts/rancher-vsphere-csi/values.yaml
       engine: yamlpath
-      key: $.versionOverrides[0].values.csiNode.image.nodeDriverRegistrar.tag
+      key: $.csiNode.image.nodeDriverRegistrar.tag
 
   # We only need to bump the -rancherX suffix when the primeTags are updated to a newer -buildXXXX version
   csiChartVersion:

@@ -34,7 +34,7 @@ csiController:
   image:
     repository: rancher/mirrored-cloud-provider-vsphere-csi-release-driver
     primeRepository: rancher/hardened-vsphere-csi-driver
-    tag: latest
+    tag: v3.7.3
     primeTag: v3.7.3-build20260909
     imagePullPolicy: ""
     additionalArgs: []
@@ -49,7 +49,7 @@ csiController:
     csiAttacher:
       repository: rancher/mirrored-sig-storage-csi-attacher
       primeRepository: rancher/hardened-csi-attacher
-      tag: latest
+      tag: v4.9.0
       primeTag: v4.9.0-build20260909
       imagePullPolicy: ""
       additionalArgs: []
@@ -64,7 +64,7 @@ csiController:
     csiResizer:
       repository: rancher/mirrored-sig-storage-csi-resizer
       primeRepository: rancher/hardened-csi-resizer
-      tag: latest
+      tag: v1.12.0
       primeTag: v1.12.0-build20260909
       imagePullPolicy: ""
       additionalArgs: []
@@ -79,7 +79,7 @@ csiController:
     livenessProbe:
       repository: rancher/mirrored-sig-storage-livenessprobe
       primeRepository: rancher/hardened-livenessprobe
-      tag: latest
+      tag: v2.15.0
       primeTag: v2.15.0-build20260909
       imagePullPolicy: ""
       additionalArgs: []
@@ -94,7 +94,7 @@ csiController:
     vsphereSyncer:
       repository: rancher/mirrored-cloud-provider-vsphere-csi-release-syncer
       primeRepository: rancher/hardened-vsphere-csi-syncer
-      tag: latest
+      tag: v3.7.3
       primeTag: v3.7.3-build20260909
       imagePullPolicy: ""
       additionalArgs: []
@@ -109,7 +109,7 @@ csiController:
     csiProvisioner:
       repository: rancher/mirrored-sig-storage-csi-provisioner
       primeRepository: rancher/hardened-csi-provisioner
-      tag: latest
+      tag: v4.0.1
       primeTag: v4.0.1-build20260909
       imagePullPolicy: ""
       additionalArgs: []
@@ -124,7 +124,7 @@ csiController:
     csiSnapshotter:
       repository: rancher/mirrored-sig-storage-csi-snapshotter
       primeRepository: rancher/hardened-csi-snapshotter
-      tag: latest
+      tag: v8.6.0
       primeTag: v8.6.0-build20260909
       imagePullPolicy: ""
       additionalArgs: []
@@ -245,7 +245,7 @@ csiNode:
   image:
     repository: rancher/mirrored-cloud-provider-vsphere-csi-release-driver
     primeRepository: rancher/hardened-vsphere-csi-driver
-    tag: latest
+    tag: v3.7.3
     primeTag: v3.7.3-build20260909
     imagePullPolicy: ""
     additionalArgs: []
@@ -260,7 +260,7 @@ csiNode:
     nodeDriverRegistrar:
       repository: rancher/mirrored-sig-storage-csi-node-driver-registrar
       primeRepository: rancher/hardened-csi-node-driver-registrar
-      tag: latest
+      tag: v2.13.0
       primeTag: v2.13.0-build20260909
       imagePullPolicy: ""
       additionalArgs: []
@@ -275,7 +275,7 @@ csiNode:
     livenessProbe:
       repository: rancher/mirrored-sig-storage-livenessprobe
       primeRepository: rancher/hardened-livenessprobe
-      tag: latest
+      tag: v2.15.0
       primeTag: v2.15.0-build20260909
       imagePullPolicy: ""
       additionalArgs: []
@@ -326,41 +326,6 @@ global:
 # Supported versions can be found at:
 # https://docs.vmware.com/en/VMware-vSphere-Container-Storage-Plug-in/3.0/vmware-vsphere-csp-getting-started/GUID-D4AAD99E-9128-40CE-B89C-AD451DA8379D.html#kubernetes-versions-compatible-with-vsphere-container-storage-plugin-1
 versionOverrides:
-  # Versions from https://github.com/kubernetes-sigs/vsphere-csi-driver/blob/v3.7.3/manifests/vanilla/vsphere-csi-driver.yaml
-  - constraint: ">= 1.31 < 1.37"
-    values:
-      csiController:
-        image:
-          repository: rancher/mirrored-cloud-provider-vsphere-csi-release-driver
-          tag: v3.7.3
-          csiAttacher:
-            repository: rancher/mirrored-sig-storage-csi-attacher
-            tag: v4.9.0
-          csiResizer:
-            repository: rancher/mirrored-sig-storage-csi-resizer
-            tag: v1.12.0
-          livenessProbe:
-            repository: rancher/mirrored-sig-storage-livenessprobe
-            tag: v2.15.0
-          vsphereSyncer:
-            repository: rancher/mirrored-cloud-provider-vsphere-csi-release-syncer
-            tag: v3.7.3
-          csiProvisioner:
-            repository: rancher/mirrored-sig-storage-csi-provisioner
-            tag: v4.0.1
-          csiSnapshotter:
-            repository: rancher/mirrored-sig-storage-csi-snapshotter
-            tag: v8.6.0
-      csiNode:
-        image:
-          repository: rancher/mirrored-cloud-provider-vsphere-csi-release-driver
-          tag: v3.7.3
-          nodeDriverRegistrar:
-            repository: rancher/mirrored-sig-storage-csi-node-driver-registrar
-            tag: v2.13.0
-          livenessProbe:
-            repository: rancher/mirrored-sig-storage-livenessprobe
-            tag: v2.15.0
   # Versions from https://github.com/kubernetes-sigs/vsphere-csi-driver/blob/v3.3.1/manifests/vanilla/vsphere-csi-driver.yaml
   - constraint: ">= 1.28 < 1.31"
     values:
