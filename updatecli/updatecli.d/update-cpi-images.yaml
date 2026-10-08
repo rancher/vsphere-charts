@@ -20,6 +20,37 @@ sources:
         pattern: '^v{{ $minor }}\.[0-9]+-build[0-9]+$'
 {{- end }}
 
+  cpiPrimeChartVersion:
+    name: Calculate CPI chart version for Prime tag updates
+    kind: shell
+    scmid: default
+    spec:
+      command: |
+        chart_version="$(awk '/^version:/ { print $2; exit }' charts/rancher-vsphere-cpi/Chart.yaml)"
+        if ! printf '%s\n' "$chart_version" | grep -Eq '^[0-9]+\.[0-9]+\.[0-9]+$'; then
+          echo "unexpected CPI chart version: $chart_version" >&2
+          exit 1
+        fi
+
+        tags_updated=false
+{{- range $minor := .cpi.primeMinors }}
+        current_tag="$(awk '/constraint: "~ {{ $minor }}"/ { found = 1 } found && /primeTag:/ { print $2; exit }' charts/rancher-vsphere-cpi/values.yaml)"
+        if [ "$current_tag" != '{{ source (printf "cpiPrime%s" (replace "." "" $minor)) }}' ]; then
+          tags_updated=true
+        fi
+{{- end }}
+
+        if [ "$tags_updated" = false ]; then
+          printf '%s\n' "$chart_version"
+          exit 0
+        fi
+
+        major="${chart_version%%.*}"
+        remainder="${chart_version#*.}"
+        minor="${remainder%%.*}"
+        patch="${remainder#*.}"
+        printf '%s.%s.%s\n' "$major" "$minor" "$((patch + 1))"
+
 targets:
 {{- range $minor := .cpi.primeMinors }}
   cpiPrimeTag{{ replace "." "" $minor }}:
@@ -32,6 +63,15 @@ targets:
       engine: yamlpath
       key: $.versionOverrides[?(@.constraint == '~ {{ $minor }}')].values.cloudControllerManager.primeTag
 {{- end }}
+
+  cpiPrimeChartVersionTarget:
+    name: Update CPI chart version for Prime image changes
+    kind: yaml
+    scmid: default
+    sourceid: cpiPrimeChartVersion
+    spec:
+      file: charts/rancher-vsphere-cpi/Chart.yaml
+      key: version
 
 {{- range $minor := .cpi.primeMinors }}
   cpiPrimeTagTestNoRegistry{{ replace "." "" $minor }}:
