@@ -92,7 +92,7 @@ func TestCSITemplateRenderedNodeDaemonsetPrimeAndWindows(t *testing.T) {
 	expectedImages := []string{
 		"registry.rancher.com/rancher/hardened-csi-node-driver-registrar:v2.13.0-build20261008",
 		"registry.rancher.com/rancher/hardened-vsphere-csi-driver:v3.7.3-build20261008",
-		"registry.rancher.com/rancher/hardened-livenessprobe:v2.15.0-build20260909",
+		"registry.rancher.com/rancher/hardened-livenessprobe:v2.15.0-build20261008",
 	}
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {
@@ -163,7 +163,7 @@ func TestCSITemplateRenderedControllerDeploymentPrime(t *testing.T) {
 	expectedImages := []string{
 		"registry.rancher.com/rancher/hardened-csi-attacher:v4.9.0-build20260909",
 		"registry.rancher.com/rancher/hardened-vsphere-csi-driver:v3.7.3-build20261008",
-		"registry.rancher.com/rancher/hardened-livenessprobe:v2.15.0-build20260909",
+		"registry.rancher.com/rancher/hardened-livenessprobe:v2.15.0-build20261008",
 		"registry.rancher.com/rancher/hardened-vsphere-csi-syncer:v3.7.3-build20260909",
 		"registry.rancher.com/rancher/hardened-csi-provisioner:v4.0.1-build20261008",
 	}
