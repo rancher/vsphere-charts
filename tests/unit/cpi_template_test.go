@@ -45,7 +45,7 @@ func TestCPITemplateRenderedDaemonset(t *testing.T) {
 				namespace:     "cpitest",
 				releaseName:   "cpitest",
 				chartRelPath:  cpiChart,
-				expectedImage: "rancher/hardened-cloud-provider-vsphere:v1.37.0-build20261008",
+				expectedImage: "rancher/hardened-cloud-provider-vsphere:v1.37.0-build20261012",
 			},
 		},
 		{
@@ -69,7 +69,7 @@ func TestCPITemplateRenderedDaemonset(t *testing.T) {
 				namespace:     "cpitest",
 				releaseName:   "cpitest",
 				chartRelPath:  cpiChart,
-				expectedImage: "rancher/hardened-cloud-provider-vsphere:v1.36.0-build20260911",
+				expectedImage: "rancher/hardened-cloud-provider-vsphere:v1.36.0-build20261012",
 			},
 		},
 		{
@@ -83,7 +83,7 @@ func TestCPITemplateRenderedDaemonset(t *testing.T) {
 				namespace:     "cpitest",
 				releaseName:   "cpitest",
 				chartRelPath:  cpiChart,
-				expectedImage: "registry.rancher.com/rancher/hardened-cloud-provider-vsphere:v1.36.0-build20260911",
+				expectedImage: "registry.rancher.com/rancher/hardened-cloud-provider-vsphere:v1.36.0-build20261012",
 			},
 		},
 		{
@@ -107,7 +107,7 @@ func TestCPITemplateRenderedDaemonset(t *testing.T) {
 				namespace:     "cpitest",
 				releaseName:   "cpitest",
 				chartRelPath:  cpiChart,
-				expectedImage: "rancher/hardened-cloud-provider-vsphere:v1.35.1-build20260911",
+				expectedImage: "rancher/hardened-cloud-provider-vsphere:v1.35.1-build20261012",
 			},
 		},
 		{
