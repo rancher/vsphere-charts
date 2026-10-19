@@ -165,7 +165,7 @@ func TestCSITemplateRenderedControllerDeploymentPrime(t *testing.T) {
 		"registry.rancher.com/rancher/hardened-vsphere-csi-driver:v3.7.3-build20261012",
 		"registry.rancher.com/rancher/hardened-livenessprobe:v2.15.0-build20261012",
 		"registry.rancher.com/rancher/hardened-vsphere-csi-syncer:v3.7.3-build20261012",
-		"registry.rancher.com/rancher/hardened-csi-provisioner:v4.0.1-build20261012",
+		"registry.rancher.com/rancher/hardened-csi-provisioner:v4.0.1-build20261016",
 	}
 	chartPath, err := filepath.Abs(csiChart)
 	require.NoError(t, err)
