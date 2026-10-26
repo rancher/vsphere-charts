@@ -27,16 +27,16 @@ var csi29_30ControllerImages = []string{
 }
 
 var csiDefaultNodeImages = []string{
-	"rancher/mirrored-sig-storage-csi-node-driver-registrar:v2.13.0",
-	"rancher/mirrored-cloud-provider-vsphere-csi-release-driver:v3.7.3",
-	"rancher/mirrored-sig-storage-livenessprobe:v2.15.0",
+	"rancher/mirrored-sig-storage-csi-node-driver-registrar:v2.14.0",
+	"rancher/mirrored-cloud-provider-vsphere-csi-release-driver:v3.8.0",
+	"rancher/mirrored-sig-storage-livenessprobe:v2.17.0",
 }
 
 var csiDefaultControllerImages = []string{
-	"rancher/mirrored-sig-storage-csi-attacher:v4.9.0",
-	"rancher/mirrored-cloud-provider-vsphere-csi-release-driver:v3.7.3",
-	"rancher/mirrored-sig-storage-livenessprobe:v2.15.0",
-	"rancher/mirrored-cloud-provider-vsphere-csi-release-syncer:v3.7.3",
+	"rancher/mirrored-sig-storage-csi-attacher:v4.10.0",
+	"rancher/mirrored-cloud-provider-vsphere-csi-release-driver:v3.8.0",
+	"rancher/mirrored-sig-storage-livenessprobe:v2.17.0",
+	"rancher/mirrored-cloud-provider-vsphere-csi-release-syncer:v3.8.0",
 	"rancher/mirrored-sig-storage-csi-provisioner:v4.0.1",
 }
 
@@ -90,9 +90,9 @@ func TestCSITemplateRenderedNodeDaemonsetPrimeAndWindows(t *testing.T) {
 		{name: "Kubernetes 1.37 Windows", kubeVersion: "1.37", template: "templates/node/windows-daemonset.yaml"},
 	}
 	expectedImages := []string{
-		"registry.rancher.com/rancher/hardened-csi-node-driver-registrar:v2.13.0-build20261020",
-		"registry.rancher.com/rancher/hardened-vsphere-csi-driver:v3.7.3-build20261012",
-		"registry.rancher.com/rancher/hardened-livenessprobe:v2.15.0-build20261020",
+		"registry.rancher.com/rancher/hardened-csi-node-driver-registrar:v2.14.0-build20261026",
+		"registry.rancher.com/rancher/hardened-vsphere-csi-driver:v3.8.0-build20261021",
+		"registry.rancher.com/rancher/hardened-livenessprobe:v2.17.0-build20261023",
 	}
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {
@@ -161,10 +161,10 @@ func TestCSITemplateRenderedControllerDeploymentPrime(t *testing.T) {
 		"global.cattle.systemDefaultRegistry": "registry.rancher.com",
 	}
 	expectedImages := []string{
-		"registry.rancher.com/rancher/hardened-csi-attacher:v4.9.0-build20261020",
-		"registry.rancher.com/rancher/hardened-vsphere-csi-driver:v3.7.3-build20261012",
-		"registry.rancher.com/rancher/hardened-livenessprobe:v2.15.0-build20261020",
-		"registry.rancher.com/rancher/hardened-vsphere-csi-syncer:v3.7.3-build20261012",
+		"registry.rancher.com/rancher/hardened-csi-attacher:v4.10.0-build20261026",
+		"registry.rancher.com/rancher/hardened-vsphere-csi-driver:v3.8.0-build20261021",
+		"registry.rancher.com/rancher/hardened-livenessprobe:v2.17.0-build20261023",
+		"registry.rancher.com/rancher/hardened-vsphere-csi-syncer:v3.8.0-build20261021",
 		"registry.rancher.com/rancher/hardened-csi-provisioner:v4.0.1-build20261020",
 	}
 	chartPath, err := filepath.Abs(csiChart)
