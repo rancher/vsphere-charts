@@ -66,7 +66,7 @@ csiController:
       repository: rancher/mirrored-sig-storage-csi-resizer
       primeRepository: rancher/hardened-csi-resizer
       tag: v2.0.0
-      primeTag: v2.0.0-build20261023
+      primeTag: v2.0.0-build20261110
       imagePullPolicy: ""
       additionalArgs: []
       resources: {}
