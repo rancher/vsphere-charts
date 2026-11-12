@@ -90,7 +90,7 @@ func TestCSITemplateRenderedNodeDaemonsetPrimeAndWindows(t *testing.T) {
 		{name: "Kubernetes 1.37 Windows", kubeVersion: "1.37", template: "templates/node/windows-daemonset.yaml"},
 	}
 	expectedImages := []string{
-		"registry.rancher.com/rancher/hardened-csi-node-driver-registrar:v2.14.0-build20261026",
+		"registry.rancher.com/rancher/hardened-csi-node-driver-registrar:v2.14.0-build20261110",
 		"registry.rancher.com/rancher/hardened-vsphere-csi-driver:v3.8.0-build20261111",
 		"registry.rancher.com/rancher/hardened-livenessprobe:v2.17.0-build20261110",
 	}
