@@ -51,7 +51,7 @@ csiController:
       repository: rancher/mirrored-sig-storage-csi-attacher
       primeRepository: rancher/hardened-csi-attacher
       tag: v4.10.0
-      primeTag: v4.10.0-build20261026
+      primeTag: v4.10.0-build20261110
       imagePullPolicy: ""
       additionalArgs: []
       resources: {}
