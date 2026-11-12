@@ -161,7 +161,7 @@ func TestCSITemplateRenderedControllerDeploymentPrime(t *testing.T) {
 		"global.cattle.systemDefaultRegistry": "registry.rancher.com",
 	}
 	expectedImages := []string{
-		"registry.rancher.com/rancher/hardened-csi-attacher:v4.10.0-build20261026",
+		"registry.rancher.com/rancher/hardened-csi-attacher:v4.10.0-build20261110",
 		"registry.rancher.com/rancher/hardened-vsphere-csi-driver:v3.8.0-build20261111",
 		"registry.rancher.com/rancher/hardened-livenessprobe:v2.17.0-build20261110",
 		"registry.rancher.com/rancher/hardened-vsphere-csi-syncer:v3.8.0-build20261111",
