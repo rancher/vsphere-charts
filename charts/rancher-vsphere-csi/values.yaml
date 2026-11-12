@@ -36,7 +36,7 @@ csiController:
     repository: rancher/mirrored-cloud-provider-vsphere-csi-release-driver
     primeRepository: rancher/hardened-vsphere-csi-driver
     tag: v3.8.0
-    primeTag: v3.8.0-build20261021
+    primeTag: v3.8.0-build20261111
     imagePullPolicy: ""
     additionalArgs: []
     resources: {}
@@ -51,7 +51,7 @@ csiController:
       repository: rancher/mirrored-sig-storage-csi-attacher
       primeRepository: rancher/hardened-csi-attacher
       tag: v4.10.0
-      primeTag: v4.10.0-build20261026
+      primeTag: v4.10.0-build20261110
       imagePullPolicy: ""
       additionalArgs: []
       resources: {}
@@ -66,7 +66,7 @@ csiController:
       repository: rancher/mirrored-sig-storage-csi-resizer
       primeRepository: rancher/hardened-csi-resizer
       tag: v2.0.0
-      primeTag: v2.0.0-build20261023
+      primeTag: v2.0.0-build20261110
       imagePullPolicy: ""
       additionalArgs: []
       resources: {}
@@ -81,7 +81,7 @@ csiController:
       repository: rancher/mirrored-sig-storage-livenessprobe
       primeRepository: rancher/hardened-livenessprobe
       tag: v2.17.0
-      primeTag: v2.17.0-build20261023
+      primeTag: v2.17.0-build20261110
       imagePullPolicy: ""
       additionalArgs: []
       resources: {}
@@ -96,7 +96,7 @@ csiController:
       repository: rancher/mirrored-cloud-provider-vsphere-csi-release-syncer
       primeRepository: rancher/hardened-vsphere-csi-syncer
       tag: v3.8.0
-      primeTag: v3.8.0-build20261021
+      primeTag: v3.8.0-build20261111
       imagePullPolicy: ""
       additionalArgs: []
       resources: {}
@@ -111,7 +111,7 @@ csiController:
       repository: rancher/mirrored-sig-storage-csi-provisioner
       primeRepository: rancher/hardened-csi-provisioner
       tag: v4.0.1
-      primeTag: v4.0.1-build20261020
+      primeTag: v4.0.1-build20261110
       imagePullPolicy: ""
       additionalArgs: []
       resources: {}
@@ -247,7 +247,7 @@ csiNode:
     repository: rancher/mirrored-cloud-provider-vsphere-csi-release-driver
     primeRepository: rancher/hardened-vsphere-csi-driver
     tag: v3.8.0
-    primeTag: v3.8.0-build20261021
+    primeTag: v3.8.0-build20261111
     imagePullPolicy: ""
     additionalArgs: []
     resources: {}
@@ -262,7 +262,7 @@ csiNode:
       repository: rancher/mirrored-sig-storage-csi-node-driver-registrar
       primeRepository: rancher/hardened-csi-node-driver-registrar
       tag: v2.14.0
-      primeTag: v2.14.0-build20261026
+      primeTag: v2.14.0-build20261110
       imagePullPolicy: ""
       additionalArgs: []
       resources: {}
@@ -277,7 +277,7 @@ csiNode:
       repository: rancher/mirrored-sig-storage-livenessprobe
       primeRepository: rancher/hardened-livenessprobe
       tag: v2.17.0
-      primeTag: v2.17.0-build20261023
+      primeTag: v2.17.0-build20261110
       imagePullPolicy: ""
       additionalArgs: []
       resources: {}
