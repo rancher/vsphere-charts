@@ -91,7 +91,9 @@ scms:
       owner: '{{ .github.owner }}'
       repository: '{{ .github.repository }}'
       branch: '{{ .github.branch }}'
-      commitusingapi: true
+      commitmessage:
+        squash: true
+        body: Update Rancher vSphere CPI Prime image tags.
 
 actions:
   default:
