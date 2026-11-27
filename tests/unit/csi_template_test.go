@@ -183,6 +183,33 @@ func TestCSITemplateRenderedControllerDeploymentOptionalImages(t *testing.T) {
 		expectedImages []string
 	}{
 		{
+			name:        "Kubernetes 1.37 block snapshotter",
+			kubeVersion: "1.37",
+			values: map[string]string{
+				"vCenter.clusterId":           random.UniqueId(),
+				"blockVolumeSnapshot.enabled": "true",
+			},
+			expectedImages: append([]string{"rancher/mirrored-sig-storage-csi-attacher:v4.10.0", "rancher/mirrored-sig-storage-csi-snapshotter:v8.7.0"}, csiDefaultControllerImages[1:]...),
+		},
+		{
+			name:        "Kubernetes 1.37 Prime block snapshotter",
+			kubeVersion: "1.37",
+			values: map[string]string{
+				"vCenter.clusterId":                   random.UniqueId(),
+				"blockVolumeSnapshot.enabled":          "true",
+				"global.prime.enabled":                "true",
+				"global.cattle.systemDefaultRegistry": "registry.rancher.com",
+			},
+			expectedImages: []string{
+				"registry.rancher.com/rancher/hardened-csi-attacher:v4.10.0-build20261110",
+				"registry.rancher.com/rancher/hardened-csi-snapshotter:v8.7.0-build20261126",
+				"registry.rancher.com/rancher/hardened-vsphere-csi-driver:v3.8.0-build20261111",
+				"registry.rancher.com/rancher/hardened-livenessprobe:v2.17.0-build20261110",
+				"registry.rancher.com/rancher/hardened-vsphere-csi-syncer:v3.8.0-build20261111",
+				"registry.rancher.com/rancher/hardened-csi-provisioner:v4.0.1-build20261110",
+			},
+		},
+		{
 			name:        "Kubernetes 1.30 block snapshotter",
 			kubeVersion: "1.30",
 			values: map[string]string{
